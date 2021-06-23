@@ -18,8 +18,9 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.registration);
-        getSupportActionBar().hide();
         btnsignup=findViewById(R.id.signup_btn);
         btnsignup.setOnClickListener(new View.OnClickListener() {
             @Override

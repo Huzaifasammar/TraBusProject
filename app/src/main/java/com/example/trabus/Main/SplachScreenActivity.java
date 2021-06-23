@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.example.trabus.MainActivity;
@@ -16,11 +17,8 @@ public class SplachScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.splach_screen);
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.hide();
         handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override

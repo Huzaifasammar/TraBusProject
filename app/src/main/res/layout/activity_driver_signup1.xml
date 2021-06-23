@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/silver"
+    android:layout_height="match_parent"
+    tools:context=".Main.Signup.Driver_Signup_1">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Green">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/left_arrow"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                app:tint="@color/white"
+                android:layout_marginStart="10dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Driver Registration"
+                android:gravity="center"
+                android:textSize="24sp"
+                android:textColor="@color/white"></TextView>
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <LinearLayout
+        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/pic_background_rounded">
+        <TextView
+            android:id="@+id/tvfill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Fill in Your Information"
+            android:textSize="20sp"
+            android:textColor="@color/black"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvfill"
+            android:id="@+id/RL_image">
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            app:tint="@color/Green"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/user"
+            android:id="@+id/driverimg"></ImageView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/driverimg"
+            android:text="+"
+            android:layout_marginStart="120dp"
+            android:id="@+id/plus"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/Green"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/plus"
+            android:layout_below="@id/driverimg"
+            android:text="Upload Image"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/Green"></TextView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/Fname_layout"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:boxStrokeColor="@color/Green"
+                app:boxStrokeErrorColor="@color/red"
+                app:boxBackgroundMode="outline"
+                android:layout_toLeftOf="@id/view"
+                app:counterOverflowTextColor="@color/Green"
+                app:hintTextColor="@color/Green"
+                app:boxStrokeWidthFocused="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fname_ET"
+                    android:backgroundTint="@color/white"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:background="@null"
+                    android:inputType="textPersonName"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_height="1dp"
+                android:layout_width="0dp"
+                android:layout_centerHorizontal="true"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lname_layout"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toRightOf="@id/view"
+                app:boxStrokeColor="@color/Green"
+                app:boxStrokeErrorColor="@color/red"
+                app:boxBackgroundMode="outline"
+                app:counterOverflowTextColor="@color/Green"
+                app:hintTextColor="@color/Green"
+                app:boxStrokeWidthFocused="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last Name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lname_ET"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:background="@null"
+                    android:backgroundTint="@color/white"
+                    android:inputType="textPersonName"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TraBus">
-        <activity android:name=".Main.Signup.Identity"></activity>
+        <activity android:name=".Main.Signup.Driver_Signup_1"></activity>
+        <activity android:name=".Main.Signup.Identity" />
         <activity android:name=".Main.RegistrationActivity" />
         <activity android:name=".Main.SplachScreenActivity">
             <intent-filter>
