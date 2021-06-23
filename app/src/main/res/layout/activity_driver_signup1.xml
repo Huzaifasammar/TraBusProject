@@ -89,6 +89,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
+                    app:endIconMode="clear_text"
                     app:boxStrokeColor="@color/Green"
                     app:boxStrokeErrorColor="@color/red"
                     app:boxBackgroundMode="outline"
@@ -129,6 +130,7 @@
                     app:counterOverflowTextColor="@color/Green"
                     app:hintTextColor="@color/Green"
                     app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name">
@@ -156,6 +158,9 @@
                 app:boxBackgroundMode="outline"
                 app:counterOverflowTextColor="@color/Green"
                 app:hintTextColor="@color/Green"
+                app:helperText="Required*"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/red"
                 app:boxStrokeWidthFocused="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,7 +187,10 @@
                 app:boxBackgroundMode="outline"
                 app:counterOverflowTextColor="@color/Green"
                 app:hintTextColor="@color/Green"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/red"
                 app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="clear_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email">
@@ -294,6 +302,7 @@
 
             </LinearLayout>
             <Button
+                android:id="@+id/btnregisterdriver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -306,6 +315,7 @@
                 android:text="@string/register"
                 android:textAllCaps="false" />
             <TextView
+                android:id="@+id/caltologindriver"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:layout_width="match_parent"

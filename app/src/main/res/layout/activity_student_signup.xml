@@ -96,6 +96,7 @@
                     app:counterOverflowTextColor="@color/Green"
                     app:hintTextColor="@color/Green"
                     app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="First Name">
@@ -129,6 +130,7 @@
                     app:counterOverflowTextColor="@color/Green"
                     app:hintTextColor="@color/Green"
                     app:boxStrokeWidthFocused="2dp"
+                    app:endIconMode="clear_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Last Name">
@@ -156,7 +158,10 @@
                 app:boxBackgroundMode="outline"
                 app:counterOverflowTextColor="@color/Green"
                 app:hintTextColor="@color/Green"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/red"
                 app:boxStrokeWidthFocused="2dp"
+                app:endIconMode="clear_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username">
@@ -182,6 +187,9 @@
                 app:boxBackgroundMode="outline"
                 app:counterOverflowTextColor="@color/Green"
                 app:hintTextColor="@color/Green"
+                app:helperText="Required*"
+                app:helperTextTextColor="@color/red"
+                app:endIconMode="clear_text"
                 app:boxStrokeWidthFocused="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -252,6 +260,10 @@
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/white_backgroun_with_border"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -277,6 +289,7 @@
                     android:layout_marginStart="30dp"></RadioButton>
             </RadioGroup>
             <Button
+                android:id="@+id/btnregisterstudent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -289,6 +302,7 @@
                 android:text="@string/register"
                 android:textAllCaps="false" />
             <TextView
+                android:id="@+id/caltologinstudent"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="30dp"
                 android:layout_width="match_parent"

@@ -25,7 +25,7 @@
         android:letterSpacing="0"
         android:text="Sign Up"
         android:textAllCaps="false"
-        android:backgroundTint="#228B22"
+        android:backgroundTint="@color/Green"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:cornerRadius="30dp"
@@ -39,7 +39,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="4dp"
         android:text="Log In"
-        android:backgroundTint="#228B22"
+        android:backgroundTint="@color/Green"
         android:letterSpacing="0"
 
         android:textSize="22sp"
@@ -58,6 +58,16 @@
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Skip"
+        android:textColor="@color/Green"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn"></TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
