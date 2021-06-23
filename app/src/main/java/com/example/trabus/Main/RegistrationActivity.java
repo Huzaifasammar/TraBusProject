@@ -14,7 +14,7 @@ import com.example.trabus.Login.SignIn;
 import com.example.trabus.Main.Signup.Identity;
 import com.example.trabus.R;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class  RegistrationActivity extends AppCompatActivity {
     Button btnsignup,btnlogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

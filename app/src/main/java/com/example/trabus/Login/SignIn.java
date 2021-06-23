@@ -15,7 +15,7 @@ import com.example.trabus.MainActivity;
 import com.example.trabus.R;
 
 public class SignIn extends AppCompatActivity {
-      TextView caltoidentity;
+      TextView caltoidentity,forgetsgnin;
       ImageView leftarrow;
       Button btnsignin;
 
@@ -26,6 +26,7 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         caltoidentity=findViewById(R.id.caltosignup);
         leftarrow=findViewById(R.id.leftarrowsignin);
+        forgetsgnin=findViewById(R.id.forgetsgnin);
         btnsignin=findViewById(R.id.btnsignin);
         caltoidentity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,12 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignIn.this, RegistrationActivity.class));
+            }
+        });
+        forgetsgnin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignIn.this, Forget_Password_Activity.class));
             }
         });
     }
