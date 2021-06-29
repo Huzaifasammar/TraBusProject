@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TraBus">
-        <activity
-            android:name=".Main.Driver_Home"
-            android:label="@string/title_activity_driver_home"
-            android:theme="@style/Theme.TraBus.NoActionBar"></activity>
+        <activity android:name=".Main.Driver_Home"></activity>
         <activity android:name=".Login.Forget_Password_Activity" />
         <activity android:name=".Login.SignIn" />
         <activity android:name=".Main.Signup.Student_Signup" />
@@ -26,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Student_Home" />
     </application>
 
 </manifest>

@@ -1,27 +1,18 @@
-package com.example.trabus.Main;
+package com.example.trabus;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
 
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 
-import com.example.trabus.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class Driver_Home extends AppCompatActivity {
+public class Student_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
-   Toolbar toolbar;
+    Toolbar toolbar;
     NavigationView navigation;
 
     @Override
@@ -33,19 +24,17 @@ public class Driver_Home extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
-        setContentView(R.layout.activity_driver_home);
-        drawerLayout=findViewById(R.id.Drawerlayout);
-        navigation=findViewById(R.id.navigation_layout);
-        toolbar=findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_main);
+        drawerLayout=findViewById(R.id.DrawerlayoutStudent);
+        navigation=findViewById(R.id.navigation_layout_student);
+        toolbar=findViewById(R.id.toolbarstudent);
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         toolbar.setNavigationIcon(R.drawable.menu);
-
     }
 }

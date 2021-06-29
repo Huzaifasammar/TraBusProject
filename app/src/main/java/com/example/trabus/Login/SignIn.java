@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.Main.RegistrationActivity;
 import com.example.trabus.Main.Signup.Identity;
-import com.example.trabus.MainActivity;
+import com.example.trabus.Student_Home;
 import com.example.trabus.R;
 
 public class SignIn extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class SignIn extends AppCompatActivity {
                 }
                 else if(btnstdnt.isChecked())
                 {
-                    startActivity(new Intent(SignIn.this,MainActivity.class));
+                    startActivity(new Intent(SignIn.this, Student_Home.class));
                 }
                 else
                 {
