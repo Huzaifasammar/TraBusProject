@@ -39,8 +39,8 @@ public class Driver_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_driver_home);
-        drawerLayout=findViewById(R.id.Drawerlayout);
-        navigation=findViewById(R.id.navigation_layout);
+        drawerLayout=findViewById(R.id.Drawerlayout_driver);
+        navigation=findViewById(R.id.navigation_layout_driver);
         toolbar=findViewById(R.id.toolbar);
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);

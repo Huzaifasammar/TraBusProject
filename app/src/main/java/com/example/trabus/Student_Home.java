@@ -28,10 +28,10 @@ public class Student_Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_student_home);
         drawerLayout=findViewById(R.id.DrawerlayoutStudent);
         navigation=findViewById(R.id.navigation_layout_student);
-        toolbar=findViewById(R.id.toolbarstudent);
+        toolbar=findViewById(R.id.toolbar_student);
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();

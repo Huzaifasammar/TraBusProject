@@ -9,31 +9,39 @@
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:padding="5dp"
-        android:id="@+id/user_image_nav"
-        android:src="@drawable/student"
+        android:padding="10dp"
+        android:id="@+id/student_image_nav"
+        android:src="@drawable/ic_man"
+
         />
     <TextView
+        android:layout_below="@+id/student_image_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/user_name_nav"
-        android:text="Student"
-        android:layout_toEndOf="@id/user_image_nav"
+        android:id="@+id/student_name_nav"
+        android:text="Muhammad Awais Khan"
+        android:layout_alignParentLeft="true"
         android:padding="5dp"
         android:textSize="18sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    />
 
     <TextView
+        android:id="@+id/student_email_nay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="email@iiu.edu.pk"
+        android:layout_alignParentLeft="true"
+        android:text="muhammad.bsse3573@iiu.edu.pk"
         android:textColor="@color/white"
-        android:textSize="16dp"
-        android:layout_toEndOf="@id/user_image_nav"
-        android:layout_below="@id/user_name_nav"
-        android:padding="5dp"/>
+        android:textSize="14dp"
+        android:padding="5dp"
+        android:layout_toEndOf="@id/student_image_nav"
+        android:layout_below="@id/student_name_nav"/>
+
 
 </RelativeLayout>

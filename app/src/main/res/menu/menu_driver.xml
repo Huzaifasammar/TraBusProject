@@ -3,15 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ShowIn="navigation_view">
 
-    <group android:checkableBehavior="single"
-        >
-        <item android:title="Home"
-            android:icon="@drawable/home"/>
+    <group android:checkableBehavior="single">
         <item
-            android:title="Contacts"
-            android:icon="@drawable/contact" />
-        <item android:title="Routes" />
+            android:id="@+id/nav_home_driver"
+            android:icon="@drawable/ic_home"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_setreminder_driver"
+            android:icon="@drawable/ic_schedule"
+            android:title="Set Reminder" />
     </group>
+    <item android:title="Setting">
+
+        <menu>
+            <item
+                android:id="@+id/nav_profile_driver"
+                android:icon="@drawable/ic_user"
+                android:title="Profile" />
+            <item
+                android:id="@+id/nav_change_password_driver"
+                android:icon="@drawable/ic_changepasord"
+                android:title="Change Password" />
+            <item
+                android:id="@+id/nav_logout_driver"
+                android:icon="@drawable/ic_logout"
+                android:title="Logout" />
+
+        </menu>
+
+    </item>
+    <item android:title="Communication">
+
+        <menu>
+            <item
+                android:id="@+id/nav_email"
+                android:icon="@drawable/ic_email"
+                android:title="Chat"
+                />
+
+        </menu>
+
+    </item>
 
 
 
