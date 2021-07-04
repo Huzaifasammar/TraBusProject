@@ -21,7 +21,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -53,7 +53,13 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+        <FrameLayout
+            android:layout_below="@id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/RL_driver_home">
 
+        </FrameLayout>
 
     </RelativeLayout>
 

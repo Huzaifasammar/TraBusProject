@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Student_Navigation_fragments.Profile"
+    android:background="@color/silver"
+    android:id="@+id/fragment_profile">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/pic_background_rounded"
+                android:id="@+id/linearr_first">
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/RL_top">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:src="@drawable/ic_man"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="30dp"
+                        android:id="@+id/circularimg_profile_fragment"
+                        android:layout_alignParentLeft="true">
+                    </de.hdodenhof.circleimageview.CircleImageView>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/pic_background_rounded"
+                android:layout_below="@+id/linearr_first"
+                android:id="@+id/linear_second">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/fname_profile_fragment"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="First Name"
+                        app:endIconMode="clear_text"
+                        app:boxStrokeColor="@color/Green"
+                        app:boxBackgroundMode="outline"
+                        app:hintTextColor="@color/Green"
+                        app:boxStrokeWidthFocused="2dp">
+                        <com.google.android.material.textfield.TextInputEditText
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/white"
+                            android:textCursorDrawable="@drawable/style_cursur"
+                            android:background="@null"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            android:id="@+id/fname_ET_profile_fragment">
+
+
+                        </com.google.android.material.textfield.TextInputEditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lname_profile_fragment"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_below="@+id/fname_profile_fragment"
+                        app:boxStrokeColor="@color/Green"
+                        app:boxStrokeErrorColor="@color/red"
+                        app:boxBackgroundMode="outline"
+                        app:counterOverflowTextColor="@color/Green"
+                        app:hintTextColor="@color/Green"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:endIconMode="clear_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Last Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/lname_ET_profile_fragment"
+                            android:textCursorDrawable="@drawable/style_cursur"
+                            android:background="@null"
+                            android:backgroundTint="@color/white"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/username_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxStrokeColor="@color/Green"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:boxBackgroundMode="outline"
+                    app:counterOverflowTextColor="@color/Green"
+                    app:hintTextColor="@color/Green"
+                    app:endIconMode="clear_text"
+                    app:boxStrokeWidthFocused="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/username_ET"
+                        android:textCursorDrawable="@drawable/style_cursur"
+                        android:background="@null"
+                        android:backgroundTint="@color/white"
+                        android:inputType="textEmailAddress"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:background="@drawable/pic_background_rounded"
+                android:layout_below="@+id/linear_second">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnregisterstudent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:background="@drawable/rounded"
+                        app:backgroundTint="@color/Green"
+                        android:textColor="@color/white"
+                        android:text="@string/update_profile"
+                        android:textAllCaps="false" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
+
+
+
+ </RelativeLayout>

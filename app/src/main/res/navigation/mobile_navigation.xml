@@ -3,23 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_Home_fragment_student">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.trabus.Main.ui.home.HomeFragment"
+        android:id="@+id/nav_Home_fragment_student"
+        android:name="com.example.trabus.Student_Navigation_fragments.Home"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        tools:layout="@layout/student_fragment_home" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.trabus.Main.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_profile_fragment_student"
+        android:name="com.example.trabus.Student_Navigation_fragments.Profile"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/student_fragment_profile" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.trabus.Main.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>

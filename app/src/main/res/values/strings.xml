@@ -9,6 +9,7 @@
     <string name="Forgett"><u> Forget Password</u></string>
     <string name="login"><u>Don\'t have an account/Signup</u></string>
     <string name="forget_password">Forget<br>Password</br> </string>
+    <string name="update_profile">Update Profile</string>
     <string name="enter_your_email_to_reset_your_password">Enter your email to reset your \n<br>password</br></string>
     <string name="title_activity_driver_home">Driver_Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -21,8 +22,14 @@
     <string name="open_navigation">Open Navigation</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="logout">Logout</string>
+    <string name="menu_Change_Paswword">Change Paswword</string>
+    <string name="menu_">Contact</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_Set_Reminder">Set reminder</string>
+    <string name="menu_Chat">Chat</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
