@@ -3,8 +3,29 @@
     <style name="Theme.TraBus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
 
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.TraBus.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.TraBus.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.TraBus.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ThemeOverlay.AppCompat.navTheme" >
+
+        <item name="colorPrimary">@color/black</item>
+
+        <item name="colorControlHighlight">@color/Green</item>
+
+    </style>
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/Green</item>
     </style>
 </resources>

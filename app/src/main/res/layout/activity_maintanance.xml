@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/silver"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Driver_Home_Activities.Maintanance">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbarmaintanace"
+        android:background="@color/Green">
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/left_arrow"
+                android:id="@+id/backmaintanance"
+                app:tint="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="Maintanance Form" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <include
+        layout="@layout/driver_sample"
+        android:id="@+id/driversample"
+        android:layout_below="@id/toolbarmaintanace"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/RLselectdatetime"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/driversample"
+            android:background="@drawable/top_round"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/tvdatetime"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="Select Date and Time"
+                android:padding="5dp" />
+              <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                  android:layout_below="@id/tvdatetime">
+            <View
+                android:layout_width="1dp"
+                android:id="@+id/view"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toLeftOf="@id/view"
+                android:padding="10dp"
+                android:background="@drawable/white_backgroun_with_border">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:id="@+id/date"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_below="@id/date"
+                    android:layout_height="wrap_content"
+                    android:text="31-07-2021"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/dateselected"
+                    android:textSize="14sp"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/calendar"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/calendar" />
+
+            </RelativeLayout>
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginStart="5dp"
+                      android:layout_marginEnd="10dp"
+                      android:layout_toRightOf="@id/view"
+                      android:padding="10dp"
+                      android:background="@drawable/white_backgroun_with_border">
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Time"
+                          android:id="@+id/time"
+                          android:textSize="16sp"
+                          android:textStyle="bold"
+                          android:textColor="@color/black" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_below="@id/time"
+                          android:layout_height="wrap_content"
+                          android:text="10:00 AM"
+                          android:layout_marginTop="5dp"
+                          android:id="@+id/timeselected"
+                          android:textSize="14sp"
+                          android:textColor="@color/black" />
+
+                      <ImageView
+                          android:layout_width="30dp"
+                          android:layout_height="30dp"
+                          android:id="@+id/clock"
+                          android:layout_centerVertical="true"
+                          android:layout_alignParentEnd="true"
+                          android:layout_alignParentTop="true"
+                          android:layout_alignParentBottom="true"
+                          android:src="@drawable/clock" />
+
+                  </RelativeLayout>
+
+        </RelativeLayout>
+        </RelativeLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/RL_petrol"
+         android:layout_below="@id/RLselectdatetime"
+         android:layout_marginStart="10dp"
+         android:layout_marginEnd="10dp"
+         android:layout_marginTop="3dp"
+         android:background="@color/white">
+
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:textSize="18sp"
+             android:id="@+id/tvservicesdetail"
+             android:text="Petrol/Diesel"
+             android:textStyle="bold"
+             android:textColor="@color/black"
+             android:gravity="center" />
+
+         <TextView
+             android:layout_width="150dp"
+             android:layout_height="wrap_content"
+             android:id="@+id/tvmileage"
+             android:layout_below="@id/tvservicesdetail"
+             android:text="Enter mileage/km"
+             android:textSize="16sp"
+             android:layout_centerVertical="true"
+             android:textColor="@color/black"
+             android:layout_marginStart="10dp"
+             android:layout_marginTop="10dp" />
+
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/tvservicesdetail"
+             android:layout_toRightOf="@id/tvmileage"
+             android:layout_marginStart="20dp"
+             android:layout_marginEnd="10dp"
+             android:layout_alignParentEnd="true"
+             android:layout_marginTop="5dp"
+             android:background="@drawable/white_backgroun_with_border"
+             android:layout_centerVertical="true"
+             android:textCursorDrawable="@drawable/style_cursur"
+             android:inputType="number"
+             android:hint="876907463 km" />
+         <TextView
+             android:layout_width="150dp"
+             android:layout_height="wrap_content"
+             android:id="@+id/tvlitres"
+             android:layout_below="@id/tvmileage"
+             android:text="Diesel (ltrs)"
+             android:textSize="16sp"
+             android:layout_centerVertical="true"
+             android:textColor="@color/black"
+             android:layout_marginStart="10dp"
+             android:layout_marginTop="20dp" />
+
+         <EditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/tvmileage"
+             android:layout_toRightOf="@id/tvlitres"
+             android:layout_marginStart="20dp"
+             android:layout_marginEnd="10dp"
+             android:layout_alignParentEnd="true"
+             android:layout_marginTop="15dp"
+             android:background="@drawable/white_backgroun_with_border"
+             android:layout_centerVertical="true"
+             android:textCursorDrawable="@drawable/style_cursur"
+             android:inputType="number"
+             android:hint="100 ltr" />
+
+
+         <com.google.android.material.textfield.TextInputLayout
+             android:layout_marginTop="15dp"
+             android:layout_width="match_parent"
+             android:layout_below="@id/tvlitres"
+             android:layout_height="wrap_content"
+             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+             app:boxStrokeWidthFocused="1.5dp"
+             app:boxBackgroundMode="outline"
+             android:layout_marginBottom="10dp"
+             app:boxStrokeColor="@color/Green"
+             app:counterOverflowTextColor="@color/Green"
+             app:hintTextColor="@color/Green"
+             app:boxStrokeWidth="1dp"
+             android:hint="Select Petrol Pump">
+
+             <AutoCompleteTextView
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:padding="10dp"
+                 android:layout_marginStart="5dp"
+                 android:layout_marginEnd="10dp"
+                 android:textColor="@color/black"
+                 android:backgroundTint="@color/white"
+                 android:textSize="16sp"
+                 android:textColorHint="@color/black"
+                 android:id="@+id/petrolpump"
+                 android:enabled="false"/>
+
+         </com.google.android.material.textfield.TextInputLayout>
+
+     </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/RL_petrol"
+            android:background="@drawable/bottom_round"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/Rl_chooseservice"
+            android:layout_marginTop="3dp"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Services"
+                android:id="@+id/services"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:gravity="center" />
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/services"
+    android:id="@+id/Rl_oilandfilter">
+
+    <CheckBox
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+       android:button="@drawable/custom_checkbox"
+        android:layout_marginStart="5dp"
+        android:id="@+id/oilandfilter"
+        android:checked="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oil and Filter Services"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/oilandfilter"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp" />
+
+    <EditText
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:textCursorDrawable="@drawable/style_cursur"
+        android:inputType="number"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/white_backgroun_with_border"
+        android:hint="1500" />
+</RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Rl_oilandfilter"
+                android:id="@+id/Rl_breakservice">
+
+                <CheckBox
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:button="@drawable/custom_checkbox"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/breakservice"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Break Services"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/breakservice"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:inputType="number"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/white_backgroun_with_border"
+                    android:hint="500" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Rl_breakservice"
+                android:id="@+id/Rl_syntheticoil">
+
+                <CheckBox
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:button="@drawable/custom_checkbox"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/syntheticoil"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Synthetic Oil"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/syntheticoil"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:inputType="number"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/white_backgroun_with_border"
+                    android:hint="800" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Rl_syntheticoil"
+                android:id="@+id/Rl_mobileoil">
+
+                <CheckBox
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:button="@drawable/custom_checkbox"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/mobileoil"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mobile Oil"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/mobileoil"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:inputType="number"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/white_backgroun_with_border"
+                    android:hint="500" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter Mileage/km"
+                android:textSize="16sp"
+                android:layout_toLeftOf="@id/view"
+                android:textColor="@color/black"
+                android:layout_below="@id/Rl_mobileoil"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="15dp"
+                android:id="@+id/tvkm" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:id="@id/view"></View>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_toRightOf="@id/view"
+                android:layout_below="@id/Rl_mobileoil"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:hint="1723034578 km"
+                android:inputType="number"
+                android:background="@drawable/white_backgroun_with_border"
+                android:textCursorDrawable="@drawable/style_cursur" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvkm"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Total"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="bold"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvkm"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="40dp"
+                android:text="4500"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"></TextView>
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@id/Rl_chooseservice"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/Green"
+                android:layout_alignParentLeft="true"
+                android:padding="15dp"
+                android:id="@+id/submit"
+                android:layout_toLeftOf="@id/view1"
+                android:layout_marginStart="10dp"
+                android:text="Submit" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:id="@+id/view1"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/view1"
+                android:padding="15dp"
+                android:id="@+id/cancel"
+                android:backgroundTint="@color/red"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/white"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="Cancel" />
+        </RelativeLayout>
+    </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

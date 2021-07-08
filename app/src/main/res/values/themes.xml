@@ -25,4 +25,8 @@
         <item name="colorControlHighlight">@color/Green</item>
 
     </style>
+    <style name="DialogTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAccent">@color/Green</item>
+        <item name="android:textColor">@color/Green</item>
+    </style>
 </resources>
