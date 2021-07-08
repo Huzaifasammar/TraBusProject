@@ -1,14 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/silver"
     android:layout_height="match_parent"
     tools:context=".Driver_Navigation_fragment.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/Rl_strtroute"
+        android:background="@drawable/white_backgroun_with_border">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:padding="25dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:src="@drawable/travel"
+            android:id="@+id/strtroute" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Sharing Your Location"
+            android:textColor="@color/Green"
+            android:padding="7dp"
+            android:gravity="center"
+            android:layout_below="@id/strtroute"
+            android:textSize="24sp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/RL_Maintanace"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/Rl_Scehdule"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/white_backgroun_with_border">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:padding="25dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:src="@drawable/tools"
+            android:id="@+id/maintanace" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maintanance"
+            android:textColor="@color/Green"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_below="@id/maintanace"
+            android:textSize="24sp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/Rl_Scehdule"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/Rl_strtroute"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:padding="25dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/white"
+            android:src="@drawable/bus_schedule"
+            android:id="@+id/schedule" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Schedule"
+            android:padding="7dp"
+            android:textColor="@color/Green"
+            android:layout_below="@id/schedule"
+            android:textSize="24sp"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

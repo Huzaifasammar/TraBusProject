@@ -10,14 +10,20 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
 
+import android.app.Dialog;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.widget.ImageView;
 
+import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
+import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
 import com.example.trabus.R;
 import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.google.android.material.navigation.NavigationView;
@@ -28,6 +34,8 @@ public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
    Toolbar toolbar;
     NavigationView navigation;
+    ImageView notification;
+    Dialog notificationdialog;
 
     @Override
     public void onBackPressed() {
@@ -47,6 +55,7 @@ public class Driver_Home extends AppCompatActivity {
         drawerLayout=findViewById(R.id.Drawerlayout_driver);
         navigation=findViewById(R.id.navigation_layout_driver);
         toolbar=findViewById(R.id.toolbar);
+        notification=findViewById(R.id.Ivnotification);
 
         navigation.bringToFront();
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
@@ -55,14 +64,35 @@ public class Driver_Home extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.menu);
 
 
+
+
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                notificationdialog = new Dialog(Driver_Home.this);
+                notificationdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                notificationdialog.setContentView(R.layout.notification_dialog);
+                notificationdialog.show();
+
+            }
+        });
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HomeFragment()).commit();
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
                 item.setChecked(true);
                 switch(item.getItemId())
                 {
+                    case R.id.nav_home_driver:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HomeFragment()).commit();
+                        break;
                     case R.id.nav_profile_driver:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new ProfileFragment()).commit();
+                        break;
+                    case R.id.nav_change_password_driver:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new Update_Password_Driver()).commit();
                         break;
 
                     default:

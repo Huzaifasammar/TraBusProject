@@ -1,4 +1,4 @@
-package com.example.trabus.Student_Navigation_fragments;
+package com.example.trabus.Driver_Navigation_fragment;
 
 import android.os.Bundle;
 
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.trabus.R;
 
+public class Update_Password_Driver extends Fragment {
 
-public class Home extends Fragment {
 
 
     @Override
@@ -24,7 +24,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v=inflater.inflate(R.layout.student_fragment_home, container, false);
-        return v;
+       View v= inflater.inflate(R.layout.fragment_update__password__driver, container, false);
+       return v;
     }
 }

@@ -41,6 +41,11 @@
                 android:icon="@drawable/ic_email"
                 android:title="Chat"
                 />
+            <item
+                android:id="@+id/nav_report"
+                android:icon="@drawable/report"
+                android:title="Report a Situation" />
+
 
         </menu>
 

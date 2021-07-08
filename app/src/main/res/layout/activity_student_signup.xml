@@ -62,21 +62,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvfill"
-                android:id="@+id/RL_image">
+                android:id="@+id/RL_student_image">
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
-                    app:tint="@color/Green"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/user"
-                    android:id="@+id/driverimg"></ImageView>
+                    android:id="@+id/studentimg"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/driverimg"
+                    android:layout_below="@id/studentimg"
                     android:text="@string/upload_image"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="10dp"

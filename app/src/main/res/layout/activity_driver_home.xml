@@ -13,9 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:theme="@style/ThemeOverlay.AppCompat.navTheme"
         android:id="@+id/navigation_layout_driver"
-        app:itemIconTint="@color/Green"
-        app:itemTextColor="@color/Green"
         app:headerLayout="@layout/header_driver_home"
         app:menu="@menu/menu_driver"/>
 
@@ -46,6 +45,7 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:layout_height="30dp"
+                android:id="@+id/Ivnotification"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="20dp"
                 app:tint="@color/white"
@@ -56,7 +56,9 @@
         <FrameLayout
             android:layout_below="@id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:id="@+id/RL_driver_home">
 
         </FrameLayout>
