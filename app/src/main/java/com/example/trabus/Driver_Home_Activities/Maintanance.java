@@ -2,6 +2,7 @@ package com.example.trabus.Driver_Home_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -27,7 +29,10 @@ import java.util.Calendar;
 public class Maintanance extends AppCompatActivity {
     RelativeLayout driversample;
     ImageView back,calendar,clock;
-    TextView name,busno,time,date;
+    String Total=null;
+    String a,b,c,d=null;
+    TextView name,busno,time,date,total;
+    EditText oil,brake,synthetic,mobileoil;
     AutoCompleteTextView PetrolPump;
     TimePickerDialog timePickerDialog;
     DatePickerDialog datePickerDialog;
@@ -35,11 +40,25 @@ public class Maintanance extends AppCompatActivity {
     Button submit,cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         super.onCreate(savedInstanceState);
 
 
 
         setContentView(R.layout.activity_maintanance);
+        total=findViewById(R.id.tvtotal);
+        oil=findViewById(R.id.etoil);
+        brake=findViewById(R.id.etbreak);
+        synthetic=findViewById(R.id.etsynthetic);
+        mobileoil=findViewById(R.id.etmobileoil);
+        a=oil.getText().toString();
+        b=brake.getText().toString();
+        c=synthetic.getText().toString();
+        d=mobileoil.getText().toString();
+
+
+
+
         PetrolPump= findViewById(R.id.petrolpump);
         String[]selectpump ={"Pso Pump police Line","Pso pump G11 markaz","Pso Pump I10 2"};
         ArrayAdapter pumpAdapter =new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,selectpump);
@@ -65,7 +84,7 @@ public class Maintanance extends AppCompatActivity {
                 int hour=mcalendar.get(Calendar.HOUR_OF_DAY);
                 int minute=mcalendar.get(Calendar.MINUTE);
                 int am=mcalendar.get(Calendar.AM_PM);
-                timePickerDialog=new TimePickerDialog(Maintanance.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog=new TimePickerDialog(Maintanance.this,R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         time.setText(hourOfDay+":"+minute);
@@ -81,12 +100,14 @@ public class Maintanance extends AppCompatActivity {
             public void onClick(View v) {
                 final Calendar clndr=Calendar.getInstance();
                 int day=clndr.get(Calendar.DAY_OF_MONTH);
-                int month=clndr.get(Calendar.MONDAY);
+                int month=clndr.get(Calendar.MONTH);
                 int year=clndr.get(Calendar.YEAR);
-                datePickerDialog=new DatePickerDialog(Maintanance.this, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog=new DatePickerDialog(Maintanance.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date.setText(dayOfMonth+"-"+month+"-"+year);
+                        int Month=month+1;
+                        date.setText(dayOfMonth+"-"+Month+"-"+year);
 
                     }
                 },year,month,day);
@@ -98,7 +119,7 @@ public class Maintanance extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Maintanance.this,"Your response has been recorded",Toast.LENGTH_LONG).show();
-                //startActivity(new Intent(Maintanance.this,Driver_Home.class));
+                startActivity(new Intent(Maintanance.this,Driver_Home.class));
             }
         });
 
@@ -118,5 +139,25 @@ public class Maintanance extends AppCompatActivity {
                 startActivity(new Intent(Maintanance.this, Driver_Home.class));
             }
         });
+
+
+
+
+        Total=a+b;
+
+        total.setText(Total);
+        System.out.println("eeeeeeeeeeeeee"+Total);
+        System.out.println("eeeeeeeeee33333333   "+oil.getText().toString());
+      /*  total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
+    }
+
+    private void total()
+    {
+
     }
 }

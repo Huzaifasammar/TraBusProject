@@ -314,6 +314,7 @@
     <EditText
         android:layout_width="80dp"
         android:layout_height="30dp"
+        android:id="@+id/etoil"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="15dp"
         android:textCursorDrawable="@drawable/style_cursur"
@@ -349,6 +350,7 @@
                 <EditText
                     android:layout_width="80dp"
                     android:layout_height="30dp"
+                    android:id="@+id/etbreak"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
                     android:textCursorDrawable="@drawable/style_cursur"
@@ -386,6 +388,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/etsynthetic"
                     android:textCursorDrawable="@drawable/style_cursur"
                     android:inputType="number"
                     android:layout_marginEnd="10dp"
@@ -421,6 +424,43 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/etmobileoil"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:inputType="number"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/white_backgroun_with_border"
+                    android:hint="500" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Rl_mobileoil"
+                android:id="@+id/Rl_other">
+
+                <CheckBox
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:button="@drawable/custom_checkbox"
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/other"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Other"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_toRightOf="@id/other"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="10dp" />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/etother"
                     android:textCursorDrawable="@drawable/style_cursur"
                     android:inputType="number"
                     android:layout_marginEnd="10dp"
@@ -435,7 +475,7 @@
                 android:textSize="16sp"
                 android:layout_toLeftOf="@id/view"
                 android:textColor="@color/black"
-                android:layout_below="@id/Rl_mobileoil"
+                android:layout_below="@id/Rl_other"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginStart="15dp"
@@ -450,7 +490,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_toRightOf="@id/view"
-                android:layout_below="@id/Rl_mobileoil"
+                android:layout_below="@id/Rl_other"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
@@ -460,17 +500,18 @@
                 android:background="@drawable/white_backgroun_with_border"
                 android:textCursorDrawable="@drawable/style_cursur" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvkm"
-                    android:layout_marginStart="50dp"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Total"
-                    android:layout_marginBottom="10dp"
-                    android:textStyle="bold"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvkm"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:text="Total"
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -478,10 +519,11 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="40dp"
                 android:text="4500"
+                android:id="@+id/tvtotal"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:layout_marginTop="10dp"></TextView>
+                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
         <RelativeLayout

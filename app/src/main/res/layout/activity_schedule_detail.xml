@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/silver"
+    android:layout_height="match_parent"
+    tools:context=".Driver_Home_Activities.Schedule_Detail">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbarscheduledetail">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/left_arrow"
+                android:id="@+id/backscheduledetail"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"></ImageView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bus No 1 Schedule"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"></TextView>
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_below="@id/toolbarscheduledetail"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:id="@+id/RL1st"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Taramri Isb (Boys)"
+            android:layout_marginStart="10dp"
+            android:id="@+id/tvfirsttime"
+            android:textSize="24sp"
+            android:textColor="@color/black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:text="1st time"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvfirsttime">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Departure:"
+                android:id="@+id/tvdeparture2nd"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/arrival1st"
+                android:layout_below="@id/tvdeparture2nd"
+                android:layout_alignParentLeft="true"
+                android:text="Arrival IIUI:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/arrival1st"
+                android:text="08:00 AM"
+                android:layout_below="@id/tvdeparture2nd"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/tvdeparture2nd"
+                android:layout_alignParentRight="true"
+                android:text="06:15 AM"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/RL2nd"
+        android:layout_below="@id/RL1st"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dhoke Sayedan (Girls)"
+            android:layout_marginStart="10dp"
+            android:id="@+id/tv2ndtime"
+            android:textSize="24sp"
+            android:textColor="@color/black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:text="2nd time"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv2ndtime">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Departure:"
+                android:id="@+id/tvdeparture1st"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/arrival2nd"
+                android:layout_below="@id/tvdeparture1st"
+                android:layout_alignParentLeft="true"
+                android:text="Arrival IIUI:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/arrival2nd"
+                android:text="11:30 AM"
+                android:layout_below="@id/tvdeparture1st"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/tvdeparture1st"
+                android:layout_alignParentRight="true"
+                android:text="10:00 AM"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/RL3rd"
+        android:layout_below="@id/RL2nd"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Commercial Market (Boys)"
+            android:layout_marginStart="10dp"
+            android:id="@+id/tv3rdtime"
+            android:textSize="24sp"
+            android:textColor="@color/black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:text="3rd time"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv3rdtime">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Departure:"
+                android:id="@+id/tvdeparture3rd"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/arrival3rd"
+                android:layout_below="@id/tvdeparture3rd"
+                android:layout_alignParentLeft="true"
+                android:text="Arrival IIUI:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/arrival3rd"
+                android:text="03:00 AM"
+                android:layout_below="@id/tvdeparture3rd"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/tvdeparture3rd"
+                android:layout_alignParentRight="true"
+                android:text="01:40 AM"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/RL4th"
+        android:layout_below="@id/RL3rd"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dhoke Sayedan (Girls)"
+            android:layout_marginStart="10dp"
+            android:id="@+id/tv4thtime"
+            android:textSize="24sp"
+            android:textColor="@color/black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:text="4th time"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv4thtime">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Departure:"
+                android:id="@+id/tvdeparture4th"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/arrival4th"
+                android:layout_below="@id/tvdeparture4th"
+                android:layout_alignParentLeft="true"
+                android:text="Arrival IIUI:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/arrival4th"
+                android:text="11:30 AM"
+                android:layout_below="@id/tvdeparture4th"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/tvdeparture4th"
+                android:layout_alignParentRight="true"
+                android:text="10:00 AM"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/RL5th"
+        android:layout_below="@id/RL4th"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/white_backgroun_with_border">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dhoke Sayedan (Girls)"
+            android:layout_marginStart="10dp"
+            android:id="@+id/tv5thtime"
+            android:textSize="24sp"
+            android:textColor="@color/black"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:text="5th time"></TextView>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv5thtime">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="Departure:"
+                android:id="@+id/tvdeparture5th"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/arrival5th"
+                android:layout_below="@id/tvdeparture5th"
+                android:layout_alignParentLeft="true"
+                android:text="Arrival IIUI:"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/arrival5th"
+                android:text="11:30 AM"
+                android:layout_below="@id/tvdeparture5th"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/tvdeparture5th"
+                android:layout_alignParentRight="true"
+                android:text="10:00 AM"
+                android:textSize="14sp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

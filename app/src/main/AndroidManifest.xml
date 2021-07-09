@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TraBus">
-        <activity android:name=".Driver_Home_Activities.Maintanance"></activity>
+        <activity android:name=".Driver_Home_Activities.Schedule_Detail"></activity>
+        <activity android:name=".Driver_Home_Activities.Schedule" />
+        <activity android:name=".Driver_Home_Activities.Maintanance" />
         <activity android:name=".Main.Driver_Home" />
         <activity android:name=".Login.Forget_Password_Activity" />
         <activity android:name=".Login.SignIn" />

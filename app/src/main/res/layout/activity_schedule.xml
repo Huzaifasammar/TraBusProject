@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/silver"
+    android:layout_height="match_parent"
+    tools:context=".Driver_Home_Activities.Schedule">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Green"
+        android:id="@+id/toolbarschedule">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/backschedule"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Schedule"
+                android:id="@+id/tvschedule"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="24sp"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:id="@+id/Rl_search"
+        android:layout_below="@id/toolbarschedule"
+        android:background="@color/Green">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/white_backgroun_with_border"
+            android:layout_centerVertical="true" >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_search_24" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:hint="Search"
+                android:textSize="18sp"
+                android:background="@null"
+                android:textCursorDrawable="@drawable/style_cursur" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <include
+        layout="@layout/busno_sample"
+        android:layout_below="@id/Rl_search"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content" />
+</RelativeLayout>
