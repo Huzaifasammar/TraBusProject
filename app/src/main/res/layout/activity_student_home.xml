@@ -14,8 +14,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:theme="@style/ThemeOverlay.AppCompat.navTheme"
-        app:itemIconTint="@color/Green"
-        app:itemTextColor="@color/Green"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:itemBackground="@drawable/item_background_color"
         android:id="@+id/navigation_layout_student"
         app:headerLayout="@layout/header_student_home"
         app:menu="@menu/menu_student"/>

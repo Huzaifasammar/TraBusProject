@@ -17,6 +17,7 @@
     <item android:title="Setting">
 
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_profile_driver"
                 android:icon="@drawable/ic_user"
@@ -29,13 +30,14 @@
                 android:id="@+id/nav_logout_driver"
                 android:icon="@drawable/ic_logout"
                 android:title="Logout" />
-
+            </group>
         </menu>
 
     </item>
     <item android:title="Communication">
 
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_email"
                 android:icon="@drawable/ic_email"
@@ -45,7 +47,7 @@
                 android:id="@+id/nav_report"
                 android:icon="@drawable/report"
                 android:title="Report a Situation" />
-
+            </group>
 
         </menu>
 

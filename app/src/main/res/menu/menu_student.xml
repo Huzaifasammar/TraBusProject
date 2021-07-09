@@ -18,6 +18,7 @@
     <item android:title="Setting">
 
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_profile_student"
                 android:icon="@drawable/ic_user"
@@ -30,7 +31,7 @@
                 android:id="@+id/nav_logout_student"
                 android:icon="@drawable/ic_logout"
                 android:title="Logout" />
-
+            </group>
         </menu>
 
     </item>
@@ -38,15 +39,20 @@
     <item android:title="Communication">
 
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_email"
                 android:icon="@drawable/ic_email"
                 android:title="Chat" />
             <item
+                android:id="@+id/nav_complaint"
+                android:icon="@drawable/ic_complaint__1_"
+                android:title="Complaint" />
+            <item
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/ic_contacts"
                 android:title="Contact" />
-
+            </group>
         </menu>
 
     </item>

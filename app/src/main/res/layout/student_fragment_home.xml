@@ -3,10 +3,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/silver"
     tools:context=".Student_Navigation_fragments.Home">
 
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"></RelativeLayout>
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_backgroun_with_border"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentRight="true"
+    android:id="@+id/RL_routeview">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/travel"
+        android:id="@+id/routeview_student"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:padding="20dp"></ImageView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/routeview_student"
+        android:hint="Live Tracking >"
+        android:layout_marginStart="30dp"
+        android:textSize="24sp"
+        android:textColor="@color/Green"
+        android:textAllCaps="false"
+        android:padding="7dp"></TextView>
+</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/white_backgroun_with_border"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/RL_routeview">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ImageView>
+    </RelativeLayout>
+
+
 </RelativeLayout>

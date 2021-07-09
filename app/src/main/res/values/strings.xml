@@ -23,9 +23,14 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_Change_Paswword">Change Paswword</string>
+    <string name="menu_Change_Paswword1">Change<br>  Password</br> </string>
+    <string name="menu_Change_Paswword2">Make sure you remember your password</string>
+
     <string name="menu_">Contact</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_logout1">Log out?</string>
+    <string name="menu_logout2">Are you sure want to log out?</string>
     <string name="menu_Set_Reminder">Set reminder</string>
     <string name="menu_Chat">Chat</string>
     <!-- TODO: Remove or change this placeholder text -->
