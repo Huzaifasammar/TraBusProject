@@ -28,114 +28,120 @@ import java.util.Calendar;
 
 public class Maintanance extends AppCompatActivity {
     RelativeLayout driversample;
-    ImageView back, calendar, clock;
-    String Total = null;
-    String a, b, c, d = null;
-    TextView name, busno, time, date, total;
-    EditText oil, brake, synthetic, mobileoil;
+    ImageView back,calendar,clock;
+    String Total=null;
+    String a,b,c,d=null;
+    TextView name,busno,time,date,total;
+    EditText oil,brake,synthetic,mobileoil;
     AutoCompleteTextView PetrolPump;
     TimePickerDialog timePickerDialog;
     DatePickerDialog datePickerDialog;
     Calendar mcalendar;
-    Button submit, cancel;
-
+    Button submit,cancel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_maintanance);
-        total = findViewById(R.id.tvtotal);
-        oil = findViewById(R.id.etoil);
-        brake = findViewById(R.id.etbreak);
-        synthetic = findViewById(R.id.etsynthetic);
-        mobileoil = findViewById(R.id.etmobileoil);
-        a = oil.getText().toString();
-        b = brake.getText().toString();
-        c = synthetic.getText().toString();
-        d = mobileoil.getText().toString();
-
-
-        PetrolPump = findViewById(R.id.petrolpump);
-        String[] selectpump = {"Pso Pump police Line", "Pso pump G11 markaz", "Pso Pump I10 2"};
-        ArrayAdapter pumpAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, selectpump);
+        initialize();
+        onclick();
+        String[]selectpump ={"Pso Pump police Line","Pso pump G11 markaz","Pso Pump I10 2"};
+        ArrayAdapter pumpAdapter =new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,selectpump);
         PetrolPump.setAdapter(pumpAdapter);
-        submit = findViewById(R.id.submit);
-        cancel = findViewById(R.id.cancel);
-        driversample = findViewById(R.id.driversample);
+
+
+
+
+
+
+
+
+    }
+public void onclick()
+{
+    clock.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mcalendar=Calendar.getInstance();
+            int hour=mcalendar.get(Calendar.HOUR_OF_DAY);
+            int minute=mcalendar.get(Calendar.MINUTE);
+            int am=mcalendar.get(Calendar.AM_PM);
+            timePickerDialog=new TimePickerDialog(Maintanance.this,R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
+                @Override
+                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                    time.setText(hourOfDay+":"+minute);
+                    timePickerDialog.getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
+                }
+            },hour,minute,false);
+            timePickerDialog.show();
+        }
+    });
+
+    calendar.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            final Calendar clndr=Calendar.getInstance();
+            int day=clndr.get(Calendar.DAY_OF_MONTH);
+            int month=clndr.get(Calendar.MONTH);
+            int year=clndr.get(Calendar.YEAR);
+            datePickerDialog=new DatePickerDialog(Maintanance.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                    int Month=month+1;
+                    date.setText(dayOfMonth+"-"+Month+"-"+year);
+
+                }
+            },year,month,day);
+            datePickerDialog.show();
+        }
+    });
+
+    submit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(Maintanance.this,"Your response has been recorded",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Maintanance.this,Driver_Home.class));
+        }
+    });
+
+    cancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Maintanance.this,Driver_Home.class));
+        }
+    });
+
+
+
+
+    back.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(Maintanance.this, Driver_Home.class));
+        }
+    });
+}
+    private void initialize()
+    {
+        submit=findViewById(R.id.submit);
+        cancel=findViewById(R.id.cancel);
+        driversample=findViewById(R.id.driversample);
         driversample.setBackground(getResources().getDrawable(R.drawable.white_backgroun_with_border));
-        name = findViewById(R.id.driver_name_nav);
+        name=findViewById(R.id.driver_name_nav);
         name.setTextColor(getResources().getColor(R.color.black));
-        busno = findViewById(R.id.driver_bus_nav);
+        busno=findViewById(R.id.driver_bus_nav);
         busno.setTextColor(getResources().getColor(R.color.black));
-        back = findViewById(R.id.backmaintanance);
-        calendar = findViewById(R.id.calendar);
-        clock = findViewById(R.id.clock);
-        time = findViewById(R.id.timeselected);
-        date = findViewById(R.id.dateselected);
-
-        clock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mcalendar = Calendar.getInstance();
-                int hour = mcalendar.get(Calendar.HOUR_OF_DAY);
-                int minute = mcalendar.get(Calendar.MINUTE);
-                int am = mcalendar.get(Calendar.AM_PM);
-                timePickerDialog = new TimePickerDialog(Maintanance.this, R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time.setText(hourOfDay + ":" + minute);
-                        timePickerDialog.getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
-                    }
-                }, hour, minute, false);
-                timePickerDialog.show();
-            }
-        });
-
-        calendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar clndr = Calendar.getInstance();
-                int day = clndr.get(Calendar.DAY_OF_MONTH);
-                int month = clndr.get(Calendar.MONTH);
-                int year = clndr.get(Calendar.YEAR);
-                datePickerDialog = new DatePickerDialog(Maintanance.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        int Month = month + 1;
-                        date.setText(dayOfMonth + "-" + Month + "-" + year);
-
-                    }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Maintanance.this, "Your response has been recorded", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(Maintanance.this, Driver_Home.class));
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Maintanance.this, Driver_Home.class));
-            }
-        });
-
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Maintanance.this, Driver_Home.class));
-            }
-        });
-
-
+        back=findViewById(R.id.backmaintanance);
+        calendar=findViewById(R.id.calendar);
+        clock=findViewById(R.id.clock);
+        total=findViewById(R.id.tvtotal);
+        oil=findViewById(R.id.etoil);
+        PetrolPump= findViewById(R.id.petrolpump);
+        brake=findViewById(R.id.etbreak);
+        synthetic=findViewById(R.id.etsynthetic);
+        mobileoil=findViewById(R.id.etmobileoil);
+        time=findViewById(R.id.timeselected);
+        date=findViewById(R.id.dateselected);
     }
 }

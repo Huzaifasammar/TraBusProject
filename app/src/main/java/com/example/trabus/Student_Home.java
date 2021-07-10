@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
+import com.example.trabus.Student_Navigation_fragments.Contact;
 import com.example.trabus.Student_Navigation_fragments.Home;
 import com.example.trabus.Student_Navigation_fragments.Logout;
 import com.example.trabus.Student_Navigation_fragments.Profile;
@@ -38,7 +39,6 @@ public class Student_Home extends AppCompatActivity {
     NavigationView navigation;
     TextView heading;
     ImageView notification;
-
 
     @Override
     public void onBackPressed() {
@@ -99,6 +99,12 @@ public class Student_Home extends AppCompatActivity {
                     case R.id.nav_home_student:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Home()).commit();
                         heading.setText("Student Home");
+                        notification.setVisibility(View.INVISIBLE);
+
+                        break;
+                    case R.id.nav_contact:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Contact()).commit();
+                        heading.setText("Contact with Driver");
                         notification.setVisibility(View.INVISIBLE);
 
                         break;
