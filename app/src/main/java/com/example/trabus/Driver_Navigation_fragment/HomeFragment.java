@@ -12,11 +12,12 @@ import android.widget.RelativeLayout;
 
 import com.example.trabus.Driver_Home_Activities.Maintanance;
 import com.example.trabus.Driver_Home_Activities.Schedule;
+import com.example.trabus.MapsActivity;
 import com.example.trabus.R;
 
 
 public class HomeFragment extends Fragment {
-    RelativeLayout maintanance,schedule;
+    RelativeLayout maintanance,schedule,location;
 
 
 
@@ -28,6 +29,7 @@ public class HomeFragment extends Fragment {
 
         View v= inflater.inflate(R.layout.driver_fragment_home, container, false);
         maintanance=v.findViewById(R.id.RL_Maintanace);
+        location=v.findViewById(R.id.Rl_strtroute);
         schedule=v.findViewById(R.id.Rl_Scehdule);
         maintanance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +41,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeFragment.this.getActivity(), Schedule.class));
+            }
+        });
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeFragment.this.getActivity(), MapsActivity.class));
             }
         });
         return v;

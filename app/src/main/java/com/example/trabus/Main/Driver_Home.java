@@ -20,9 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
+import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
 import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
 import com.example.trabus.R;
 import com.example.trabus.Student_Navigation_fragments.Profile;
@@ -35,6 +37,7 @@ public class Driver_Home extends AppCompatActivity {
    Toolbar toolbar;
     NavigationView navigation;
     ImageView notification;
+    TextView heading;
     Dialog notificationdialog;
 
     @Override
@@ -53,6 +56,7 @@ public class Driver_Home extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_driver_home);
         drawerLayout=findViewById(R.id.Drawerlayout_driver);
+        heading=findViewById(R.id.driver_home);
         navigation=findViewById(R.id.navigation_layout_driver);
         toolbar=findViewById(R.id.toolbar);
         notification=findViewById(R.id.Ivnotification);
@@ -90,9 +94,18 @@ public class Driver_Home extends AppCompatActivity {
                         break;
                     case R.id.nav_profile_driver:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new ProfileFragment()).commit();
+                        heading.setText("Update Profile");
+                        notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.nav_change_password_driver:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new Update_Password_Driver()).commit();
+                        heading.setText("Update Password");
+                        notification.setVisibility(View.INVISIBLE);
+                        break;
+                    case R.id.nav_report:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new ReportSituationFragment()).commit();
+                        heading.setText("Report a Situation");
+                        notification.setVisibility(View.INVISIBLE);
                         break;
 
                     default:

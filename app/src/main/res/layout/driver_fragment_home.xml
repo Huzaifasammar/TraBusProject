@@ -5,6 +5,12 @@
     android:background="@color/silver"
     android:layout_height="match_parent"
     tools:context=".Driver_Navigation_fragment.HomeFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -48,7 +54,7 @@
         android:layout_below="@id/Rl_Scehdule"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/white_backgroun_with_border">
 
         <ImageView
@@ -104,5 +110,6 @@
     </RelativeLayout>
 
 
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

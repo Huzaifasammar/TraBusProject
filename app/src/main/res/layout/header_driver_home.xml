@@ -8,6 +8,9 @@
     android:padding="16dp"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-    <include layout="@layout/driver_sample"></include>
+    <include layout="@layout/driver_sample"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        ></include>
 
 </RelativeLayout>

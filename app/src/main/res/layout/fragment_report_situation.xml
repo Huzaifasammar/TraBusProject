@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Driver_Navigation_fragment.ReportSituationFragment">
+
+   <AutoCompleteTextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/location_layout"
+       android:layout_marginStart="10dp"
+       android:padding="15dp"
+       android:textCursorDrawable="@drawable/style_cursur"
+       android:hint="Location"
+       android:layout_marginTop="50dp"
+       android:layout_marginEnd="10dp"
+       android:background="@drawable/white_backgroun_with_border"></AutoCompleteTextView>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:id="@+id/situation_layout"
+        android:layout_below="@id/location_layout"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/Green"
+        app:counterOverflowTextColor="@color/Green"
+        app:hintTextColor="@color/Green"
+        app:boxStrokeWidth="1dp"
+        android:hint="situation type">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:textSize="18sp"
+            android:id="@+id/situation"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:id="@+id/Busno_layout"
+        android:layout_below="@id/situation_layout"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        app:boxStrokeWidthFocused="2dp"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/Green"
+        app:counterOverflowTextColor="@color/Green"
+        app:hintTextColor="@color/Green"
+        app:boxStrokeWidth="1dp"
+        android:hint="Bus No">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:textSize="18sp"
+            android:id="@+id/busno"
+            android:enabled="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/etdescription"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="start"
+        android:hint="Description"
+        android:background="@drawable/white_backgroun_with_border"
+        android:textCursorDrawable="@drawable/style_cursur"
+        android:textColorHint="@color/black"
+        android:layout_below="@id/Busno_layout" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etdescription"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/Green"
+        android:text="Submit"
+        android:textSize="18sp"
+        android:padding="15dp"></Button>
+
+
+</RelativeLayout>
