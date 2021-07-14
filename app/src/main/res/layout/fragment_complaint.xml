@@ -3,7 +3,321 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/silver"
     tools:context=".Student_Navigation_fragments.Complaint">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded"
+                android:id="@+id/RL_complaint">
 
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="30dp"
+                    android:src="@drawable/complaint"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/img_complaint">
 
+                </ImageView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Complaint Form"
+                    android:textColorHint="@color/white"
+                    android:textSize="25sp"
+                    android:layout_toRightOf="@+id/img_complaint"
+                    android:layout_marginTop="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_alignParentRight="true"
+                    ></TextView>
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/RL_complaint"
+                android:background="@drawable/round_border"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:id="@+id/LL_complaint">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="First Name"
+                        android:id="@+id/fm"
+                        app:hintTextColor="@color/Green"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:boxBackgroundMode="outline"
+                        app:boxStrokeErrorColor="@color/red"
+                        app:boxStrokeColor="@color/Green"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:counterOverflowTextColor="@color/Green"
+                        android:layout_toLeftOf="@id/complaint_view">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/white"
+                            android:textCursorDrawable="@drawable/style_cursur"
+                            android:background="@null"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            android:id="@+id/etfm"
+                            ></com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/complaint_view"></View>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/ln"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/complaint_view"
+                        android:hint="Last Name"
+                        app:hintTextColor="@color/Green"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        app:boxStrokeColor="@color/Green"
+                        app:boxStrokeErrorColor="@color/red"
+                        app:boxBackgroundMode="outline"
+                        app:counterOverflowTextColor="@color/Green"
+                        app:boxStrokeWidthFocused="2dp">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textCursorDrawable="@drawable/style_cursur"
+                            android:background="@null"
+                            android:backgroundTint="@color/white"
+                            android:inputType="textPersonName"
+                            android:textSize="16sp"
+                            android:id="@+id/et_ln"></com.google.android.material.textfield.TextInputEditText>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Registration No"
+                    app:hintTextColor="@color/Green"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxStrokeColor="@color/Green"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:boxBackgroundMode="outline"
+                    app:counterOverflowTextColor="@color/Green"
+                    app:boxStrokeWidthFocused="2dp"
+                    android:id="@+id/regno">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textCursorDrawable="@drawable/style_cursur"
+                        android:background="@null"
+                        android:backgroundTint="@color/white"
+                        android:inputType="none"
+                        android:textSize="16sp"
+                        android:id="@+id/et_regno"></com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Address"
+                    app:hintTextColor="@color/Green"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:boxStrokeColor="@color/Green"
+                    app:boxStrokeErrorColor="@color/red"
+                    app:boxBackgroundMode="outline"
+                    app:counterOverflowTextColor="@color/Green"
+                    app:boxStrokeWidthFocused="2dp"
+                    android:id="@+id/Eaddress">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textCursorDrawable="@drawable/style_cursur"
+                        android:background="@null"
+                        android:backgroundTint="@color/white"
+                        android:inputType="textEmailAddress"
+                        android:textSize="16sp"
+                        android:id="@+id/et_Eaddress"></com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/Green"
+                    app:counterOverflowTextColor="@color/Green"
+                    app:hintTextColor="@color/Green"
+                    app:boxStrokeWidth="1dp"
+                    android:hint="Complaint Type">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="18dp"
+                        android:textColor="@color/material_on_primary_disabled"
+                        android:backgroundTint="@color/white"
+                        android:textSize="18sp"
+                        android:id="@+id/complainttype"
+                        android:enabled="false"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/round_border"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:padding="0dp"
+                        android:text="Phone Number"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"></TextView>
+
+                    <LinearLayout
+                        android:id="@+id/linear1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/country_code_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="0dp"
+                            app:ccp_autoDetectCountry="true"
+                            app:ccp_showFlag="true"
+                            app:ccp_showFullName="false"
+                            app:ccp_showNameCode="false"
+                            tools:ignore="MissingClass" />
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="267dp"
+                            android:layout_height="match_parent"
+                            android:textCursorDrawable="@drawable/style_cursur"
+                            android:background="@null"
+                            android:hint="333-1234567" />
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/etcomplaint_descrption"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start"
+                    android:hint="@string/complaint_Descrption"
+                    android:textSize="10sp"
+                    android:padding="10dp"
+                    android:background="@drawable/round_border"
+                    android:textCursorDrawable="@drawable/style_cursur"
+                    android:textColorHint="@color/black"></EditText>
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LL_complaint"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/red"
+                    android:layout_alignParentLeft="true"
+                    android:padding="15dp"
+                    android:id="@+id/cancel"
+                    android:layout_toLeftOf="@id/view1"
+                    android:layout_marginStart="10dp"
+                    android:text="Cancel"
+                    android:layout_marginTop="15dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="0dp"
+                    android:id="@+id/view1"
+                    android:layout_centerHorizontal="true" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/view1"
+                    android:padding="15dp"
+                    android:id="@+id/submit"
+                    android:backgroundTint="@color/Green"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Submit"
+                    android:layout_marginTop="15dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

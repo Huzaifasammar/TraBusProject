@@ -72,6 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="First Name"
+                        app:counterOverflowTextColor="@color/Green"
                         app:endIconMode="clear_text"
                         app:boxStrokeColor="@color/Green"
                         app:boxBackgroundMode="outline"
@@ -145,7 +146,7 @@
                         android:textCursorDrawable="@drawable/style_cursur"
                         android:background="@null"
                         android:backgroundTint="@color/white"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textPersonName"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 

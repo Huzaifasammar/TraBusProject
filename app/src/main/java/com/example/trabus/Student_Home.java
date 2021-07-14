@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
+import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
 import com.example.trabus.Student_Navigation_fragments.Home;
 import com.example.trabus.Student_Navigation_fragments.Logout;
@@ -72,41 +73,40 @@ public class Student_Home extends AppCompatActivity {
                 item.setChecked(true);
                 switch(item.getItemId())
                 {
-                    case R.id.nav_profile_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Profile()).commit();
-                        heading.setText("Update Profile");
-                        notification.setVisibility(View.INVISIBLE);
 
+
+                    case R.id.nav_home_student:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Home()).commit();
                         break;
                     case R.id.nav_setreminder_student:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Reminder()).commit();
                         heading.setText("Set Reminder");
                         notification.setVisibility(View.INVISIBLE);
-
                         break;
-                    case R.id.nav_logout_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Logout()).commit();
-                        heading.setText("Logout");
+                    case R.id.nav_profile_student:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Profile()).commit();
+                        heading.setText("Update Profile");
                         notification.setVisibility(View.INVISIBLE);
-
                         break;
                     case R.id.nav_change_password_student:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new ChangePassword()).commit();
                         heading.setText("Change Password");
                         notification.setVisibility(View.INVISIBLE);
-
                         break;
-                    case R.id.nav_home_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Home()).commit();
-                        heading.setText("Student Home");
+                    case R.id.nav_logout_student:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Logout()).commit();
+                        heading.setText("Logout");
                         notification.setVisibility(View.INVISIBLE);
-
+                        break;
+                    case R.id.nav_complaint:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Complaint()).commit();
+                        heading.setText("Complaints");
+                        notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.nav_contact:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Contact()).commit();
                         heading.setText("Contact with Driver");
                         notification.setVisibility(View.INVISIBLE);
-
                         break;
 
                     default:

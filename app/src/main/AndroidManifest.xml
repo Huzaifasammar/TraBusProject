@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.trabus">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -19,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TraBus">
-
+        <activity android:name=".Student_Home_Activities.Book_Bus"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -34,11 +33,14 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
         <activity android:name=".Driver_Home_Activities.Schedule_Detail" />
         <activity android:name=".Driver_Home_Activities.Schedule" />
         <activity android:name=".Driver_Home_Activities.Maintanance" />
         <activity android:name=".Main.Driver_Home" />
+        <activity android:name=".Student_Home_Activities.Booking_Trip" />
+        <activity android:name=".Student_Home_Activities.Buses_Schedule" />
+        <activity android:name=".Student_Home_Activities.Bus_schedule_detail" />
         <activity android:name=".Login.Forget_Password_Activity" />
         <activity android:name=".Login.SignIn" />
         <activity android:name=".Main.Signup.Student_Signup" />

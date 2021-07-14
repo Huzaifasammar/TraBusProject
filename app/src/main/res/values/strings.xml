@@ -33,9 +33,31 @@
     <string name="menu_logout2">Are you sure want to log out?</string>
     <string name="menu_Set_Reminder">Set reminder</string>
     <string name="menu_Chat">Chat</string>
+    <string name="bottomsheet">bottom_sheet_behavior</string>
+    <string name="complaint_Descrption">Please describe the nature of your complaint including any prior action taken to resolve the complaint.  </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <!-- spinner -->
+    <string-array name="spinnerlistpickup">
+        <item>Select Pickup Location</item>
+        <item>Rawalpindi</item>
+        <item>Islamabad</item>
+        <item>New Campus</item>
+        <item>Old Campus</item>
+
+    </string-array>
+    <string-array name="spinnerlistdropoff">
+        <item>Select Drop Off Location</item>
+        <item>Nathia Gali</item>
+        <item>Muree</item>
+        <item>MuskPuri</item>
+        <item>Lahore</item>
+        <item>Kashmir</item>
+        <item>Kalarkahar</item>
+    </string-array>
 
 
 </resources>

@@ -10,4 +10,8 @@
     <string name="login"><u>Don\'t have an account/Signup</u></string>
     <string name="forget_password">Forget<br>Password</br> </string>
     <string name="enter_your_email_to_reset_your_password">Enter your email to reset your <br>password</br></string>
+
+
+
+
 </resources>

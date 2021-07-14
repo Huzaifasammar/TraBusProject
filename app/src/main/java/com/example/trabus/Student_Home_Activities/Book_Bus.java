@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.trabus.R;
 
-public class Complaints extends AppCompatActivity {
+public class Book_Bus extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complaints);
+        setContentView(R.layout.activity_book_bus);
     }
 }

@@ -1,9 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Student_Home_Activities.Booking_Trip">
+    tools:context=".Student_Home_Activities.Booking_Trip"
+    android:id="@+id/Rl_top_trip">
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Green"
+        android:id="@+id/toolbar_Trip_booking">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/back_trip_booking"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/left_arrow"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text=" Booking Buses"
+                android:id="@+id/tv_trip_booking"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="24sp"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Rl_trip_booking"
+        android:layout_below="@id/toolbar_Trip_booking"
+        android:background="@color/Green"
+        android:layout_marginTop="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/white_backgroun_with_border"
+            android:layout_marginTop="20dp"
+            android:id="@+id/ll_pickup_booking">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:id="@+id/picup_location"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:tint="@color/Green" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/spinner_pickup"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"></Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/white_backgroun_with_border"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/ll_pickup_booking"
+            android:id="@+id/ll_dropoff_booking">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:id="@+id/dropoff_location"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_location_on_24"
+                app:tint="@color/Green" />
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/spinner_dropoff"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="10dp"
+                android:layout_centerVertical="true"
+                android:backgroundTint="@color/Green"></Spinner>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/white_backgroun_with_border"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/ll_dropoff_booking"
+            android:id="@+id/ll_calender_booking">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:id="@+id/calender_booking"
+                android:layout_height="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/calendar"
+                app:tint="@color/Green" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:hint="--- Departure Date ---"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
+                android:background="@null"
+                android:textColorHint="@color/black"
+                android:layout_marginEnd="5dp"/>
+        </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_calender_booking"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+                android:text="Check Availiablity"
+                android:textColor="@color/Green"
+                android:textSize="18sp"
+                android:backgroundTint="@color/white"
+                android:id="@+id/btn_check_avalibilty"
+
+                ></Button>
+    </RelativeLayout>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/Rl_trip_booking"
+        android:background="@color/silver">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/RL_design_bottom_sheet"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            android:elevation="4dp"
+            app:behavior_peekHeight="10dp"
+            app:behavior_hideable="true">
+          <include
+              layout="@layout/sample_bottom_sheet"
+              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/sample_check_bus"
+           ></include>
+
+
+</RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
