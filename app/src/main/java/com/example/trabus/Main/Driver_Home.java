@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
@@ -28,7 +29,15 @@ import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
 import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
 import com.example.trabus.R;
 import com.example.trabus.Student_Navigation_fragments.Profile;
+import com.example.trabus.models.DriverHelper;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,8 +46,11 @@ public class Driver_Home extends AppCompatActivity {
    Toolbar toolbar;
     NavigationView navigation;
     ImageView notification;
-    TextView heading;
+    TextView heading,DriverName,BusNumber;
     Dialog notificationdialog;
+    FirebaseAuth fAuth;
+    FirebaseDatabase database;
+    ImageView driverImage;
 
     @Override
     public void onBackPressed() {
@@ -60,12 +72,18 @@ public class Driver_Home extends AppCompatActivity {
         navigation=findViewById(R.id.navigation_layout_driver);
         toolbar=findViewById(R.id.toolbar);
         notification=findViewById(R.id.Ivnotification);
-
+        fAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
+        driverImage=findViewById(R.id.driver_image_nav);
+        DriverName=findViewById(R.id.driver_name_nav);
+        BusNumber=findViewById(R.id.driver_bus_nav);
+        retrivedata();
         navigation.bringToFront();
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         toolbar.setNavigationIcon(R.drawable.menu);
+
 
 
 
@@ -86,6 +104,7 @@ public class Driver_Home extends AppCompatActivity {
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+
                 item.setChecked(true);
                 switch(item.getItemId())
                 {
@@ -115,5 +134,38 @@ public class Driver_Home extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public void retrivedata()
+    {
+        String id=fAuth.getUid();
+        DatabaseReference reference=database.getReference("User").child("Driver").child(id);
+        DatabaseReference dbreference=reference.child("ProfileImages");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+              if(snapshot.exists())
+              {
+                  DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                  assert helper != null;
+                  String FirstName=helper.getFname();
+                  String LastName=helper.getLname();
+                  String BusNo=helper.getBusno();
+                  String Image=helper.getImageurl();
+                  BusNumber.setText(BusNo);
+                  System.out.println("eeeeee"+BusNo);
+                  String Fullname=FirstName+" "+LastName;
+                  DriverName.setText(Fullname);
+                  System.out.println("eeeeee22"+Fullname);
+                  Picasso.get().load(Image).into(driverImage);
+
+              }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(Driver_Home.this, "DataBase error.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

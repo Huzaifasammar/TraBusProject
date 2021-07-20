@@ -1,5 +1,6 @@
 package com.example.trabus.Driver_Home_Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -23,12 +24,22 @@ import android.widget.Toast;
 
 import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.R;
+import com.example.trabus.models.DriverHelper;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
 public class Maintanance extends AppCompatActivity {
     RelativeLayout driversample;
-    ImageView back,calendar,clock;
+    ImageView back,calendar,clock,driverImage;
     String Total=null;
     String a,b,c,d=null;
     TextView name,busno,time,date,total;
@@ -38,12 +49,15 @@ public class Maintanance extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     Calendar mcalendar;
     Button submit,cancel;
+    FirebaseAuth fAuth;
+    FirebaseDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintanance);
         initialize();
+        retrivedata();
         onclick();
         String[]selectpump ={"Pso Pump police Line","Pso pump G11 markaz","Pso Pump I10 2"};
         ArrayAdapter pumpAdapter =new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,selectpump);
@@ -143,5 +157,41 @@ public void onclick()
         mobileoil=findViewById(R.id.etmobileoil);
         time=findViewById(R.id.timeselected);
         date=findViewById(R.id.dateselected);
+        fAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
+        driverImage=findViewById(R.id.driver_image_nav);
+    }
+    public void retrivedata()
+    {
+        String id=fAuth.getUid();
+        DatabaseReference reference=database.getReference("User").child("Driver").child(id);
+        DatabaseReference dbreference=reference.child("ProfileImages");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                    assert helper != null;
+                    String FirstName=helper.getFname();
+                    String LastName=helper.getLname();
+                    String BusNo=helper.getBusno();
+                    String Image=helper.getImageurl();
+                    busno.setText(BusNo);
+                    System.out.println("eeeeee"+BusNo);
+                    String Fullname=FirstName+" "+LastName;
+                    name.setText(Fullname);
+                    System.out.println("eeeeee22"+FirstName+""+LastName);
+                    Picasso.get().load(Image).into(driverImage);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(Maintanance.this, "DataBase error.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

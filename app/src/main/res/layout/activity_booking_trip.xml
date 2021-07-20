@@ -120,16 +120,18 @@
                 android:layout_marginStart="10dp"
                 android:src="@drawable/calendar"
                 app:tint="@color/Green" />
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/tvdeparturedate"
+                android:background="@null"
                 android:gravity="center"
                 android:hint="--- Departure Date ---"
-                android:layout_marginStart="10dp"
-                android:textSize="18sp"
-                android:background="@null"
                 android:textColorHint="@color/black"
-                android:layout_marginEnd="5dp"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
             <Button

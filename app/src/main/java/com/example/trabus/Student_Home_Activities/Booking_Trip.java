@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trabus.Driver_Home_Activities.Maintanance;
@@ -39,6 +40,8 @@ public class Booking_Trip extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     Button check_avaliable;
     RelativeLayout bottomsheet;
+    TextView date,busdate;
+    BottomSheetBehavior behavior;
 
 
 
@@ -50,11 +53,13 @@ public class Booking_Trip extends AppCompatActivity {
 
         spnpickup=findViewById(R.id.spinner_pickup);
         spndrop=findViewById(R.id.spinner_dropoff);
+        date=findViewById(R.id.tvdeparturedate);
+        busdate=findViewById(R.id.tv_date);
         backtrip=findViewById(R.id.back_trip_booking);
         calender=findViewById(R.id.ll_calender_booking);
         check_avaliable=findViewById(R.id.btn_check_avalibilty);
         View bottomsheet=findViewById(R.id.RL_design_bottom_sheet);
-        final BottomSheetBehavior behavior=BottomSheetBehavior.from(bottomsheet);
+         behavior=BottomSheetBehavior.from(bottomsheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull @NotNull View bottomSheet, int newState) {
@@ -113,6 +118,8 @@ public class Booking_Trip extends AppCompatActivity {
                         @Override
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                             int Month=month+1;
+                            date.setText(dayOfMonth+"-"+Month+"-"+year);
+                            busdate.setText(dayOfMonth+"-"+Month+"-"+year);
 
                         }
                     },year,month,day);
@@ -155,4 +162,5 @@ public class Booking_Trip extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -2,7 +2,7 @@ package com.example.trabus.models;
 
 public class DriverHelper {
     String fname,lname,username,email,password,imageurl,phonenumber,busno,id;
-    public DriverHelper(String fname,String lname,String username,String email,String password,String imageurl,String phonenumber,String busno,String id)
+    public DriverHelper(String id,String fname,String lname,String username,String email,String password,String busno,String phonenumber,String imageurl)
     {
         this.busno=busno;
         this.email=email;

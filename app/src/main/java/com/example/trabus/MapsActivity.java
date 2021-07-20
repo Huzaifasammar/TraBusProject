@@ -46,6 +46,7 @@ import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
@@ -64,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps_activity);
-        reference= FirebaseDatabase.getInstance().getReference().child("user-101");
+        reference= FirebaseDatabase.getInstance().getReference().child("user").child("driver");
         manager=(LocationManager)getSystemService(LOCATION_SERVICE);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
