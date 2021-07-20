@@ -3,41 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/Green"
-        android:id="@+id/toolbar"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/left_arrow"
-                app:tint="@color/white" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tracking"
-
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:textColor="@color/white"
-                android:textSize="24sp"></TextView>
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
+        android:layout_height="650dp"
         android:id="@+id/Rl_maps"
         >
         <include layout="@layout/activity_maps"></include>
     </RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/endroute"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@id/Rl_maps"
+        android:text="End Route"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/Green"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"></Button>
 
 
 

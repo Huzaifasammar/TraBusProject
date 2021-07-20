@@ -6,6 +6,7 @@
     android:background="@color/Green"
     android:gravity="bottom"
     android:padding="16dp"
+    android:id="@+id/Driver_Header"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
     <include layout="@layout/driver_sample"

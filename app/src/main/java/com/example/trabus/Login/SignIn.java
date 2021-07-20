@@ -168,16 +168,12 @@ public class SignIn extends AppCompatActivity {
                            progressdialog.dismiss();
                            startActivity(new Intent(SignIn.this,Student_Home.class));
                        }
-                       progressdialog.dismiss();
-                       startActivity(new Intent(SignIn.this,Student_Home.class));
                    }else {
                        if(fAuth.getCurrentUser()!=null)
                        {
                            progressdialog.dismiss();
                            startActivity(new Intent(SignIn.this, Driver_Home.class));
                        }
-                       progressdialog.dismiss();
-                       startActivity(new Intent(SignIn.this, Driver_Home.class));
                    }
 
                }

@@ -11,6 +11,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
@@ -27,6 +29,7 @@ import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
 import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
 import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
+import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
 import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.models.DriverHelper;
@@ -41,6 +44,8 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
    Toolbar toolbar;
@@ -50,7 +55,7 @@ public class Driver_Home extends AppCompatActivity {
     Dialog notificationdialog;
     FirebaseAuth fAuth;
     FirebaseDatabase database;
-    ImageView driverImage;
+    CircleImageView driverImage;
 
     @Override
     public void onBackPressed() {
@@ -74,15 +79,13 @@ public class Driver_Home extends AppCompatActivity {
         notification=findViewById(R.id.Ivnotification);
         fAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-        driverImage=findViewById(R.id.driver_image_nav);
-        DriverName=findViewById(R.id.driver_name_nav);
-        BusNumber=findViewById(R.id.driver_bus_nav);
-        retrivedata();
+
         navigation.bringToFront();
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         toolbar.setNavigationIcon(R.drawable.menu);
+        retrivedata();
 
 
 
@@ -104,6 +107,7 @@ public class Driver_Home extends AppCompatActivity {
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                retrivedata();
 
                 item.setChecked(true);
                 switch(item.getItemId())
@@ -126,6 +130,9 @@ public class Driver_Home extends AppCompatActivity {
                         heading.setText("Report a Situation");
                         notification.setVisibility(View.INVISIBLE);
                         break;
+                    case R.id.nav_logout_driver:
+                        fAuth.signOut();
+                        startActivity(new Intent(Driver_Home.this, SignIn.class));
 
                     default:
                         break;
@@ -138,25 +145,28 @@ public class Driver_Home extends AppCompatActivity {
     public void retrivedata()
     {
         String id=fAuth.getUid();
-        DatabaseReference reference=database.getReference("User").child("Driver").child(id);
-        DatabaseReference dbreference=reference.child("ProfileImages");
+        DatabaseReference reference=database.getReference("User").child("Drivers").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
               if(snapshot.exists())
               {
                   DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                  NavigationView navigationView=findViewById(R.id.navigation_layout_driver);
+                  View hView=navigationView.getHeaderView(0);
+                  driverImage=hView.findViewById(R.id.driver_image_nav);
+                  DriverName=hView.findViewById(R.id.driver_name_nav);
+                  BusNumber=hView.findViewById(R.id.driver_bus_nav);
                   assert helper != null;
                   String FirstName=helper.getFname();
                   String LastName=helper.getLname();
                   String BusNo=helper.getBusno();
                   String Image=helper.getImageurl();
                   BusNumber.setText(BusNo);
-                  System.out.println("eeeeee"+BusNo);
                   String Fullname=FirstName+" "+LastName;
                   DriverName.setText(Fullname);
-                  System.out.println("eeeeee22"+Fullname);
                   Picasso.get().load(Image).into(driverImage);
+                  System.out.println("eeeeeee"+BusNumber);
 
               }
             }

@@ -17,11 +17,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowInsetsAnimation;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.R;
+import com.example.trabus.models.DriverHelper;
 import com.example.trabus.models.Mylocation;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,11 +36,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Tag;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -52,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Object Places;
+    FirebaseAuth firebaseAuth;
     private DatabaseReference reference;
     private LocationManager manager;
     private final int mintime=1000;
@@ -60,18 +67,76 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Mylocation location;
     LatLng latlng1;
     LatLng latlng2;
+    String id;
     double longitude,latitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.maps_activity);
-        reference= FirebaseDatabase.getInstance().getReference().child("user").child("driver");
+        firebaseAuth=FirebaseAuth.getInstance();
+        id=firebaseAuth.getCurrentUser().getUid();
+        reference= FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(id);
         manager=(LocationManager)getSystemService(LOCATION_SERVICE);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getlocationupdates();
+        Button EndRoute;
+        EndRoute=findViewById(R.id.endroute);
+
+
+        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        DatabaseReference db=database.getReference("User").child("Drivers").child(id);
+        EndRoute.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ProgressDialog dialog=new ProgressDialog(MapsActivity.this);
+                dialog.setTitle("End Route");
+                dialog.setMessage("We Ending Your Route");
+                dialog.show();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                Query query=ref.child("User").child("Drivers").child("Location").child(id);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            for (DataSnapshot appleSnapshot: snapshot.getChildren()) {
+                                appleSnapshot.getRef().removeValue();
+                            }
+                            onPause();
+                            dialog.dismiss();
+                            startActivity(new Intent(MapsActivity.this, Driver_Home.class));
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            }
+        });
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                    assert helper != null;
+                    marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(helper.getBusno()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
@@ -109,10 +174,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        latlng1=new LatLng(33,73);
         readchanges();
 
-        latlng1=new LatLng(33,73);
-        marker=mMap.addMarker(new MarkerOptions().position(latlng1).title("Bus No 55"));
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        manager.removeUpdates(this);
     }
 
     @Override
@@ -123,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         else
         {
-            Toast.makeText(this,"No locatiion found",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"No location found",Toast.LENGTH_LONG).show();
         }
     }
 

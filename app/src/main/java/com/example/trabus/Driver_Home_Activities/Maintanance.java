@@ -31,15 +31,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Maintanance extends AppCompatActivity {
     RelativeLayout driversample;
-    ImageView back,calendar,clock,driverImage;
+    CircleImageView driverImage;
+    ImageView back,calendar,clock;
     String Total=null;
     String a,b,c,d=null;
     TextView name,busno,time,date,total;
@@ -164,8 +168,7 @@ public void onclick()
     public void retrivedata()
     {
         String id=fAuth.getUid();
-        DatabaseReference reference=database.getReference("User").child("Driver").child(id);
-        DatabaseReference dbreference=reference.child("ProfileImages");
+        DatabaseReference reference=database.getReference("User").child("Drivers").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -177,19 +180,18 @@ public void onclick()
                     String LastName=helper.getLname();
                     String BusNo=helper.getBusno();
                     String Image=helper.getImageurl();
-                    busno.setText(BusNo);
-                    System.out.println("eeeeee"+BusNo);
+                    Picasso.get().load(Image).into(driverImage);
                     String Fullname=FirstName+" "+LastName;
                     name.setText(Fullname);
-                    System.out.println("eeeeee22"+FirstName+""+LastName);
-                    Picasso.get().load(Image).into(driverImage);
+                    busno.setText(BusNo);
+
 
                 }
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(Maintanance.this, "DataBase error.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Maintanance.this, "Network error.", Toast.LENGTH_SHORT).show();
             }
         });
 

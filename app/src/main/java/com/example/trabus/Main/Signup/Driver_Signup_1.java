@@ -263,8 +263,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
     public boolean validatephonenumber()
     {
         String val=pnumber.getEditableText().toString().trim();
-        String regexStr = "^[0-9]$";
-        if(val.length()<10||val.matches(regexStr)==false)
+        if(val.length() != 10)
         {
             pnumber.setError("Number pattern not correct");
             return false;

@@ -6,10 +6,11 @@
     android:id="@+id/driversample"
     android:background="@color/Green">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:id="@+id/driver_image_nav"
         android:src="@drawable/ic_driver"
