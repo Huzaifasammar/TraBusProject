@@ -48,83 +48,112 @@
         android:background="@color/Green"
         android:layout_marginTop="3dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             android:background="@drawable/white_backgroun_with_border"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:id="@+id/ll_pickup_booking">
-
+            android:id="@+id/RL_pickup"
+           >
             <ImageView
-                android:layout_width="30dp"
-                android:id="@+id/picup_location"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_location_on_24"
-                app:tint="@color/Green" />
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:id="@+id/spinner_pickup"
-                android:layout_centerHorizontal="true"
-                android:layout_marginEnd="10dp"
-                android:layout_centerVertical="true"></Spinner>
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:tint="@color/Green"
+                android:id="@+id/img1">
+            </ImageView>
 
-        </LinearLayout>
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pickup Location"
+                android:id="@+id/pickup"
+                android:background="@null"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@+id/img1"
+                android:completionThreshold="1"></AutoCompleteTextView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_drop_down"
+                android:layout_alignTop="@+id/pickup"
+                android:layout_alignBottom="@+id/pickup"
+                android:layout_alignRight="@+id/pickup"
+                app:tint="@color/Green"
+                android:id="@+id/drop1"></ImageView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_backgroun_with_border"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/RL_pickup"
+            android:id="@+id/RL_drop">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_location_on_24"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:tint="@color/Green"
+                android:id="@+id/img2">
+            </ImageView>
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pickup Location"
+                android:id="@+id/drop"
+                android:background="@null"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_toRightOf="@+id/img2"
+                android:completionThreshold="1"></AutoCompleteTextView>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_drop_down"
+                android:layout_alignTop="@+id/drop"
+                android:layout_alignBottom="@+id/drop"
+                android:layout_alignRight="@+id/drop"
+                app:tint="@color/Green"
+                android:id="@+id/drop2"></ImageView>
+        </RelativeLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="40dp"
+            android:padding="12dp"
+            android:layout_marginEnd="40dp"
             android:background="@drawable/white_backgroun_with_border"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/ll_pickup_booking"
-            android:id="@+id/ll_dropoff_booking">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:id="@+id/dropoff_location"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_baseline_location_on_24"
-                app:tint="@color/Green" />
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:id="@+id/spinner_dropoff"
-                android:layout_centerHorizontal="true"
-                android:layout_marginEnd="10dp"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/Green"></Spinner>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/white_backgroun_with_border"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/ll_dropoff_booking"
+            android:layout_below="@+id/RL_drop"
             android:id="@+id/ll_calender_booking">
 
             <ImageView
                 android:layout_width="30dp"
                 android:id="@+id/calender_booking"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
                 android:src="@drawable/calendar"
                 app:tint="@color/Green" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:id="@+id/tvdeparturedate"
                 android:background="@null"
@@ -139,8 +168,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ll_calender_booking"
                 android:layout_marginTop="10dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginStart="40dp"
+                android:padding="12dp"
+                android:layout_marginEnd="40dp"
                 android:layout_marginBottom="20dp"
                 android:text="Check Availiablity"
                 android:textColor="@color/Green"
@@ -170,7 +200,7 @@
               layout="@layout/sample_bottom_sheet"
               android:layout_height="wrap_content"
               android:layout_width="match_parent"
-              android:id="@+id/sample_check_bus"
+
            ></include>
 
 

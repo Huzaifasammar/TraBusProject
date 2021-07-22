@@ -3,8 +3,145 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Student_Home_Activities.Book_Bus">
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bus  Details"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:id="@+id/tv_detail"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_alignParentLeft="true"></TextView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_detail"
+        android:id="@+id/tv_bus_name"
+        android:text="Bus No : 34"
+        android:textColor="@color/Green"
+        android:textSize="36dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"></TextView>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:src="@drawable/iiu_bus"
+        android:layout_below="@+id/tv_bus_name"
+        android:id="@+id/bus_pic"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"></ImageView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RL_df"
+        android:layout_below="@+id/bus_pic">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/view"
+        android:layout_marginTop="30dp"
+
+        android:background="@drawable/border_thickness"></View>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Date :"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/view"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="30dp"
+          android:textSize="20sp"
+          android:id="@+id/tv_date3"
+          android:textColor="@color/black"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7/9/15"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/tv_date3"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:layout_alignEnd="@+id/tv_date3"
+        android:id="@+id/tv_date4"
+        android:textColor="@color/black"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fare :"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_date3"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:textSize="20sp"
+        android:id="@+id/tv_date5"
+        android:textColor="@color/black"></TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3500 PKR"
+        android:layout_below="@+id/tv_date4"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/tv_date5"
+        android:textSize="20sp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:layout_alignEnd="@+id/tv_date3"
+        android:id="@+id/tv_date6"
+        android:textColor="@color/black"></TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/view1"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tv_date6"
+        android:background="@drawable/border_thickness"></View>
+    </RelativeLayout>
+
+
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/book_cancel"
+        android:layout_below="@+id/book"
+        android:text="Cancel"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:padding="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="15dp"
+        android:id="@+id/book"
+        android:backgroundTint="@color/Green"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/white"
+        android:layout_marginEnd="10dp"
+        android:text="let's Book"
+        android:layout_below="@+id/RL_df"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
 
 
 </RelativeLayout>

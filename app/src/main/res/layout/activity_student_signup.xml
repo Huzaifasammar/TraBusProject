@@ -63,14 +63,14 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvfill"
                 android:id="@+id/RL_student_image">
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentLeft="true"
                     android:src="@drawable/user"
-                    android:id="@+id/studentimg"></ImageView>
+                    android:id="@+id/studentimg"></de.hdodenhof.circleimageview.CircleImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/Fname_layout"
+                    android:id="@+id/Fname_std_layout"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -121,7 +121,7 @@
                     android:layout_centerHorizontal="true"
                     />
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lname_layout"
+                    android:id="@+id/lname_std_layout"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -150,7 +150,7 @@
 
             </RelativeLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_layout"
+                android:id="@+id/username_std_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -179,7 +179,7 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/Email_layout"
+                android:id="@+id/Email_std_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -208,7 +208,7 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_layout"
+                android:id="@+id/password_std_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -221,6 +221,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/icon_selector"
+                app:passwordToggleTint="@color/Green"
                 android:hint="Password">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -234,7 +236,7 @@
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cpassword_layout"
+                android:id="@+id/cpassword_std_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -247,6 +249,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
+                app:passwordToggleDrawable="@drawable/icon_selector"
+                app:passwordToggleTint="@color/Green"
                 android:hint="Confirm Password">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -28,7 +28,7 @@
            android:layout_height="wrap_content"
            android:text="@string/menu_logout2"
            android:textColor="@color/Green"
-           android:textSize="20sp"
+           android:textSize="18sp"
            android:layout_marginLeft="10dp"
            android:layout_marginTop="10dp"
            ></TextView>
@@ -39,28 +39,32 @@
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_marginTop="20dp"
-               android:layout_marginLeft="30dp"
+               android:layout_marginLeft="10dp"
                android:text="Cancel"
-               android:textSize="20sp"
+               android:textSize="18sp"
                android:textColor="@color/white"
-               android:backgroundTint="@color/Green"
+               android:backgroundTint="@color/red"
                android:id="@+id/btn_cancel"
                android:textAllCaps="false"
-               android:layout_marginBottom="20dp">
+               android:layout_alignParentLeft="true"
+
+               android:layout_marginBottom="10dp">
 
            </Button>
            <Button
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:layout_toRightOf="@+id/btn_cancel"
-               android:layout_marginLeft="30dp"
-               android:layout_marginTop="20dp"
+               android:layout_marginLeft="20dp"
+               android:layout_marginTop="18dp"
                android:text="log out"
                android:textColor="@color/white"
                android:textSize="20sp"
                android:textAllCaps="false"
+               android:layout_marginRight="10dp"
+               android:layout_alignParentRight="true"
                android:backgroundTint="@color/Green"
-               android:layout_marginBottom="20dp">
+               android:layout_marginBottom="10dp">
 
            </Button>
 

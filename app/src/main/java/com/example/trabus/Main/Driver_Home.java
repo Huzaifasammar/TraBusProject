@@ -48,7 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
-   Toolbar toolbar;
+    Toolbar toolbar;
     NavigationView navigation;
     ImageView notification;
     TextView heading,DriverName,BusNumber;

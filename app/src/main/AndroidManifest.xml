@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TraBus"
         tools:targetApi="m">
-        <activity android:name=".Student_Home_Activities.Book_Bus"></activity>
+        <activity android:name=".Student_Home_Activities.Live_Tracking"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

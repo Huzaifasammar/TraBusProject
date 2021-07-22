@@ -13,10 +13,11 @@ import android.widget.RelativeLayout;
 import com.example.trabus.R;
 import com.example.trabus.Student_Home_Activities.Booking_Trip;
 import com.example.trabus.Student_Home_Activities.Buses_Schedule;
+import com.example.trabus.Student_Home_Activities.Live_Tracking;
 
 
 public class Home extends Fragment {
-   RelativeLayout buses_schedule,booking;
+   RelativeLayout buses_schedule,booking,live_tracking;
    View v;
 
 
@@ -53,11 +54,19 @@ public class Home extends Fragment {
                 startActivity(intent);
             }
         });
+        live_tracking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Home.this.getActivity(), Live_Tracking.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
     public void intilize(){
         buses_schedule=v.findViewById(R.id.Rl_bus_schedule);
         booking=v.findViewById(R.id.Rl_booking);
+        live_tracking=v.findViewById(R.id.Rl_livetracking);
     }
 }

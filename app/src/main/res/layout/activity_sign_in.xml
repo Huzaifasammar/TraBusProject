@@ -90,6 +90,8 @@
             app:hintTextColor="@color/Green"
             app:boxStrokeWidthFocused="2dp"
             app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/icon_selector"
+            app:passwordToggleTint="@color/Green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password">

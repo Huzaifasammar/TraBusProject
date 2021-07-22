@@ -42,7 +42,6 @@
 
     <!-- spinner -->
     <string-array name="spinnerlistpickup">
-        <item>Select Pickup Location</item>
         <item>Rawalpindi</item>
         <item>Islamabad</item>
         <item>New Campus</item>
@@ -50,7 +49,6 @@
 
     </string-array>
     <string-array name="spinnerlistdropoff">
-        <item>Select Drop Off Location</item>
         <item>Nathia Gali</item>
         <item>Muree</item>
         <item>MuskPuri</item>

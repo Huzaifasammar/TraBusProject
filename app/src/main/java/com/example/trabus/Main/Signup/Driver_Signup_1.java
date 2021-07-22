@@ -1,4 +1,4 @@
-package com.example.trabus.Main.Signup;
+  package com.example.trabus.Main.Signup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.storage.StorageManager;
 import android.provider.MediaStore;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -26,42 +28,31 @@ import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
 import com.example.trabus.models.DriverHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseException;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URI;
-import java.util.Objects;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Driver_Signup_1 extends AppCompatActivity {
     ImageView backarrow;
-    Uri image;
     RelativeLayout Rlimage;
     TextView caltologindriver;
     Button btnregisterdriver;
     AutoCompleteTextView busno;
-    TextInputEditText pnumber,FirstName,LastName,UserName,Email_et,Password_et;
-    private FirebaseAuth fAuth;
-    StorageReference reference;
-    DatabaseReference dbreference;
+    TextInputEditText pnumber,password,rpassword;
+    FirebaseAuth fAuth;
+    StorageReference image;
     ProgressDialog progressdialog;
     FirebaseDatabase fdatabase;
-    String Fname,Lname,Username,Email,Password,BusNo,PhoneNumber;
     TextInputLayout fname, lname, username, email, passwors, cpassword;
     final int RESULT_LOAD_IMAGE = 0;
 
@@ -71,11 +62,12 @@ public class Driver_Signup_1 extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
-                image = data.getData();
+                Uri ImageData = data.getData();
                 CircleImageView imageView = findViewById(R.id.driverimg);
-                imageView.setImageURI(image);
+                imageView.setImageURI(ImageData);
             }
         }
+
     }
 
     @Override
@@ -85,7 +77,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
         setContentView(R.layout.activity_driver_signup1);
         initialization();
         onclick();
-        progressdialog=new ProgressDialog(Driver_Signup_1.this);
+        progressdialog = new ProgressDialog(Driver_Signup_1.this);
         progressdialog.setTitle("Creating Account");
         progressdialog.setMessage("We are Creating Your Account");
 
@@ -94,6 +86,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
         busno.setAdapter(genderAdapter);
 
     }
+
     // onclicklisteners
     public void onclick() {
         Rlimage.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +108,6 @@ public class Driver_Signup_1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validation();
-
             }
         });
         caltologindriver.setOnClickListener(new View.OnClickListener() {
@@ -125,19 +117,14 @@ public class Driver_Signup_1 extends AppCompatActivity {
             }
         });
     }
+
     //initialize all variables
     public void initialization() {
-        fAuth=FirebaseAuth.getInstance();
-        fdatabase=FirebaseDatabase.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        fdatabase = FirebaseDatabase.getInstance();
         backarrow = findViewById(R.id.backarrow);
         Rlimage = findViewById(R.id.RL_image);
         busno = findViewById(R.id.busno);
-        FirstName=findViewById(R.id.fname_ET);
-        LastName=findViewById(R.id.lname_ET);
-        UserName=findViewById(R.id.username_ET);
-        Email_et=findViewById(R.id.email_ET);
-        Password_et=findViewById(R.id.password_ET);
-        reference=FirebaseStorage.getInstance().getReference().child("ProfileImages");
         btnregisterdriver = findViewById(R.id.btnregisterdriver);
         caltologindriver = findViewById(R.id.caltologindriver);
         fname = findViewById(R.id.Fname_layout);
@@ -147,25 +134,17 @@ public class Driver_Signup_1 extends AppCompatActivity {
         passwors = findViewById(R.id.password_layout);
         cpassword = findViewById(R.id.cpassword_layout);
         pnumber = findViewById(R.id.phone);
-        dbreference=FirebaseDatabase.getInstance().getReference();
+
     }
-    public void getEditTextData()
-    {
-        Fname= Objects.requireNonNull(FirstName.getText()).toString().trim();
-        Lname= Objects.requireNonNull(LastName.getText()).toString().trim();
-        Username= Objects.requireNonNull(UserName.getText()).toString().trim();
-        Email= Objects.requireNonNull(Email_et.getText()).toString().trim();
-        Password= Objects.requireNonNull(Password_et.getText()).toString().trim();
-        BusNo=busno.getText().toString();
-        PhoneNumber=pnumber.getEditableText().toString().trim();
-    }
+
     // validate Text Fields
     public void validation() {
-    if (!validatefname() || !validatelname() || !validateusername() || !validateemail() || !validatePassword() || !validatephonenumber()){
-           Toast.makeText(getApplicationContext(), "please fill require fields", Toast.LENGTH_LONG).show();
-       } else {
-            savedata();
-       }
+        if (!validatefname() || !validatelname() || !validateusername() || !validateemail() || !validatePassword()) {
+            Toast.makeText(getApplicationContext(), "please fill require fields", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(Driver_Signup_1.this, SignIn.class));
+        }
     }
 
     public boolean validatefname() {
@@ -237,22 +216,13 @@ public class Driver_Signup_1 extends AppCompatActivity {
         if (val.isEmpty()) {
             passwors.setError("This field cannot be empty");
             return false;
-        }
-        else if(val.length() < 6)
-        {
-          passwors.setError("Password Must be greter or equal to 6 character");
-          return false;
-        }
-        else if (val1.isEmpty()) {
+        } else if (val1.isEmpty()) {
             cpassword.setError("This field cannot be empty");
             return false;
-        }
-
-        else if (!val1.matches(val)) {
+        } else if (!val1.matches(val)) {
             cpassword.setError("Password not match!");
             return false;
-        }
-        else {
+        } else {
             passwors.setError(null);
             passwors.setErrorEnabled(false);
             cpassword.setError(null);
@@ -260,69 +230,19 @@ public class Driver_Signup_1 extends AppCompatActivity {
             return true;
         }
     }
-    public boolean validatephonenumber()
-    {
-        String val=pnumber.getEditableText().toString().trim();
-        if(val.length() != 10)
-        {
-            pnumber.setError("Number pattern not correct");
-            return false;
-        }
-        else
-        {
-            pnumber.setError(null);
-            return true;
-        }
-    }
 
-    public void savedata()
-    {
-        getEditTextData();
-        fAuth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    public void savedata() {
+        fAuth.createUserWithEmailAndPassword(email.toString(), passwors.toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    String id = fAuth.getCurrentUser().getUid();
 
-                    if (task.isSuccessful()) {
-                        progressdialog.show();
-                        String id= Objects.requireNonNull(task.getResult().getUser()).getUid();
-                        String uniqueString = UUID.randomUUID().toString();
-                        StorageReference Imagename = reference.child(uniqueString);
-                        try {
-                        Imagename.putFile(image).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull @NotNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
-                                DriverHelper helper = new DriverHelper(id, Fname, Lname, Username, Email, Password, BusNo, PhoneNumber, "");
-                                dbreference.child("User").child("Drivers").child(id).setValue(helper);
-                            }
-                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                Imagename.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        DriverHelper helper = new DriverHelper(id, Fname, Lname, Username, Email, Password, BusNo, PhoneNumber, uri.toString());
-                                        dbreference.child("User").child("Drivers").child(id).setValue(helper);
-                                        progressdialog.dismiss();
-                                        startActivity(new Intent(Driver_Signup_1.this, SignIn.class));
-                                    }
-                                });
-                            }
-                        });
 
-                    } catch (DatabaseException e)
-                        {
-                            System.out.println("Error"+ e);
-                        }
                 }
-
-            }
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Error Signing up", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 }

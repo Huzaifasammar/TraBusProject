@@ -21,12 +21,14 @@ import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.Student_Navigation_fragments.Reminder;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.app.Dialog;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ public class Student_Home extends AppCompatActivity {
     NavigationView navigation;
     TextView heading;
     ImageView notification;
+    Dialog dialog_notice;
 
     @Override
     public void onBackPressed() {
@@ -59,7 +62,7 @@ public class Student_Home extends AppCompatActivity {
         navigation=findViewById(R.id.navigation_layout_student);
         toolbar=findViewById(R.id.toolbar_student);
         heading=findViewById(R.id.studenthome);
-        notification=findViewById(R.id.ivnotificationstd);
+        notification=findViewById(R.id.iv_notification_std);
         navigation.bringToFront();
 
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar ,R.string.open_navigation,R.string.close_navigation);
@@ -114,6 +117,18 @@ public class Student_Home extends AppCompatActivity {
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog_notice=new Dialog(Student_Home.this);
+                dialog_notice.setContentView(R.layout.student_notification_dialog);
+                dialog_notice.getWindow().setBackgroundDrawable(getDrawable(R.drawable.book_bus_background));
+                dialog_notice.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog_notice.setCancelable(true);
+                dialog_notice.getWindow().getAttributes().windowAnimations =R.style.animation;
+                dialog_notice.show();
             }
         });
 
