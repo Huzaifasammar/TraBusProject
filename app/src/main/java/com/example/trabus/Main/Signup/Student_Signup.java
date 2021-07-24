@@ -11,22 +11,35 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
+import com.example.trabus.models.DriverHelper;
+import com.example.trabus.models.StudentHelper;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -36,10 +49,20 @@ public class Student_Signup extends AppCompatActivity {
   Button btnregisterstudent;
   RelativeLayout RLstudentimg;
   FirebaseAuth fAuth;
-  StorageReference image;
+  Uri Imagedata;
+  StorageReference reference;
   ProgressDialog progressdialog;
   FirebaseDatabase fdatabase;
+  DatabaseReference dbreference;
   TextInputLayout fname, lname, username, email, passwors, cpassword;
+  TextInputEditText FirstName,LastName,UserName,Email,Password;
+  RadioGroup gender;
+  String Sfirstname;
+    String Slastname;
+    String Susername;
+    String Semail;
+    String Spassword;
+    int Sgender;
   final int RESULT_LOAD_IMAGE = 0;
 
     @Override
@@ -48,9 +71,9 @@ public class Student_Signup extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
-                Uri ImageData = data.getData();
+                Imagedata = data.getData();
                 CircleImageView imageView = findViewById(R.id.studentimg);
-                imageView.setImageURI(ImageData);
+                imageView.setImageURI(Imagedata);
             }
         }
     }
@@ -112,6 +135,14 @@ public class Student_Signup extends AppCompatActivity {
         email = findViewById(R.id.Email_std_layout);
         passwors = findViewById(R.id.password_std_layout);
         cpassword = findViewById(R.id.cpassword_std_layout);
+        FirstName=findViewById(R.id.fname_ET_Student);
+        LastName=findViewById(R.id.lname_ET_Student);
+        UserName=findViewById(R.id.username_ET_Student);
+        Email=findViewById(R.id.email_ET_Student);
+        Password=findViewById(R.id.password_ET_Student);
+        gender=findViewById(R.id.checked_Student);
+        reference= FirebaseStorage.getInstance().getReference().child("ProfileImagesStudents");
+        dbreference=FirebaseDatabase.getInstance().getReference();
 
     }
     // validate Text Fields
@@ -119,8 +150,7 @@ public class Student_Signup extends AppCompatActivity {
         if (!validatefname() || !validatelname() || !validateusername() || !validateemail() || !validatePassword()) {
             Toast.makeText(getApplicationContext(), "please fill require fields", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(Student_Signup.this, SignIn.class));
+           savedata();
         }
     }
     public boolean validatefname() {
@@ -206,16 +236,56 @@ public class Student_Signup extends AppCompatActivity {
             return true;
         }
     }
+    public void getEdittextdata()
+    {
+        Sfirstname=FirstName.getText().toString().trim();
+        Slastname=LastName.getText().toString().trim();
+        Susername=UserName.getText().toString().trim();
+        Semail=Email.getText().toString().trim();
+        Spassword=Password.getText().toString().trim();
+        Sgender=gender.getCheckedRadioButtonId();
+    }
 
     public void savedata() {
-        fAuth.createUserWithEmailAndPassword(email.toString(), passwors.toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        getEdittextdata();
+        fAuth.createUserWithEmailAndPassword(Semail,Spassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String id = fAuth.getCurrentUser().getUid();
+                    progressdialog.show();
+                    String id = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+                    String uniqueString = UUID.randomUUID().toString();
+                    StorageReference Imagename = reference.child(uniqueString);
+                    Imagename.putFile(Imagedata).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull @NotNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
+                            StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender, "");
+                            dbreference.child("User").child("Students").child(id).setValue(helper);
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Imagename.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender,uri.toString());
+                                    dbreference.child("User").child("Students").child(id).setValue(helper);
+                                    progressdialog.dismiss();
+                                    startActivity(new Intent(Student_Signup.this, SignIn.class));
+                                }
+                            });
+
+                        }
+                    });
 
 
                 }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Error Signing up", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -160,19 +160,19 @@ public class SignIn extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
 
             String id=authResult.getUser().getUid();
-           dbreference.child("User").child("Driver").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+           dbreference.child("User").child("Drivers").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                @Override
                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                    if (snapshot.exists()) {
                        if (fAuth.getCurrentUser() != null) {
                            progressdialog.dismiss();
-                           startActivity(new Intent(SignIn.this,Student_Home.class));
+                           startActivity(new Intent(SignIn.this,Driver_Home.class));
                        }
                    }else {
                        if(fAuth.getCurrentUser()!=null)
                        {
                            progressdialog.dismiss();
-                           startActivity(new Intent(SignIn.this, Driver_Home.class));
+                           startActivity(new Intent(SignIn.this, Student_Home.class));
                        }
                    }
 

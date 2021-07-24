@@ -166,7 +166,6 @@ public class Driver_Home extends AppCompatActivity {
                   String Fullname=FirstName+" "+LastName;
                   DriverName.setText(Fullname);
                   Picasso.get().load(Image).into(driverImage);
-                  System.out.println("eeeeeee"+BusNumber);
 
               }
             }

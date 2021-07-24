@@ -12,6 +12,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
+import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
 import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
@@ -19,6 +20,8 @@ import com.example.trabus.Student_Navigation_fragments.Home;
 import com.example.trabus.Student_Navigation_fragments.Logout;
 import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.Student_Navigation_fragments.Reminder;
+import com.example.trabus.models.DriverHelper;
+import com.example.trabus.models.StudentHelper;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.app.Dialog;
@@ -31,18 +34,31 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Student_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     NavigationView navigation;
-    TextView heading;
+    TextView heading,StudentName,Email;
     ImageView notification;
+    CircleImageView StudentImage;
     Dialog dialog_notice;
+    FirebaseAuth fAuth;
+    FirebaseDatabase database;
 
     @Override
     public void onBackPressed() {
@@ -62,9 +78,11 @@ public class Student_Home extends AppCompatActivity {
         navigation=findViewById(R.id.navigation_layout_student);
         toolbar=findViewById(R.id.toolbar_student);
         heading=findViewById(R.id.studenthome);
+        fAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
         notification=findViewById(R.id.iv_notification_std);
         navigation.bringToFront();
-
+        retrivedata();
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar ,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -133,6 +151,38 @@ public class Student_Home extends AppCompatActivity {
         });
 
 
+    }
+    public void retrivedata() {
+        String id = fAuth.getUid();
+        DatabaseReference reference = database.getReference("User").child("Students").child(id);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    StudentHelper helper = snapshot.getValue(StudentHelper.class);
+                    NavigationView navigationView = findViewById(R.id.navigation_layout_student);
+                    View hView = navigationView.getHeaderView(0);
+                    StudentImage = hView.findViewById(R.id.student_image_nav);
+                    StudentName = hView.findViewById(R.id.student_name_nav);
+                    Email = hView.findViewById(R.id.student_email_nav);
+                    assert helper != null;
+                    String FirstName = helper.getFname();
+                    String LastName = helper.getLname();
+                    String email = helper.getEmail();
+                    String Image = helper.getImageurl();
+                    String Fullname = FirstName + " " + LastName;
+                    StudentName.setText(Fullname);
+                    Email.setText(email);
+                    Picasso.get().load(Image).into(StudentImage);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(Student_Home.this, "DataBase error.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }
