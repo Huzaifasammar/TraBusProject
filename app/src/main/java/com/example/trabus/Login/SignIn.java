@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,9 +45,10 @@ public class SignIn extends AppCompatActivity {
       String Email,Password;
       FirebaseDatabase database;
       FirebaseAuth fAuth;
+      FirebaseUser Currentuser;
       ProgressDialog progressdialog;
       DatabaseReference dbreference;
-      RadioButton btndriver,btnstdnt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +67,6 @@ public class SignIn extends AppCompatActivity {
     {
         caltoidentity=findViewById(R.id.caltosignup);
         leftarrow=findViewById(R.id.leftarrowsignin);
-        btndriver=findViewById(R.id.radiobtndriver);
-        btnstdnt=findViewById(R.id.radiobtnstdnt);
         forgetsgnin=findViewById(R.id.forgetsgnin);
         btnsignin=findViewById(R.id.btnsignin);
         Lemail=findViewById(R.id.email_layout);
@@ -76,6 +76,7 @@ public class SignIn extends AppCompatActivity {
         fAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
         dbreference=FirebaseDatabase.getInstance().getReference();
+        Currentuser=FirebaseAuth.getInstance().getCurrentUser();
 
     }
     public void onclick()

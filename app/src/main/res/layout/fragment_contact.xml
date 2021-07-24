@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/silver">
+
+
+<TableLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Student_Navigation_fragments.Contact"
     android:background="@color/silver">
-
-
-
         <TableRow>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -17,20 +21,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="20dp">
 
-            <TextView
-                android:layout_width="50dp"
-                android:id="@+id/srno"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/round_border"
-                android:backgroundTint="@color/Green"
-                android:layout_alignParentLeft="true"
-                android:padding="5dp"
-                android:text="Sr No "
-                android:textColor="@color/white"
-                android:gravity="center"
-                />
+
 
             <TextView
                 android:layout_width="70dp"
@@ -39,7 +30,6 @@
                 android:layout_marginStart="5dp"
                 android:background="@drawable/round_border"
                 android:backgroundTint="@color/Green"
-                android:layout_toEndOf="@id/srno"
                 android:id="@+id/busno"
                 android:padding="5dp"
                 android:text="Bus No "
@@ -47,7 +37,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
@@ -61,7 +51,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
@@ -76,12 +66,13 @@
                 android:gravity="center"/>
     </RelativeLayout>
         </TableRow>
-
-       <include layout="@layout/sample_contact">
-
-       </include>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/silver"
+        android:id="@+id/contact_recyclerview"></androidx.recyclerview.widget.RecyclerView>
 
 
 
 </TableLayout>
+</LinearLayout>
