@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Student_Home_Activities.Live_Tracking">
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -68,152 +69,11 @@
                 android:textCursorDrawable="@drawable/style_cursur" />
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/RL_track_bus"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@+id/Rl_track_search">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/white_backgroun_with_border"
-            android:id="@+id/ll_track1">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bus_stop"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="@color/Green" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bus No 1 "
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/white_backgroun_with_border"
-            android:id="@+id/ll_track2"
-            android:layout_below="@+id/ll_track1"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bus_stop"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="@color/Green" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bus No 2 "
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/white_backgroun_with_border"
-            android:id="@+id/ll_track3"
-            android:layout_below="@+id/ll_track2"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bus_stop"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="@color/Green" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bus No 3 "
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/white_backgroun_with_border"
-            android:id="@+id/ll_track5"
-            android:layout_below="@+id/ll_track4"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bus_stop"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="@color/Green" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bus No 5"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/white_backgroun_with_border"
-            android:id="@+id/ll_track4"
-            android:layout_below="@+id/ll_track3"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/bus_stop"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:tint="@color/Green" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bus No 4"
-                android:textSize="20sp"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerviewtracking" />
 
 
-
-
-    </RelativeLayout>
-
-
-</RelativeLayout>
+</LinearLayout>

@@ -6,30 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
-import com.example.trabus.Main.Driver_Home;
+import com.example.trabus.Login.SignIn;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
 import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
 import com.example.trabus.Student_Navigation_fragments.Home;
-import com.example.trabus.Student_Navigation_fragments.Logout;
 import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.Student_Navigation_fragments.Reminder;
-import com.example.trabus.models.DriverHelper;
 import com.example.trabus.models.StudentHelper;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.app.Dialog;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -38,6 +28,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +48,10 @@ public class Student_Home extends AppCompatActivity {
     ImageView notification;
     CircleImageView StudentImage;
     Dialog dialog_notice;
+    FirebaseUser user;
+    String id;
     FirebaseAuth fAuth;
+
     FirebaseDatabase database;
 
     @Override
@@ -115,9 +109,9 @@ public class Student_Home extends AppCompatActivity {
                         notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.nav_logout_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Logout()).commit();
-                        heading.setText("Logout");
-                        notification.setVisibility(View.INVISIBLE);
+                        fAuth.signOut();
+                        startActivity(new Intent(Student_Home.this, SignIn.class));
+                        finish();
                         break;
                     case R.id.nav_complaint:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Complaint()).commit();
@@ -153,7 +147,7 @@ public class Student_Home extends AppCompatActivity {
 
     }
     public void retrivedata() {
-        String id = fAuth.getUid();
+         id = fAuth.getUid();
         DatabaseReference reference = database.getReference("User").child("Students").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override

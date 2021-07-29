@@ -26,6 +26,7 @@ public class Schedule extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Schedule.this, Driver_Home.class));
+                finish();
             }
         });
         busno.setOnClickListener(new View.OnClickListener() {

@@ -27,8 +27,8 @@ public class Contact extends Fragment {
     public Contact()
     {}
      FirebaseDatabase database;
-    RecyclerView contact;
-    ArrayList<DriverHelper> list=new ArrayList<>();
+     RecyclerView contact;
+     ArrayList<DriverHelper> list=new ArrayList<>();
 
 
     @Override
@@ -42,7 +42,7 @@ public class Contact extends Fragment {
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         contact.setLayoutManager(linearLayoutManager);
         database=FirebaseDatabase.getInstance();
-        database.getReference().child("User").child("Drivers").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("User").child("Drivers").child("Profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
             list.clear();

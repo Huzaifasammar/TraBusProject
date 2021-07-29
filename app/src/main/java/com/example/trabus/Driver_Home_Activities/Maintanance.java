@@ -44,8 +44,7 @@ public class Maintanance extends AppCompatActivity {
     RelativeLayout driversample;
     CircleImageView driverImage;
     ImageView back,calendar,clock;
-    String Total=null;
-    String a,b,c,d=null;
+    String id;
     TextView name,busno,time,date,total;
     EditText oil,brake,synthetic,mobileoil;
     AutoCompleteTextView PetrolPump;
@@ -137,6 +136,7 @@ public void onclick()
         @Override
         public void onClick(View v) {
             startActivity(new Intent(Maintanance.this, Driver_Home.class));
+            finish();
         }
     });
 }
@@ -167,8 +167,8 @@ public void onclick()
     }
     public void retrivedata()
     {
-        String id=fAuth.getUid();
-        DatabaseReference reference=database.getReference("User").child("Drivers").child(id);
+        id=fAuth.getUid();
+        DatabaseReference reference=database.getReference("User").child("Drivers").child("Profile").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

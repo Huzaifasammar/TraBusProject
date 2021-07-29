@@ -57,7 +57,6 @@ import java.util.Objects;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private GoogleMap mMap;
-    private Object Places;
     FirebaseAuth firebaseAuth;
     private DatabaseReference reference;
     private LocationManager manager;
@@ -66,7 +65,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker marker;
     Mylocation location;
     LatLng latlng1;
-    LatLng latlng2;
     String id;
     double longitude,latitude;
     @Override
@@ -88,7 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         FirebaseDatabase database=FirebaseDatabase.getInstance();
-        DatabaseReference db=database.getReference("User").child("Drivers").child(id);
+        DatabaseReference db=database.getReference("User").child("Drivers").child("Profile").child(id);
         EndRoute.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -109,7 +107,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             onPause();
                             dialog.dismiss();
                             startActivity(new Intent(MapsActivity.this, Driver_Home.class));
+                            finish();
                         }
+
+
 
                     }
 
@@ -139,7 +140,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
-
 
 
     @Override
@@ -243,7 +243,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if(snapshot.exists())
                 {
                     location=snapshot.getValue(Mylocation.class);
-                    try {
                         if(location!=null) {
                             longitude = location.getLongitude();
                             latitude = location.getLatitude();
@@ -252,10 +251,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18.0f));
                             marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                         }
-                    }catch (Exception e)
-                    {
-                        Toast.makeText(MapsActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
 
 
                 }

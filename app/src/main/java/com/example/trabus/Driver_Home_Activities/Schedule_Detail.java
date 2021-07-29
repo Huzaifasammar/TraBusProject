@@ -23,6 +23,7 @@ public class Schedule_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Schedule_Detail.this,Schedule.class));
+                finish();
             }
         });
     }

@@ -38,7 +38,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     public void onBindViewHolder(@NonNull @NotNull ContactsAdapter.ViewHolder holder, int position) {
      final DriverHelper helper=list.get(position);
      holder.busno.setText(helper.getBusno());
-     String Fullname=helper.getFname()+helper.getLname();
+     String Fullname=helper.getFname()+" "+helper.getLname();
      holder.name.setText(Fullname);
      holder.contact.setText(helper.getPhonenumber());
     }
@@ -49,7 +49,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     }
     public class ViewHolder extends RecyclerView.ViewHolder
     {
-       TextView id,busno,name,contact;
+       TextView busno,name,contact;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             busno=itemView.findViewById(R.id.busno);

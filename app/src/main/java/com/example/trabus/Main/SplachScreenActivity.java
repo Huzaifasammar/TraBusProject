@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
+import com.example.trabus.Student_Home;
 
 public class SplachScreenActivity extends AppCompatActivity {
   Handler handler;
@@ -19,7 +21,7 @@ public class SplachScreenActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(SplachScreenActivity.this, RegistrationActivity.class);
+                Intent intent=new Intent(SplachScreenActivity.this, SignIn.class);
                 startActivity(intent);
                 finish();
             }

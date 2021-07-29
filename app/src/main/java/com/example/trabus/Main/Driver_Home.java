@@ -49,12 +49,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    String id;
     NavigationView navigation;
     ImageView notification;
     TextView heading,DriverName,BusNumber;
     Dialog notificationdialog;
     FirebaseAuth fAuth;
     FirebaseDatabase database;
+    DatabaseReference reference;
     CircleImageView driverImage;
 
     @Override
@@ -79,7 +81,7 @@ public class Driver_Home extends AppCompatActivity {
         notification=findViewById(R.id.Ivnotification);
         fAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-
+        reference=FirebaseDatabase.getInstance().getReference();
         navigation.bringToFront();
         ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
         drawerLayout.addDrawerListener(drawerToggle);
@@ -133,6 +135,7 @@ public class Driver_Home extends AppCompatActivity {
                     case R.id.nav_logout_driver:
                         fAuth.signOut();
                         startActivity(new Intent(Driver_Home.this, SignIn.class));
+                        finish();
 
                     default:
                         break;
@@ -144,8 +147,8 @@ public class Driver_Home extends AppCompatActivity {
     }
     public void retrivedata()
     {
-        String id=fAuth.getUid();
-        DatabaseReference reference=database.getReference("User").child("Drivers").child(id);
+        id=fAuth.getUid();
+        reference=database.getReference("User").child("Drivers").child("Profile").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

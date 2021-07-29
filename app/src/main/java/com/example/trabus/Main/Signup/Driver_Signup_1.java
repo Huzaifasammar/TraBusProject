@@ -293,7 +293,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
                             public void onFailure(@NonNull @NotNull Exception e) {
                                 Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
                                 DriverHelper helper = new DriverHelper(id, Fname, Lname, Username, Email, Password, BusNo, PhoneNumber, "");
-                                dbreference.child("User").child("Drivers").child(id).setValue(helper);
+                                dbreference.child("User").child("Drivers").child("Profile").child(id).setValue(helper);
                             }
                         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -302,7 +302,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Uri uri) {
                                         DriverHelper helper = new DriverHelper(id, Fname, Lname, Username, Email, Password, BusNo, PhoneNumber, uri.toString());
-                                        dbreference.child("User").child("Drivers").child(id).setValue(helper);
+                                        dbreference.child("User").child("Drivers").child("Profile").child(id).setValue(helper);
                                         progressdialog.dismiss();
                                         startActivity(new Intent(Driver_Signup_1.this, SignIn.class));
                                     }
