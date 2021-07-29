@@ -52,7 +52,6 @@ public class SignIn extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_sign_in);
         initialize();
-        checkcurrentuser();
         onclick();
         progressdialog = new ProgressDialog(SignIn.this);
         progressdialog.setTitle("Logging In");
@@ -82,6 +81,13 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SignIn.this, Identity.class));
             }
+        });
+        btnsignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validation();
+            }
+
         });
         leftarrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,37 +186,6 @@ public class SignIn extends AppCompatActivity {
         });
     }
 
-    public void checkcurrentuser() {
-        if (Currentuser != null) {
-            id = fAuth.getCurrentUser().getUid();
-            dbreference.child("User").child("Students").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        startActivity(new Intent(SignIn.this, Student_Home.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(SignIn.this, Driver_Home.class));
-                        finish();
-                    }
-                }
 
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                }
-            });
-        }
-        else
-        {
-            btnsignin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    validation();
-                }
-
-            });
-        }
-    }
 }
 
