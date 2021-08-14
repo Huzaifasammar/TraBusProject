@@ -70,6 +70,7 @@ public class Live_Tracking extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Live_Tracking.this, Student_Home.class));
+                finish();
             }
         });
     }

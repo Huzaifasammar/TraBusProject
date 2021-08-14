@@ -119,6 +119,7 @@ public void onclick()
         public void onClick(View v) {
             Toast.makeText(Maintanance.this,"Your response has been recorded",Toast.LENGTH_LONG).show();
             startActivity(new Intent(Maintanance.this,Driver_Home.class));
+            finish();
         }
     });
 
@@ -126,6 +127,7 @@ public void onclick()
         @Override
         public void onClick(View v) {
             startActivity(new Intent(Maintanance.this,Driver_Home.class));
+            finish();
         }
     });
 

@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="match_parent"
+        android:layout_above="@id/endroute"
         android:id="@+id/Rl_maps"
         >
         <include layout="@layout/activity_maps"></include>
@@ -19,7 +20,7 @@
         android:id="@+id/endroute"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_below="@id/Rl_maps"
+        android:layout_marginBottom="5dp"
         android:text="End Route"
         android:textColor="@color/white"
         android:backgroundTint="@color/Green"

@@ -5,16 +5,30 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Application;
+import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trabus.Main.Driver_Home;
+import com.example.trabus.MapsActivity;
 import com.example.trabus.R;
+import com.example.trabus.Student_Home;
 import com.example.trabus.models.Mylocation;
+import com.example.trabus.models.Rating;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,12 +36,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,15 +60,24 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, TrackingBuses {
+public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
     private  GoogleMap mMap;
-    String BusNo;
+    String BusNo,id;
     Query query;
-    private Marker marker;
+    RatingBar ratingBar;
+    TextView textView;
+    Polygon polygon;
+    Marker marker;
+    Dialog rating;
+    Button btnreview;
+    Polyline polyline1;
+    double distenace;
+    MarkerOptions options;
     FirebaseDatabase database;
     FirebaseAuth auth;
     Mylocation location;
+    LocationListener listener;
     private final int mintime=1000;
     private final int distance=1;
     Location currentLocation;
@@ -57,8 +86,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     LatLng latlng1,latlng2;
     double longitude,latitude;
     DatabaseReference reference;
-    String id;
-    LocationManager manager;
+    private LocationManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,25 +95,65 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         setContentView(R.layout.maps_activity);
         database=FirebaseDatabase.getInstance();
         auth=FirebaseAuth.getInstance();
+        options=new MarkerOptions();
+        rating=new Dialog(TrackBuses.this);
+        rating.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        rating.setContentView(R.layout.review);
+        btnreview=rating.findViewById(R.id.btnrate);
+        ratingBar=rating.findViewById(R.id.ratingbar);
+        textView=rating.findViewById(R.id.ratingtext);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                textView.setText(" "+rating);
+            }
+        });
         BusNo=getIntent().getStringExtra("busno");
         id=getIntent().getStringExtra("id");
         reference= FirebaseDatabase.getInstance().getReference();
         query=reference.child("User").child("Drivers").child("Location").child(id);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        manager=(LocationManager)getSystemService(LOCATION_SERVICE);
         fetchLocation();
+        getlocationupdates();
+        Button EndRoute;
+        EndRoute=findViewById(R.id.endroute);
+        EndRoute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rating.show();
+                onPause();
+            }
+        });
+        btnreview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(TrackBuses.this,"Your response has been recorded",Toast.LENGTH_SHORT).show();
+                String text= textView.getText().toString().trim();
+                FirebaseUser CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
+                Rating rating=new Rating(text);
+                Rating helper=new Rating(text);
+                reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).setValue(helper);
+                startActivity(new Intent(TrackBuses.this,Student_Home.class));
+                finish();
+
+            }
+        });
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         latlng1=new LatLng(33,73);
         latlng1 = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        marker = mMap.addMarker(new MarkerOptions().position(latlng1).title("You are here!")) ;
+        marker=mMap.addMarker(options.position(latlng1).title("You are here !"));
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latlng1));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18.0f));
         readchanges();
-    }
 
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
@@ -94,21 +162,26 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 fetchLocation();
                 getlocationupdates();
-                readchanges();
             }
         }
     }
+
     @Override
-    public void onLocationChanged(@NonNull Location location) {
-        if(location!=null)
-        {
-            savelocation(location);
-        }
-        else
-        {
-            Toast.makeText(this,"No location found",Toast.LENGTH_LONG).show();
-        }
+    public void onBackPressed() {
+        super.onBackPressed();
+        manager.removeUpdates(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        manager.removeUpdates(this);
+    }
+
+    @Override
+        public void onLocationChanged(@NonNull Location location) {
+            readchanges();
+        }
 
     private void fetchLocation() {
         if (ActivityCompat.checkSelfPermission(
@@ -131,10 +204,6 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         });
 
     }
-private void savelocation(Location location)
-{
-    reference.setValue(location);
-}
         public void readchanges() {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -150,18 +219,34 @@ private void savelocation(Location location)
                                 longitude = location.getLongitude();
                                 latitude = location.getLatitude();
                                 latlng2 = new LatLng(latitude, longitude);
-                                marker = mMap.addMarker(new MarkerOptions().position(latlng2).title(BusNo)) ;
+                                marker.setPosition(latlng2);
+                                marker.setTitle(BusNo);
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng2, 18.0f));
                                 marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
-                                double distenace=calculatedistance(latlng1,latlng2);
-                                Toast.makeText(getApplicationContext(),"You are "+" "+distenace+" km"+" away from Bus",Toast.LENGTH_LONG).show();
+                                distenace=calculatedistance(latlng1,latlng2);
+                                PolylineOptions options=new PolylineOptions();
+                                polyline1 = mMap.addPolyline(options
+                                        .clickable(true)
+                                        .add(latlng1,latlng2));
+                                polyline1.setWidth(25);
+                                polyline1.setColor(R.color.red);
+                                mMap.addCircle(new CircleOptions().fillColor(Color.argb(70,150,50,50)).radius(5.0).center(latlng1).strokeWidth(3f));
+                                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                    @SuppressLint("DefaultLocale")
+                                    @Override
+                                    public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
+                                        Toast.makeText(TrackBuses.this,"You are "+String.format("%.0f",distenace)+" km away from bus",Toast.LENGTH_SHORT).show();
+                                        return false;
+                                    }
+                                });
+
 
                             }
 
                     }
                     else
                     {
-                        Toast.makeText(getApplicationContext(),"Driver Not start Sharing Location Yet",Toast.LENGTH_LONG).show();
+                        Toast.makeText(TrackBuses.this,"Driver not start sharing their location yet",Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -180,9 +265,9 @@ private void savelocation(Location location)
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             {
                 if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, mintime, distance, (LocationListener) this);
+                    manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, mintime, distance,this);
                 } else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mintime, distance, (LocationListener) this);
+                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mintime, distance,this);
                 } else {
                     Toast.makeText(this, "No provider available", Toast.LENGTH_LONG).show();
                 }

@@ -81,6 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getlocationupdates();
+        readchanges();
         Button EndRoute;
         EndRoute=findViewById(R.id.endroute);
 

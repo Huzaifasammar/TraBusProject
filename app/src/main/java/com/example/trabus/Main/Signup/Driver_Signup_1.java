@@ -305,6 +305,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
                                         dbreference.child("User").child("Drivers").child("Profile").child(id).setValue(helper);
                                         progressdialog.dismiss();
                                         startActivity(new Intent(Driver_Signup_1.this, SignIn.class));
+                                        finish();
                                     }
                                 });
                             }
