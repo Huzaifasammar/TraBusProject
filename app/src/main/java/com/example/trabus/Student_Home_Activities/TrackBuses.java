@@ -67,23 +67,21 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     Query query;
     RatingBar ratingBar;
     TextView textView;
-    Polygon polygon;
-    Marker marker;
+    Marker marker,marker1;
     Dialog rating;
+    Polyline drawline;
     Button btnreview;
-    Polyline polyline1;
     double distenace;
     MarkerOptions options;
     FirebaseDatabase database;
     FirebaseAuth auth;
     Mylocation location;
-    LocationListener listener;
     private final int mintime=1000;
     private final int distance=1;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
-    LatLng latlng1,latlng2;
+    LatLng latlng1,latlng2,latLng;
     double longitude,latitude;
     DatabaseReference reference;
     private LocationManager manager;
@@ -131,7 +129,6 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                 Toast.makeText(TrackBuses.this,"Your response has been recorded",Toast.LENGTH_SHORT).show();
                 String text= textView.getText().toString().trim();
                 FirebaseUser CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
-                Rating rating=new Rating(text);
                 Rating helper=new Rating(text);
                 reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).setValue(helper);
                 startActivity(new Intent(TrackBuses.this,Student_Home.class));
@@ -145,10 +142,11 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        latlng1=new LatLng(33,73);
+        latLng=new LatLng(33,73);
+        marker1=mMap.addMarker(options.position(latLng).title("Location Checking"));
+        marker=mMap.addMarker(options.position(latLng));
         latlng1 = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        marker=mMap.addMarker(options.position(latlng1).title("You are here !"));
+        mMap.addMarker(options.position(latlng1).title("you are Here!"));
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latlng1));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18.0f));
         readchanges();
@@ -180,6 +178,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
 
     @Override
         public void onLocationChanged(@NonNull Location location) {
+
             readchanges();
         }
 
@@ -210,7 +209,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
                     if (snapshot.exists()) {
-                       
+
                             location =snapshot.getValue(Mylocation.class);
 
 
@@ -219,23 +218,25 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                 longitude = location.getLongitude();
                                 latitude = location.getLatitude();
                                 latlng2 = new LatLng(latitude, longitude);
-                                marker.setPosition(latlng2);
-                                marker.setTitle(BusNo);
+                                marker1.setVisible(true);
+                                marker1.setPosition(latlng2);
+                                marker1.setTitle(BusNo);
                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng2, 18.0f));
-                                marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
+                                marker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                                 distenace=calculatedistance(latlng1,latlng2);
-                                PolylineOptions options=new PolylineOptions();
-                                polyline1 = mMap.addPolyline(options
-                                        .clickable(true)
-                                        .add(latlng1,latlng2));
-                                polyline1.setWidth(25);
-                                polyline1.setColor(R.color.red);
-                                mMap.addCircle(new CircleOptions().fillColor(Color.argb(70,150,50,50)).radius(5.0).center(latlng1).strokeWidth(3f));
+                                mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
+                                mMap.addCircle(new CircleOptions().fillColor(Color.argb(150,100,150,100)).radius(5.0).center(latlng1).strokeWidth(3f));
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @SuppressLint("DefaultLocale")
                                     @Override
                                     public boolean onMarkerClick(@NonNull @NotNull Marker marker) {
-                                        Toast.makeText(TrackBuses.this,"You are "+String.format("%.0f",distenace)+" km away from bus",Toast.LENGTH_SHORT).show();
+                                        if (latlng2 != null) {
+                                            Toast.makeText(TrackBuses.this, "You are " + String.format("%.0f", distenace) + " km away from bus", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                        {
+                                            Toast.makeText(TrackBuses.this,"Driver End Their Location",Toast.LENGTH_SHORT).show();
+                                        }
                                         return false;
                                     }
                                 });
@@ -246,6 +247,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                     }
                     else
                     {
+                        marker1.setVisible(false);
                         Toast.makeText(TrackBuses.this,"Driver not start sharing their location yet",Toast.LENGTH_SHORT).show();
                     }
 

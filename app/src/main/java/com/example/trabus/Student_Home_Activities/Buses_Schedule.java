@@ -28,6 +28,7 @@ public class Buses_Schedule extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Buses_Schedule.this, Student_Home.class));
+                finish();
             }
         });
 
@@ -36,6 +37,7 @@ public class Buses_Schedule extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Buses_Schedule.this,Bus_schedule_detail.class));
+                finish();
             }
         });
 

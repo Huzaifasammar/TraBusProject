@@ -5,14 +5,62 @@
     android:layout_height="match_parent"
     tools:context=".Student_Navigation_fragments.Reminder">
 
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Set Reminder"
+      android:layout_marginStart="20dp"
+      android:textSize="24sp"
+      android:layout_marginTop="20dp"
+      android:id="@+id/tvsetreminder" />
+
   <TimePicker
       android:id="@+id/timepicker"
+      android:layout_below="@id/tvsetreminder"
       android:layout_width="wrap_content"
+      android:numbersBackgroundColor="@color/white"
+      android:numbersSelectorColor="@color/Green"
+      android:headerBackground="@color/Green"
       android:layout_height="wrap_content"
-      android:layout_marginTop="50dp"
+      android:layout_marginTop="20dp"
       android:layout_marginLeft="20dp"
       android:layout_marginRight="20dp">
 
   </TimePicker>
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Set Reminder"
+      android:textColor="@color/white"
+      android:backgroundTint="@color/Green"
+      android:layout_marginStart="10dp"
+      android:layout_marginEnd="10dp"
+      android:layout_marginTop="20dp"
+      android:layout_toLeftOf="@id/view"
+      android:layout_below="@id/timepicker"
+      android:layout_alignParentLeft="true"
+      android:id="@+id/btnsetreminder" />
+
+  <View
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:layout_below="@id/timepicker"
+      android:layout_centerVertical="true"
+      android:layout_centerHorizontal="true"
+      android:id="@+id/view" />
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="cancel"
+      android:backgroundTint="@color/red"
+      android:textColor="@color/white"
+      android:layout_marginStart="10dp"
+      android:layout_marginTop="20dp"
+      android:layout_marginEnd="10dp"
+      android:layout_toRightOf="@id/view"
+      android:layout_below="@id/timepicker"
+      android:layout_alignParentEnd="true"
+      android:id="@+id/btncancel" />
 
 </RelativeLayout>

@@ -8,11 +8,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.trabus.Login.SignIn;
+import com.example.trabus.Main.ChatsActivity;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
 import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
 import com.example.trabus.Student_Navigation_fragments.Home;
-import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.Student_Navigation_fragments.Reminder;
 import com.example.trabus.models.StudentHelper;
 
@@ -98,11 +98,7 @@ public class Student_Home extends AppCompatActivity {
                         heading.setText("Set Reminder");
                         notification.setVisibility(View.INVISIBLE);
                         break;
-                    case R.id.nav_profile_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Profile()).commit();
-                        heading.setText("Update Profile");
-                        notification.setVisibility(View.INVISIBLE);
-                        break;
+                   
                     case R.id.nav_change_password_student:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new ChangePassword()).commit();
                         heading.setText("Change Password");
@@ -122,6 +118,10 @@ public class Student_Home extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Contact()).commit();
                         heading.setText("Contact with Driver");
                         notification.setVisibility(View.INVISIBLE);
+                        break;
+                    case R.id.studentchat:
+                        startActivity(new Intent(Student_Home.this,ChatsActivity.class));
+                        finish();
                         break;
 
                     default:

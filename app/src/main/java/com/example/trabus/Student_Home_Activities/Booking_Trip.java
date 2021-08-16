@@ -148,6 +148,7 @@ public class Booking_Trip extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Booking_Trip.this, Student_Home.class));
+                finish();
             }
         });
         drop1.setOnClickListener(new View.OnClickListener() {

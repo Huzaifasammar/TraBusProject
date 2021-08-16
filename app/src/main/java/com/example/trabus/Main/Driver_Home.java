@@ -1,22 +1,14 @@
 package com.example.trabus.Main;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,13 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trabus.Driver_Navigation_fragment.DriverReminder;
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
-import com.example.trabus.Driver_Navigation_fragment.ProfileFragment;
 import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
 import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
 import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
-import com.example.trabus.Student_Navigation_fragments.Profile;
 import com.example.trabus.models.DriverHelper;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -117,11 +108,6 @@ public class Driver_Home extends AppCompatActivity {
                     case R.id.nav_home_driver:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HomeFragment()).commit();
                         break;
-                    case R.id.nav_profile_driver:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new ProfileFragment()).commit();
-                        heading.setText("Update Profile");
-                        notification.setVisibility(View.INVISIBLE);
-                        break;
                     case R.id.nav_change_password_driver:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new Update_Password_Driver()).commit();
                         heading.setText("Update Password");
@@ -136,7 +122,15 @@ public class Driver_Home extends AppCompatActivity {
                         fAuth.signOut();
                         startActivity(new Intent(Driver_Home.this, SignIn.class));
                         finish();
-
+                        break;
+                    case R.id.nav_setreminder_driver:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new DriverReminder()).commit();
+                        heading.setText("Set Reminder");
+                        break;
+                    case R.id.chatdriver:
+                        startActivity(new Intent(Driver_Home.this,ChatsActivity.class));
+                        finish();
+                        break;
                     default:
                         break;
                 }

@@ -71,4 +71,10 @@ public class TrackingAdapter extends RecyclerView.Adapter<TrackingAdapter.ViewHo
 
         }
     }
+    public void filterlist (ArrayList<DriverHelper> filterlist)
+    {
+        list=filterlist;
+        notifyDataSetChanged();
+    }
+
 }

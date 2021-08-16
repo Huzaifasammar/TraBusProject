@@ -1,4 +1,4 @@
-package com.example.trabus.Student_Navigation_fragments;
+package com.example.trabus.Driver_Navigation_fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -17,19 +17,20 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.R;
 import com.example.trabus.Student_Home;
 import com.example.trabus.Student_Home_Activities.TrackBuses;
 import com.example.trabus.adapter.AlarmReciever;
+import com.example.trabus.adapter.DriverReminderReciever;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 
-public class Reminder extends Fragment implements View.OnClickListener {
+public class DriverReminder extends Fragment implements View.OnClickListener {
 
     private int  NotificationId=1;
-    Button btnsubmit,cancel;
     View view;
     TimePicker timePicker;
 
@@ -46,10 +47,10 @@ public class Reminder extends Fragment implements View.OnClickListener {
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(Reminder.this.getActivity(), AlarmReciever.class);
+        Intent intent = new Intent(DriverReminder.this.getActivity(), DriverReminderReciever.class);
         intent.putExtra("notificationid", NotificationId);
 
-        PendingIntent reminderintent = PendingIntent.getBroadcast(getContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent reminderintent = PendingIntent.getBroadcast(DriverReminder.this.getActivity(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) requireActivity().getSystemService(Context.ALARM_SERVICE);
 
@@ -66,7 +67,7 @@ public class Reminder extends Fragment implements View.OnClickListener {
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, alrmstarttime, reminderintent);
                 Toast.makeText(getContext(), "Reminder Set", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Reminder.this.getActivity(), Student_Home.class));
+                startActivity(new Intent(getContext(), Driver_Home.class));
                 break;
 
             case R.id.btncancel:

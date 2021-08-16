@@ -20,10 +20,6 @@
         <menu>
             <group android:checkableBehavior="single">
             <item
-                android:id="@+id/nav_profile_student"
-                android:icon="@drawable/ic_user"
-                android:title="Profile" />
-            <item
                 android:id="@+id/nav_change_password_student"
                 android:icon="@drawable/ic_changepasord"
                 android:title="Change Password" />
@@ -41,7 +37,7 @@
         <menu>
             <group android:checkableBehavior="single">
             <item
-                android:id="@+id/nav_email"
+                android:id="@+id/studentchat"
                 android:icon="@drawable/ic_email"
                 android:title="Chat" />
             <item

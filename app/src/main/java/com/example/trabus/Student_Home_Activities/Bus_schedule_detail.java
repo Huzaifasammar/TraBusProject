@@ -21,6 +21,7 @@ public class Bus_schedule_detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Bus_schedule_detail.this,Buses_Schedule.class));
+                finish();
             }
         });
     }

@@ -7,8 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 
 import com.example.trabus.R;
@@ -25,13 +31,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class Live_Tracking extends AppCompatActivity {
+public class Live_Tracking extends AppCompatActivity  {
     public Live_Tracking()
     {
     }
     ImageView back_arrow_track;
     FirebaseDatabase database;
     RecyclerView Tracking;
+    EditText search;
     ArrayList<DriverHelper> list=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +46,29 @@ public class Live_Tracking extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_live_tracking);
         database=FirebaseDatabase.getInstance();
+        search=findViewById(R.id.searchbus);
         Tracking=findViewById(R.id.recyclerviewtracking);
         final TrackingAdapter adapter= new TrackingAdapter(list,Live_Tracking.this);
         Tracking.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(Live_Tracking.this);
         Tracking.setLayoutManager(linearLayoutManager);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+               filter(s.toString());
+
+            }
+        });
         database.getReference().child("User").child("Drivers").child("Profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -74,4 +99,35 @@ public class Live_Tracking extends AppCompatActivity {
             }
         });
     }
+    private void  filter (String text)
+    {
+         ArrayList<DriverHelper> filtereddata=new ArrayList<>();
+         TrackingAdapter adapter= new TrackingAdapter(list,Live_Tracking.this);
+         Tracking.setAdapter(adapter);
+        database.getReference().child("User").child("Drivers").child("Profile").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot dataSnapshot:snapshot.getChildren())
+                {
+                    DriverHelper helper=dataSnapshot.getValue(DriverHelper.class);
+                        if(helper.getBusno().toLowerCase().contains(text.toLowerCase()))
+                        {
+                            filtereddata.add(helper);
+                        }
+                        adapter.filterlist(filtereddata);
+
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
 }
