@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/Green"
     android:gravity="bottom"
-    android:padding="16dp"
+    android:padding="5dp"
     android:id="@+id/Driver_Header"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">

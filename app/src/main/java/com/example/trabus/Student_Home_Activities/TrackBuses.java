@@ -69,7 +69,6 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     TextView textView;
     Marker marker,marker1;
     Dialog rating;
-    Polyline drawline;
     Button btnreview;
     double distenace;
     MarkerOptions options;

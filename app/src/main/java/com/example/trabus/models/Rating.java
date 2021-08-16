@@ -1,21 +1,24 @@
 package com.example.trabus.models;
 
 public class Rating {
-    String rate;
+    float rate;
     public Rating()
     {
 
     }
-    public Rating(String rate)
+    public Rating(float rate)
     {
         this.rate=rate;
     }
 
-    public String getRate() {
+    public Rating(String text) {
+    }
+
+    public float getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(float rate) {
         this.rate = rate;
     }
 }

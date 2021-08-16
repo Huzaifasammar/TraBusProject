@@ -2,28 +2,29 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="200dp"
+    android:gravity="bottom"
     android:id="@+id/driversample"
     android:background="@color/Green">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="5dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/driver_image_nav"
-        android:src="@drawable/ic_driver"
+        android:src="@drawable/ic_man"
 
         />
+
     <TextView
-        android:layout_below="@+id/driver_image_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/driver_name_nav"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@id/driver_image_nav"
         android:text="Muhammad Huzaifa Sammar"
-        android:layout_centerHorizontal="true"
-        android:padding="5dp"
+        android:layout_marginTop="60dp"
         android:textSize="18sp"
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
@@ -35,11 +36,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bus No 3"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
         android:textColor="@color/white"
-        android:textSize="14dp"
-        android:padding="5dp"
+        android:textSize="14sp"
+        android:layout_toRightOf="@id/driver_image_nav"
         android:layout_below="@id/driver_name_nav"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.5"
+        android:layout_marginStart="10dp"
+        android:id="@+id/driverrating"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/driver_image_nav"
+        android:textSize="14dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:layout_below="@id/driver_bus_nav" />
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="7.5dp"
+        android:layout_toRightOf="@id/driverrating"
+        android:layout_below="@id/driver_bus_nav"
+        android:src="@drawable/stars"
+        android:layout_marginStart="5dp"
+        app:tint="@color/white"></ImageView>
 
 
 </RelativeLayout>

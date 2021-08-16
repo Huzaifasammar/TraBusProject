@@ -263,27 +263,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-    public Double calculatedistance(LatLng stratP,LatLng EndP)
-    {
-        int radius=6371; //earth radius in km
-        double lat1=stratP.latitude;
-        double lat2=EndP.latitude;
-        double long1=stratP.longitude;
-        double long2=EndP.longitude;
-        double distancelat=Math.toRadians(lat2-lat1);
-        double distancelon=Math.toRadians(long2-long1);
-        double a=Math.sin(distancelat/2)*Math.sin(distancelat/2)+Math.cos(Math.toRadians(lat1))
-                *Math.cos(Math.toRadians(lat2))*Math.sin(distancelon/2)*Math.sin(distancelon/2);
-        double c=2*Math.asin(Math.sqrt(a));
-        double valueresult=radius*c;
-        double km=valueresult/1;
-        DecimalFormat format=new DecimalFormat("####");
-        int kmInDec = Integer.parseInt(format.format(km));
-        double meter=valueresult%1000;
-        int meterindec=Integer.valueOf(format.format(meter));
-        Log.i("Radius Value", "" + valueresult + "   KM  " + kmInDec
-                + " Meter   " + meterindec);
-        return  radius*c;
-
-    }
 }

@@ -46,6 +46,8 @@ public class ChatsActivity extends AppCompatActivity {
             }
         });
     }
+
+
     public void checkcurrentuser() {
         if (Currentuser != null) {
             id = firebaseAuth.getCurrentUser().getUid();

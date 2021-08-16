@@ -5,26 +5,26 @@
     android:layout_height="200dp"
     android:background="@color/Green"
     android:gravity="bottom"
-    android:padding="16dp"
+    android:padding="5dp"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:padding="10dp"
+       android:padding="5dp"
         android:id="@+id/student_image_nav"
         android:src="@drawable/ic_man"
 
         />
     <TextView
-        android:layout_below="@+id/student_image_nav"
+        android:layout_toRightOf="@id/student_image_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/student_name_nav"
         android:text="Muhammad Awais Khan"
-        android:layout_alignParentLeft="true"
         android:padding="5dp"
+        android:layout_marginTop="5dp"
         android:textSize="18sp"
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
@@ -35,10 +35,9 @@
         android:id="@+id/student_email_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:text="muhammad.bsse3573@iiu.edu.pk"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:padding="5dp"
         android:layout_toEndOf="@id/student_image_nav"
         android:layout_below="@id/student_name_nav"/>

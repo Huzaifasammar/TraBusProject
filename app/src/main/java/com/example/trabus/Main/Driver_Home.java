@@ -24,8 +24,10 @@ import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
 import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
 import com.example.trabus.models.DriverHelper;
+import com.example.trabus.models.Rating;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,15 +37,18 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     String id;
+    FirebaseUser Id;
     NavigationView navigation;
     ImageView notification;
-    TextView heading,DriverName,BusNumber;
+    TextView heading,DriverName,BusNumber,ratings;
     Dialog notificationdialog;
     FirebaseAuth fAuth;
     FirebaseDatabase database;
@@ -69,6 +74,7 @@ public class Driver_Home extends AppCompatActivity {
         heading=findViewById(R.id.driver_home);
         navigation=findViewById(R.id.navigation_layout_driver);
         toolbar=findViewById(R.id.toolbar);
+        Id=FirebaseAuth.getInstance().getCurrentUser();
         notification=findViewById(R.id.Ivnotification);
         fAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
@@ -141,7 +147,41 @@ public class Driver_Home extends AppCompatActivity {
     }
     public void retrivedata()
     {
-        id=fAuth.getUid();
+        id=Id.getUid();
+        reference=database.getReference().child("User").child("Drivers").child("Rating").child(id);
+        NavigationView navigationView=findViewById(R.id.navigation_layout_driver);
+        View hView=navigationView.getHeaderView(0);
+        ratings=hView.findViewById(R.id.driverrating);
+        ArrayList<Float> list=new ArrayList<>();
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+
+              for(DataSnapshot dataSnapshot:snapshot.getChildren())
+              {
+                  String koi = snapshot.child("rate").getValue(String.class);
+                  Rating rating=new Rating();
+                  float Rating=rating.getRate();
+                  list.add(Rating);
+                  System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+koi);
+              }
+                System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+list.toString());
+              float result=0;
+              for(int i=0;i<list.size();i++)
+              {
+                  result=result+list.get(i);
+              }
+              result=result/list.size();
+              System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+result);
+              //ratings.setText((int) result);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
         reference=database.getReference("User").child("Drivers").child("Profile").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,8 +189,6 @@ public class Driver_Home extends AppCompatActivity {
               if(snapshot.exists())
               {
                   DriverHelper helper=snapshot.getValue(DriverHelper.class);
-                  NavigationView navigationView=findViewById(R.id.navigation_layout_driver);
-                  View hView=navigationView.getHeaderView(0);
                   driverImage=hView.findViewById(R.id.driver_image_nav);
                   DriverName=hView.findViewById(R.id.driver_name_nav);
                   BusNumber=hView.findViewById(R.id.driver_bus_nav);
