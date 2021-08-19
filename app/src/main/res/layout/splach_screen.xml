@@ -4,23 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#228B22"
+    android:background="@color/white"
     tools:context=".Main.SplachScreenActivity">
-    <ImageView
-        android:id="@+id/logo_id"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_centerInParent="true"
-        />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo_id"
-        android:layout_centerHorizontal="true"
-        android:text="TraBus"
-        android:textSize="60dp"
-        android:textColor="@color/white"/>
+        android:layout_centerInParent="true">
+
+
+        <ImageView
+            android:id="@+id/logo_id"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/ic_trabus"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo_id"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="TraBus"
+            android:textSize="50sp"
+            android:textColor="@color/Green"/>
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -32,6 +45,6 @@
         android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="Senior year project 2021"
-        android:textColor="@color/white"></TextView>
+        android:textColor="@color/Green"></TextView>
 
 </RelativeLayout>

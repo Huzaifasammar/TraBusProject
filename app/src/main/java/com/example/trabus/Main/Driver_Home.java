@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -45,14 +46,18 @@ public class Driver_Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     String id;
+    Query query;
     FirebaseUser Id;
     NavigationView navigation;
     ImageView notification;
     TextView heading,DriverName,BusNumber,ratings;
     Dialog notificationdialog;
+    ActionBarDrawerToggle drawerToggle;
     FirebaseAuth fAuth;
+    View hView;
+    NavigationView navigationView;
     FirebaseDatabase database;
-    DatabaseReference reference;
+    DatabaseReference reference,reference1;
     CircleImageView driverImage;
 
     @Override
@@ -70,20 +75,8 @@ public class Driver_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_driver_home);
-        drawerLayout=findViewById(R.id.Drawerlayout_driver);
-        heading=findViewById(R.id.driver_home);
-        navigation=findViewById(R.id.navigation_layout_driver);
-        toolbar=findViewById(R.id.toolbar);
-        Id=FirebaseAuth.getInstance().getCurrentUser();
-        notification=findViewById(R.id.Ivnotification);
-        fAuth=FirebaseAuth.getInstance();
-        database=FirebaseDatabase.getInstance();
-        reference=FirebaseDatabase.getInstance().getReference();
-        navigation.bringToFront();
-        ActionBarDrawerToggle drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
-        drawerLayout.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-        toolbar.setNavigationIcon(R.drawable.menu);
+        Initialization();
+        onClick();
         retrivedata();
 
 
@@ -101,6 +94,102 @@ public class Driver_Home extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    // Read data from firebase to show user Info
+
+    public void retrivedata()
+    {
+        query= reference1.child("User").child("Drivers").child("Rating").child(id);
+
+        ArrayList<Rating> list=new ArrayList<>();
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                int counter=0;
+                float result=0;
+                for (DataSnapshot d : snapshot.getChildren()) {
+                    counter++;
+                    Rating rating = d.getValue(Rating.class);
+                    result+= rating.getRate();
+                }
+                float result2=result/counter;
+                ratings.setText(String.valueOf(result2));
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    // Initialize all fields
+
+    public void Initialization()
+    {
+        drawerLayout=findViewById(R.id.Drawerlayout_driver);
+        heading=findViewById(R.id.driver_home);
+        navigation=findViewById(R.id.navigation_layout_driver);
+        toolbar=findViewById(R.id.toolbar);
+        Id=FirebaseAuth.getInstance().getCurrentUser();
+        notification=findViewById(R.id.Ivnotification);
+        fAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
+        reference=FirebaseDatabase.getInstance().getReference();
+        reference1=FirebaseDatabase.getInstance().getReference();
+        navigation.bringToFront();
+        drawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_navigation,R.string.close_navigation);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        id=Id.getUid();
+        toolbar.setNavigationIcon(R.drawable.menu);
+        navigationView=findViewById(R.id.navigation_layout_driver);
+        hView=navigationView.getHeaderView(0);
+        ratings=hView.findViewById(R.id.driverrating);
+    }
+
+    // on Click Listeners
+
+    public void onClick()
+    {
+
+        // Read Driver Profile from firebase and uploaad on Header
+
+        reference=database.getReference("User").child("Drivers").child("Profile").child(id);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                    driverImage=hView.findViewById(R.id.driver_image_nav);
+                    DriverName=hView.findViewById(R.id.driver_name_nav);
+                    BusNumber=hView.findViewById(R.id.driver_bus_nav);
+                    assert helper != null;
+                    String FirstName=helper.getFname();
+                    String LastName=helper.getLname();
+                    String BusNo=helper.getBusno();
+                    String Image=helper.getImageurl();
+                    BusNumber.setText(BusNo);
+                    String Fullname=FirstName+" "+LastName;
+                    DriverName.setText(Fullname);
+                    Picasso.get().load(Image).into(driverImage);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(Driver_Home.this, "DataBase error.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Navigation Item Selected Listener
 
         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HomeFragment()).commit();
         navigation.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -144,72 +233,5 @@ public class Driver_Home extends AppCompatActivity {
                 return true;
             }
         });
-    }
-    public void retrivedata()
-    {
-        id=Id.getUid();
-        reference=database.getReference().child("User").child("Drivers").child("Rating").child(id);
-        NavigationView navigationView=findViewById(R.id.navigation_layout_driver);
-        View hView=navigationView.getHeaderView(0);
-        ratings=hView.findViewById(R.id.driverrating);
-        ArrayList<Float> list=new ArrayList<>();
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
-              for(DataSnapshot dataSnapshot:snapshot.getChildren())
-              {
-                  String koi = snapshot.child("rate").getValue(String.class);
-                  Rating rating=new Rating();
-                  float Rating=rating.getRate();
-                  list.add(Rating);
-                  System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+koi);
-              }
-                System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+list.toString());
-              float result=0;
-              for(int i=0;i<list.size();i++)
-              {
-                  result=result+list.get(i);
-              }
-              result=result/list.size();
-              System.out.println("eeeeeeeeeeeeeeeeeeeeeee"+result);
-              //ratings.setText((int) result);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-        reference=database.getReference("User").child("Drivers").child("Profile").child(id);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-              if(snapshot.exists())
-              {
-                  DriverHelper helper=snapshot.getValue(DriverHelper.class);
-                  driverImage=hView.findViewById(R.id.driver_image_nav);
-                  DriverName=hView.findViewById(R.id.driver_name_nav);
-                  BusNumber=hView.findViewById(R.id.driver_bus_nav);
-                  assert helper != null;
-                  String FirstName=helper.getFname();
-                  String LastName=helper.getLname();
-                  String BusNo=helper.getBusno();
-                  String Image=helper.getImageurl();
-                  BusNumber.setText(BusNo);
-                  String Fullname=FirstName+" "+LastName;
-                  DriverName.setText(Fullname);
-                  Picasso.get().load(Image).into(driverImage);
-
-              }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(Driver_Home.this, "DataBase error.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 }

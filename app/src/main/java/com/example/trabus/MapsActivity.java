@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,36 +59,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     FirebaseAuth firebaseAuth;
-    private DatabaseReference reference;
+    private DatabaseReference reference,db;
     private LocationManager manager;
     private final int mintime=1000;
     private final int distance=1;
     private Marker marker;
     Mylocation location;
+    String BusNo;
     LatLng latlng1;
-    String id;
+    FirebaseUser CurrentUser;
     double longitude,latitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.maps_activity);
+
+        //Initilization
         firebaseAuth=FirebaseAuth.getInstance();
-        id=firebaseAuth.getCurrentUser().getUid();
-        reference= FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(id);
+        CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
+        reference= FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
         manager=(LocationManager)getSystemService(LOCATION_SERVICE);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getlocationupdates();
-        readchanges();
         Button EndRoute;
         EndRoute=findViewById(R.id.endroute);
-
-
         FirebaseDatabase database=FirebaseDatabase.getInstance();
-        DatabaseReference db=database.getReference("User").child("Drivers").child("Profile").child(id);
+        // Fetching Bus No
+        db=database.getReference("User").child("Drivers").child("Profile").child(CurrentUser.getUid());
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                    assert helper != null;
+                    BusNo=helper.getBusno();
+                    marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
+            }
+        });
+        // End Route ClickListner
         EndRoute.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -97,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dialog.setMessage("We Ending Your Route");
                 dialog.show();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query query=ref.child("User").child("Drivers").child("Location").child(id);
+                Query query=ref.child("User").child("Drivers").child("Location").child(CurrentUser.getUid());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -123,26 +143,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
-                    assert helper != null;
-                    marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(helper.getBusno()));
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
-            }
-        });
-
     }
 
-
+//   On Permission Granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @org.jetbrains.annotations.NotNull String[] permissions, @NonNull @org.jetbrains.annotations.NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -176,6 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap = googleMap;
         latlng1=new LatLng(33,73);
+        marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
         readchanges();
 
 
@@ -217,7 +221,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onProviderDisabled(@NonNull String provider) {
 
+
     }
+
+    // Get Location Updates
+
     private void getlocationupdates() {
         if(manager!=null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -237,6 +245,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+
+    // Read Data from Database
+
     private void readchanges() {
         reference.addValueEventListener(new ValueEventListener() {
             @Override

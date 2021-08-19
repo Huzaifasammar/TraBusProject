@@ -42,59 +42,26 @@
             </LinearLayout>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@color/silver"
-        android:layout_below="@id/toolbar">
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/time_tx"
-                android:text="9:40 AM"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"></TextView>
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+           android:layout_above="@id/Rlsend"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:id="@+id/chatrecyclerview"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:stackFromEnd="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/other_text"
-                android:layout_below="@id/time_tx"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/chat_details_blue"
-                android:text="hello how are you"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:padding="10dp"></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/other_text"
-                android:layout_marginTop="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/chat_details_white"
-                android:text="yes i am fine "
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:padding="10dp"></TextView>
-
-        </RelativeLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/Rlsend"
         android:orientation="horizontal"
         android:background="@color/white"
         android:layout_alignParentStart="true"

@@ -24,12 +24,14 @@ RelativeLayout Rldriver,Rlstudent;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Identity.this,Driver_Signup_1.class));
+                finish();
             }
         });
         Rlstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Identity.this,Student_Signup.class));
+                finish();
             }
         });
 

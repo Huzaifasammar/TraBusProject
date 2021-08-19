@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:layout_width="match_parent"
@@ -20,12 +21,14 @@
         android:layout_below="@id/tvrate"
         android:layout_marginTop="10dp" />
 
-    <RatingBar
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="5"
-        android:stepSize="0.5"
-        android:rating="4.5"
+        app:srb_stepSize="0.5"
+        app:srb_borderColor="@color/Green"
+        app:srb_rating="3"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_below="@id/tvrate"
         android:id="@+id/ratingbar" />
@@ -36,10 +39,10 @@
         android:layout_below="@id/tvrate"
         android:id="@+id/ratingtext"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="5dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:textSize="24sp"
-        android:text="4.5" />
+        android:text="3.0" />
 
     <View
         android:layout_width="match_parent"
@@ -51,17 +54,32 @@
 
     <Button
         android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/view"
         android:id="@+id/btnrate"
         android:layout_marginTop="20dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:text="Submit"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:textColor="@color/white"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/Green"
+        android:textSize="16sp" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnrate"
+        android:layout_alignParentLeft="true"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/btnskip"
+        android:layout_marginTop="10dp"
+        android:text="Skip"
+
+        android:layout_marginStart="20dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/red"
         android:textSize="16sp" />
 
 

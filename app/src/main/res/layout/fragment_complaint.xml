@@ -163,7 +163,7 @@
                     android:backgroundTint="@color/red"
                     android:layout_alignParentLeft="true"
                     android:padding="15dp"
-                    android:id="@+id/cancel"
+                    android:id="@+id/cmplaincancel"
                     android:layout_toLeftOf="@id/view1"
                     android:layout_marginStart="10dp"
                     android:text="Cancel"

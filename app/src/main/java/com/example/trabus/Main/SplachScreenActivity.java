@@ -48,7 +48,7 @@ public class SplachScreenActivity extends AppCompatActivity {
     }
         public void checkcurrentuser() {
             if (Currentuser != null) {
-                id = firebaseAuth.getCurrentUser().getUid();
+                id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
                 dbreference.child("User").child("Students").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

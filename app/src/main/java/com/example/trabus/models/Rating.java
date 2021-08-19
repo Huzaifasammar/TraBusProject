@@ -11,8 +11,6 @@ public class Rating {
         this.rate=rate;
     }
 
-    public Rating(String text) {
-    }
 
     public float getRate() {
         return rate;

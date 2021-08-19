@@ -38,16 +38,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/toolbar"
         android:orientation="vertical"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_trabus"
             android:layout_marginTop="20dp">
-        </de.hdodenhof.circleimageview.CircleImageView>
+        </ImageView>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_layout"
             android:layout_marginTop="20dp"

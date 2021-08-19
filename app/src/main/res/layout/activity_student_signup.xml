@@ -6,82 +6,61 @@
     android:background="@color/silver"
     android:layout_height="match_parent"
     tools:context=".Main.Signup.Student_Signup">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/Green">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/backarrowstudent"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/left_arrow"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="5dp"
-                app:tint="@color/white"
-                android:layout_marginStart="10dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Student Registration"
-                android:gravity="center"
-                android:textSize="24sp"
-                android:textColor="@color/white"></TextView>
-        </RelativeLayout>
-    </androidx.appcompat.widget.Toolbar>
 
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:background="@drawable/pic_background_rounded">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/tvfill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
-                android:text="Fill in Your Information"
-                android:textSize="20sp"
-                android:textColor="@color/black"></TextView>
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvfill"
-                android:id="@+id/RL_student_image">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/user"
-                    android:id="@+id/studentimg"></de.hdodenhof.circleimageview.CircleImageView>
+                android:text="Create New Account"
+                android:textSize="26sp"
+                android:textColor="@color/black" />
 
-                <TextView
-                    android:layout_width="match_parent"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Please fill in your information"
+                android:gravity="center" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/user"
+                    android:id="@+id/studentimg" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/studentimg"
-                    android:text="@string/upload_image"
-                    android:layout_marginTop="5dp"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/camera"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="10dp"
                     android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/Green"></TextView>
+                    app:fabSize="mini"
+                    android:id="@+id/RL_student_image"
+                    app:tint="@color/Green"
+                    app:backgroundTint="@color/white"
+                    android:contentDescription="Upload Picture" />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -267,8 +246,8 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/checked_Student"
                 android:layout_marginStart="10dp"
+                android:background="@drawable/round_border"
                 android:layout_marginEnd="10dp"
-                android:background="@drawable/white_backgroun_with_border"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,19 +285,34 @@
                 android:textColor="@color/white"
                 android:text="@string/register"
                 android:textAllCaps="false" />
-            <TextView
-                android:id="@+id/caltologinstudent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/underlinetext"
-                android:textColor="@color/Green"
-                android:gravity="center"
-                android:textSize="16sp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/alreadyaccount"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Already have an account ? "
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/caltologinstudent"
+                    android:text="Login"
+                    android:layout_toEndOf="@+id/alreadyaccount"
+                    android:textSize="16sp"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@color/Green"
+                    android:layout_marginBottom="30dp"
+
+
+                    />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

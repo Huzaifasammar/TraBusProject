@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">TraBus</string>
-    <string name="underlinetext">
-         <u> Already have an account/login</u>
-    </string>
     <string name="register">Register</string>
     <string name="upload_image"><u>+ upload image</u></string>
     <string name="sign_in">Sign In</string>

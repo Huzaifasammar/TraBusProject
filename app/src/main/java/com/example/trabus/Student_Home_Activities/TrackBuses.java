@@ -54,6 +54,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -65,11 +66,12 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     private  GoogleMap mMap;
     String BusNo,id;
     Query query;
-    RatingBar ratingBar;
+    Button EndRoute;
+    SimpleRatingBar ratingBar;
     TextView textView;
     Marker marker,marker1;
     Dialog rating;
-    Button btnreview;
+    Button btnreview,btnskip;
     double distenace;
     MarkerOptions options;
     FirebaseDatabase database;
@@ -90,51 +92,11 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.maps_activity);
-        database=FirebaseDatabase.getInstance();
-        auth=FirebaseAuth.getInstance();
-        options=new MarkerOptions();
-        rating=new Dialog(TrackBuses.this);
-        rating.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        rating.setContentView(R.layout.review);
-        btnreview=rating.findViewById(R.id.btnrate);
-        ratingBar=rating.findViewById(R.id.ratingbar);
-        textView=rating.findViewById(R.id.ratingtext);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                textView.setText(" "+rating);
-            }
-        });
-        BusNo=getIntent().getStringExtra("busno");
-        id=getIntent().getStringExtra("id");
-        reference= FirebaseDatabase.getInstance().getReference();
-        query=reference.child("User").child("Drivers").child("Location").child(id);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        manager=(LocationManager)getSystemService(LOCATION_SERVICE);
+        Initilization();
+        onClick();
         fetchLocation();
         getlocationupdates();
-        Button EndRoute;
-        EndRoute=findViewById(R.id.endroute);
-        EndRoute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rating.show();
-                onPause();
-            }
-        });
-        btnreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(TrackBuses.this,"Your response has been recorded",Toast.LENGTH_SHORT).show();
-                String text= textView.getText().toString().trim();
-                FirebaseUser CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
-                Rating helper=new Rating(text);
-                reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).setValue(helper);
-                startActivity(new Intent(TrackBuses.this,Student_Home.class));
-                finish();
 
-            }
-        });
 
     }
 
@@ -181,6 +143,80 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             readchanges();
         }
 
+        // Initialize all fields
+
+        public void Initilization()
+        {
+            database=FirebaseDatabase.getInstance();
+            auth=FirebaseAuth.getInstance();
+            options=new MarkerOptions();
+            rating=new Dialog(TrackBuses.this);
+            rating.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            rating.setContentView(R.layout.review);
+            btnreview=rating.findViewById(R.id.btnrate);
+            btnskip=rating.findViewById(R.id.btnskip);
+            ratingBar=rating.findViewById(R.id.ratingbar);
+            textView=rating.findViewById(R.id.ratingtext);
+            EndRoute=findViewById(R.id.endroute);
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            manager=(LocationManager)getSystemService(LOCATION_SERVICE);
+            BusNo=getIntent().getStringExtra("busno");
+            id=getIntent().getStringExtra("id");
+            reference= FirebaseDatabase.getInstance().getReference();
+            query=reference.child("User").child("Drivers").child("Location").child(id);
+        }
+        // click Listeners
+
+        public void onClick()
+        {
+            // Ratingbar Change Listener
+
+            ratingBar.setOnRatingBarChangeListener(new SimpleRatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(SimpleRatingBar simpleRatingBar, float rating, boolean fromUser) {
+                    textView.setText(" "+rating);
+                }
+            });
+
+            // Skip Button Listener
+
+            btnskip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(TrackBuses.this,Student_Home.class));
+                    finish();
+                }
+            });
+
+            // End Route Listener
+
+            EndRoute.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rating.show();
+                    onPause();
+                }
+            });
+
+            // Review Button Listener
+
+            btnreview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(TrackBuses.this,"Your response has been recorded",Toast.LENGTH_SHORT).show();
+                    float text= Float.parseFloat(textView.getText().toString());
+                    FirebaseUser CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
+                    Rating helper=new Rating(text);
+                    reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).setValue(helper);
+                    startActivity(new Intent(TrackBuses.this,Student_Home.class));
+                    finish();
+
+                }
+            });
+        }
+
+     // Fetch Student Location
+
     private void fetchLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -202,6 +238,9 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         });
 
     }
+
+    // get Driver Location from database
+
         public void readchanges() {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -260,6 +299,8 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             });
         }
 
+// Get Location updates
+
     private void getlocationupdates() {
         if(manager!=null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
@@ -279,6 +320,9 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             }
         }
     }
+
+    // Calculate Distanace Between Two Latlng
+
     public Double calculatedistance(LatLng stratP,LatLng EndP)
     {
         int radius=6371; //earth radius in km

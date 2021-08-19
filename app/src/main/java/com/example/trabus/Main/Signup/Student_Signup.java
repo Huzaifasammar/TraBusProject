@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -47,7 +48,7 @@ public class Student_Signup extends AppCompatActivity {
   ImageView backaroow;
   TextView caltologinstudent;
   Button btnregisterstudent;
-  RelativeLayout RLstudentimg;
+  FloatingActionButton RLstudentimg;
   FirebaseAuth fAuth;
   Uri Imagedata;
   StorageReference reference;
@@ -99,13 +100,6 @@ public class Student_Signup extends AppCompatActivity {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
-
-        backaroow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Student_Signup.this,Identity.class));
-            }
-        });
         btnregisterstudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +110,7 @@ public class Student_Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Student_Signup.this, SignIn.class));
+                finish();
             }
         });
 
@@ -123,7 +118,6 @@ public class Student_Signup extends AppCompatActivity {
     }
     //initialize all variables
     public void initialization(){
-        backaroow=findViewById(R.id.backarrowstudent);
         btnregisterstudent=findViewById(R.id.btnregisterstudent);
         caltologinstudent=findViewById(R.id.caltologinstudent);
         RLstudentimg=findViewById(R.id.RL_student_image);
@@ -273,6 +267,7 @@ public class Student_Signup extends AppCompatActivity {
                                     dbreference.child("User").child("Students").child(id).setValue(helper);
                                     progressdialog.dismiss();
                                     startActivity(new Intent(Student_Signup.this, SignIn.class));
+                                    finish();
                                 }
                             });
 

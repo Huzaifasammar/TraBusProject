@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
@@ -49,10 +50,9 @@ import java.util.UUID;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Driver_Signup_1 extends AppCompatActivity {
-    ImageView backarrow;
     Uri image;
-    RelativeLayout Rlimage;
     TextView caltologindriver;
+    FloatingActionButton Rlimage;
     Button btnregisterdriver;
     AutoCompleteTextView busno;
     TextInputEditText pnumber,FirstName,LastName,UserName,Email_et,Password_et;
@@ -103,14 +103,6 @@ public class Driver_Signup_1 extends AppCompatActivity {
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
-
-
-        backarrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Driver_Signup_1.this, Identity.class));
-            }
-        });
         btnregisterdriver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,7 +121,6 @@ public class Driver_Signup_1 extends AppCompatActivity {
     public void initialization() {
         fAuth=FirebaseAuth.getInstance();
         fdatabase=FirebaseDatabase.getInstance();
-        backarrow = findViewById(R.id.backarrow);
         Rlimage = findViewById(R.id.RL_image);
         busno = findViewById(R.id.busno);
         FirstName=findViewById(R.id.fname_ET);

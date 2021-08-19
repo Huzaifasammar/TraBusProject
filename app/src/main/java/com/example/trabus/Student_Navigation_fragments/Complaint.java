@@ -59,6 +59,7 @@ public class Complaint extends Fragment {
         Email=view.findViewById(R.id.complainemail);
         Regno=view.findViewById(R.id.regno);
         btncomplain=view.findViewById(R.id.submitcmplain);
+        btncancel=view.findViewById(R.id.cmplaincancel);
         description=view.findViewById(R.id.complaindescription);
         auth=FirebaseAuth.getInstance();
         id=FirebaseAuth.getInstance().getCurrentUser();
@@ -86,11 +87,19 @@ public class Complaint extends Fragment {
                     helper.put("regno",sRegNo);
                     helper.put("complaintype",sComplaintype);
                     helper.put("description",sDescription);
-                    reference.child("User").child("Students_Complaints").child(Id).setValue(helper);
+                    reference.child("User").child("Students").child("Complaints").child(Id).push().setValue(helper);
                     startActivity(new Intent(Complaint.this.getActivity(), Student_Home.class));
+                    getActivity().finish();
                 }
 
 
+            }
+        });
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Complaint.this.getActivity(), Student_Home.class));
+                getActivity().finish();
             }
         });
         return view;

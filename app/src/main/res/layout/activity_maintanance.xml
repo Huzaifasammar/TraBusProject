@@ -41,31 +41,23 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <include
-        layout="@layout/driver_sample"
-        android:id="@+id/driversample"
-        android:layout_below="@id/toolbarmaintanace"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:id="@+id/RLselectdatetime"
             android:layout_height="wrap_content"
-            android:layout_below="@id/driversample"
+            android:layout_below="@id/toolbarmaintanace"
             android:background="@drawable/top_round"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:id="@+id/tvdatetime"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:text="Select Date and Time"
@@ -194,6 +186,7 @@
          <EditText
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
+             android:id="@+id/petrolmileage"
              android:layout_below="@id/tvservicesdetail"
              android:layout_toRightOf="@id/tvmileage"
              android:layout_marginStart="20dp"
@@ -221,6 +214,7 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_below="@id/tvmileage"
+             android:id="@+id/totallitres"
              android:layout_toRightOf="@id/tvlitres"
              android:layout_marginStart="20dp"
              android:layout_marginEnd="10dp"
@@ -269,7 +263,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/RL_petrol"
             android:background="@drawable/bottom_round"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="30dp"
             android:id="@+id/Rl_chooseservice"
             android:layout_marginTop="3dp"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -489,6 +483,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
+                android:id="@+id/servicesmileage"
                 android:layout_toRightOf="@id/view"
                 android:layout_below="@id/Rl_other"
                 android:layout_alignParentEnd="true"
@@ -500,30 +495,6 @@
                 android:background="@drawable/white_backgroun_with_border"
                 android:textCursorDrawable="@drawable/style_cursur" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvkm"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:text="Total"
-                android:layout_marginBottom="10dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvkm"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="40dp"
-                android:text="4500"
-                android:id="@+id/tvtotal"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp" />
 
         </RelativeLayout>
         <RelativeLayout

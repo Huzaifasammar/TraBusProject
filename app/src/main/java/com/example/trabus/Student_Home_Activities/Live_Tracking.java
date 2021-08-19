@@ -38,6 +38,7 @@ public class Live_Tracking extends AppCompatActivity  {
     ImageView back_arrow_track;
     FirebaseDatabase database;
     RecyclerView Tracking;
+    TrackingAdapter adapter;
     EditText search;
     ArrayList<DriverHelper> list=new ArrayList<>();
     @Override
@@ -45,13 +46,30 @@ public class Live_Tracking extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_live_tracking);
+        Initialization();
+        OnClick();
+
+    }
+
+    // Initialize all fields
+
+    public void Initialization()
+    {
         database=FirebaseDatabase.getInstance();
         search=findViewById(R.id.searchbus);
         Tracking=findViewById(R.id.recyclerviewtracking);
-        final TrackingAdapter adapter= new TrackingAdapter(list,Live_Tracking.this);
+        adapter= new TrackingAdapter(list,Live_Tracking.this);
         Tracking.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(Live_Tracking.this);
         Tracking.setLayoutManager(linearLayoutManager);
+    }
+
+    // Click Listeners
+
+    public void OnClick()
+    {
+        // Searchbar Listener
+
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -65,10 +83,12 @@ public class Live_Tracking extends AppCompatActivity  {
 
             @Override
             public void afterTextChanged(Editable s) {
-               filter(s.toString());
+                filter(s.toString());
 
             }
         });
+        // All Buses List
+
         database.getReference().child("User").child("Drivers").child("Profile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -89,6 +109,7 @@ public class Live_Tracking extends AppCompatActivity  {
             }
         });
 
+     // Back Arrow listener
 
         back_arrow_track=findViewById(R.id.back_bus_track);
         back_arrow_track.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +120,8 @@ public class Live_Tracking extends AppCompatActivity  {
             }
         });
     }
+    // Filter Search Text
+
     private void  filter (String text)
     {
          ArrayList<DriverHelper> filtereddata=new ArrayList<>();
