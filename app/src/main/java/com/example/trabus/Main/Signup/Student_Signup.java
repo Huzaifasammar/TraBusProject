@@ -255,7 +255,7 @@ public class Student_Signup extends AppCompatActivity {
                         public void onFailure(@NonNull @NotNull Exception e) {
                             Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
                             StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender, "");
-                            dbreference.child("User").child("Students").child(id).setValue(helper);
+                            dbreference.child("User").child("Students").child("Profiles").child(id).setValue(helper);
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -264,7 +264,7 @@ public class Student_Signup extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender,uri.toString());
-                                    dbreference.child("User").child("Students").child(id).setValue(helper);
+                                    dbreference.child("User").child("Students").child("Profiles").child(id).setValue(helper);
                                     progressdialog.dismiss();
                                     startActivity(new Intent(Student_Signup.this, SignIn.class));
                                     finish();

@@ -47,8 +47,6 @@
         <activity android:name=".Driver_Home_Activities.Maintanance" />
         <activity android:name=".Main.Driver_Home" />
         <activity android:name=".Student_Home_Activities.Booking_Trip" />
-        <activity android:name=".Student_Home_Activities.Buses_Schedule" />
-        <activity android:name=".Student_Home_Activities.Bus_schedule_detail" />
         <activity android:name=".Login.Forget_Password_Activity" />
         <activity android:name=".Login.SignIn" />
         <activity android:name=".Main.Signup.Student_Signup" />

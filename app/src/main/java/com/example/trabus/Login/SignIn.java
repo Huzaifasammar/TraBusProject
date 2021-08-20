@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.Main.Signup.Identity;
 import com.example.trabus.Student_Home;
 import com.example.trabus.R;
+import com.example.trabus.adapter.ProgressButton;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,18 +33,19 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 public class SignIn extends AppCompatActivity {
     TextView caltoidentity, forgetsgnin;
-    ImageView leftarrow;
-    Button btnsignin;
-    String id;
+    View view;
     TextInputLayout Lemail, Lpassword;
     TextInputEditText Temail, Tpassword;
     String Email, Password;
     FirebaseDatabase database;
+    String id;
     FirebaseAuth fAuth;
+    ProgressButton progressButton;
     FirebaseUser Currentuser;
-    ProgressDialog progressdialog;
     DatabaseReference dbreference;
 
 
@@ -53,17 +56,13 @@ public class SignIn extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
         initialize();
         onclick();
-        progressdialog = new ProgressDialog(SignIn.this);
-        progressdialog.setTitle("Logging In");
-        progressdialog.setMessage("We are Logging you in");
 
     }
 
     public void initialize() {
         caltoidentity = findViewById(R.id.caltosignup);
-        leftarrow = findViewById(R.id.leftarrowsignin);
         forgetsgnin = findViewById(R.id.forgetsgnin);
-        btnsignin = findViewById(R.id.btnsignin);
+        view=findViewById(R.id.myProgressbtn);
         Lemail = findViewById(R.id.email_layout);
         Lpassword = findViewById(R.id.password_layout);
         Temail = findViewById(R.id.email_ET);
@@ -76,25 +75,28 @@ public class SignIn extends AppCompatActivity {
     }
 
     public void onclick() {
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressButton=new ProgressButton(SignIn.this,view);
+                progressButton.buttonactivated();
+                Handler handler=new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        validation();
+                    }
+                },3000);
+            }
+        });
         caltoidentity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignIn.this, Identity.class));
             }
         });
-        btnsignin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validation();
-            }
 
-        });
-        leftarrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignIn.this, Identity.class));
-            }
-        });
         forgetsgnin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,7 +138,9 @@ public class SignIn extends AppCompatActivity {
 
     public void validation() {
         if (!validateemail() || !validatepassword()) {
+            progressButton.buttonfinished();
             Toast.makeText(getApplicationContext(), "please fill require fields", Toast.LENGTH_LONG).show();
+
         } else {
             Authentication();
         }
@@ -146,24 +150,21 @@ public class SignIn extends AppCompatActivity {
 
         Email = Temail.getText().toString().trim();
         Password = Tpassword.getText().toString().trim();
-        progressdialog.show();
         fAuth.signInWithEmailAndPassword(Email, Password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
 
-                String id = authResult.getUser().getUid();
-                dbreference.child("User").child("Students").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                id = authResult.getUser().getUid();
+                dbreference.child("User").child("Students").child("Profiles").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         if (snapshot.exists()) {
                             if (fAuth.getCurrentUser() != null) {
-                                progressdialog.dismiss();
                                 startActivity(new Intent(SignIn.this, Student_Home.class));
                                 finish();
                             }
                         } else {
                             if (fAuth.getCurrentUser() != null) {
-                                progressdialog.dismiss();
                                 startActivity(new Intent(SignIn.this, Driver_Home.class));
                                 finish();
                             }
@@ -180,7 +181,7 @@ public class SignIn extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull @NotNull Exception e) {
-                progressdialog.dismiss();
+                progressButton.buttonfinished();
                 Toast.makeText(getApplicationContext(), "Incorrect Email or Password", Toast.LENGTH_SHORT).show();
             }
         });

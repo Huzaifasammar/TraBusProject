@@ -16,7 +16,6 @@
         app:theme="@style/ThemeOverlay.AppCompat.navTheme"
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"
-        app:itemBackground="@drawable/item_background_color"
         android:id="@+id/navigation_layout_student"
         app:headerLayout="@layout/header_student_home"
         app:menu="@menu/menu_student"/>

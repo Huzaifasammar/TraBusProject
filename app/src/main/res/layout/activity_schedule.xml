@@ -65,18 +65,16 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:hint="Search"
+                android:id="@+id/schedulesearch"
                 android:textSize="18sp"
                 android:background="@null"
                 android:textCursorDrawable="@drawable/style_cursur" />
         </LinearLayout>
     </RelativeLayout>
 
-    <include
-        layout="@layout/busno_sample"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@id/Rl_search"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content" />
+        android:id="@+id/Scheduledrecyclerview" />
 </RelativeLayout>

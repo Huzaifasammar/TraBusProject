@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">TraBus</string>
-    <string name="underlinetext">
-         <u> Already have an account/login</u>
-    </string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
-    <string name="Forgett"><u> Forget Password</u></string>
-    <string name="login"><u>Don\'t have an account/Signup</u></string>
     <string name="forget_password">Forget<br>Password</br> </string>
     <string name="enter_your_email_to_reset_your_password">Enter your email to reset your <br>password</br></string>
 

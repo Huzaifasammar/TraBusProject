@@ -148,7 +148,7 @@ public class Student_Home extends AppCompatActivity {
     }
     public void retrivedata() {
          id = fAuth.getUid();
-        DatabaseReference reference = database.getReference("User").child("Students").child(id);
+        DatabaseReference reference = database.getReference("User").child("Students").child("Profiles").child(id);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.example.trabus.Driver_Home_Activities.Schedule;
 import com.example.trabus.R;
 import com.example.trabus.Student_Home_Activities.Booking_Trip;
-import com.example.trabus.Student_Home_Activities.Buses_Schedule;
 import com.example.trabus.Student_Home_Activities.Live_Tracking;
 
 
@@ -42,7 +42,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                // startActivity(new Intent(Home.this.getActivity(), Buses_Schedule.class));
-                Intent intent=new Intent(Home.this.getActivity(),Buses_Schedule.class);
+                Intent intent=new Intent(Home.this.getActivity(), Schedule.class);
                 startActivity(intent);
             }
         });

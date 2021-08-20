@@ -31,9 +31,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:id="@+id/tv_busno1"
+            android:id="@+id/tv_busnobooking"
             android:layout_toEndOf="@+id/img_bus"
             ></TextView>
+
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -41,11 +42,12 @@
             android:layout_marginTop="10dp"
             android:text="3500 PKR"
             android:textSize="18sp"
+            android:id="@+id/fare"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textColor="@color/Green"
             android:textStyle="bold"
-            android:layout_alignParentRight="true"></TextView>
+            android:layout_alignParentRight="true" />
         <TextView
             android:layout_width="100dp"
             android:layout_height="wrap_content"

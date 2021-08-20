@@ -142,7 +142,7 @@ public void Initialize()
     public void checkcurrentuser() {
         if (Currentuser != null) {
 
-            dbreference.child("User").child("Students").child(Currentuser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            dbreference.child("User").child("Students").child("Profiles").child(Currentuser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {

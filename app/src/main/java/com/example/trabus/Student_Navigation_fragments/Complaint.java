@@ -87,7 +87,7 @@ public class Complaint extends Fragment {
                     helper.put("regno",sRegNo);
                     helper.put("complaintype",sComplaintype);
                     helper.put("description",sDescription);
-                    reference.child("User").child("Students").child("Complaints").child(Id).push().setValue(helper);
+                    reference.child("User").child("Students").child("Complaints").child(Id).setValue(helper);
                     startActivity(new Intent(Complaint.this.getActivity(), Student_Home.class));
                     getActivity().finish();
                 }

@@ -45,8 +45,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Maintanance extends AppCompatActivity {
     CircleImageView driverImage;
     ImageView back,calendar,clock;
-
-    TextView time,date;
+    String Bus;
+    TextView time,date,BusNo;
     EditText oil,brake,synthetic,mobileoil,mileagepetrol,litres,other,mileageservices;
     AutoCompleteTextView PetrolPump;
     TimePickerDialog timePickerDialog;
@@ -56,7 +56,7 @@ public class Maintanance extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseDatabase database;
     FirebaseUser Id;
-    DatabaseReference reference;
+    DatabaseReference reference,reference1;
     String sTime,sDate,sOil,sBrake,sSynthetic,sMobileoil,sMileagepetrol,sLitres,sOther,sMileageservices,sPetrolpump;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,24 @@ public class Maintanance extends AppCompatActivity {
     }
 public void onclick()
 {
+    reference1.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+            if(snapshot.exists()) {
+
+                DriverHelper helper = snapshot.getValue(DriverHelper.class);
+                assert helper != null;
+                Bus=helper.getBusno().toString();
+                BusNo.setText(Bus);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+        }
+    });
     clock.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -132,7 +150,7 @@ public void onclick()
                                       helper.put("BrakeServicesPrice",sBrake);
                                       helper.put("Other_services_Price",sOther);
                                       helper.put("Mileage_Services",sMileageservices);
-                                      reference.child("User").child("Drivers").child("Maintanance").child(Id.getUid()).push().setValue(helper);
+                                      reference.child("User").child("Drivers").child("Maintanance").child(Id.getUid()).child(Bus).push().setValue(helper);
                                       Toast.makeText(Maintanance.this,"Your response has been recorded",Toast.LENGTH_LONG).show();
                                       startActivity(new Intent(Maintanance.this,Driver_Home.class));
                                       finish();
@@ -173,13 +191,15 @@ public void onclick()
         date=findViewById(R.id.dateselected);
         fAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-        reference=FirebaseDatabase.getInstance().getReference();
         Id=FirebaseAuth.getInstance().getCurrentUser();
+        reference=FirebaseDatabase.getInstance().getReference();
+        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Drivers").child("Profile").child(Id.getUid());
         driverImage=findViewById(R.id.driver_image_nav);
         mileagepetrol=findViewById(R.id.petrolmileage);
         litres=findViewById(R.id.totallitres);
         other=findViewById(R.id.etother);
         mileageservices=findViewById(R.id.servicesmileage);
+        BusNo=findViewById(R.id.tvbusnomaintanace);
     }
     public void getedittextdata()
     {

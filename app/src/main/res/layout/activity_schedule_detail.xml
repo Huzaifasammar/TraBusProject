@@ -27,14 +27,16 @@
                 android:id="@+id/backscheduledetail"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"></ImageView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bus No 1 Schedule"
                 android:textSize="24sp"
+                android:id="@+id/tvtoolbarschedule"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:textColor="@color/black"></TextView>
+                android:textColor="@color/black" />
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -48,6 +50,7 @@
         android:id="@+id/RL1st"
         android:layout_marginStart="10dp"
         android:background="@drawable/white_backgroun_with_border">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +58,7 @@
             android:layout_marginStart="10dp"
             android:id="@+id/tvfirsttime"
             android:textSize="24sp"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -121,6 +124,7 @@
         android:layout_below="@id/RL1st"
         android:layout_marginStart="10dp"
         android:background="@drawable/white_backgroun_with_border">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -128,7 +132,7 @@
             android:layout_marginStart="10dp"
             android:id="@+id/tv2ndtime"
             android:textSize="24sp"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -194,6 +198,7 @@
         android:layout_below="@id/RL2nd"
         android:layout_marginStart="10dp"
         android:background="@drawable/white_backgroun_with_border">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,7 +206,8 @@
             android:layout_marginStart="10dp"
             android:id="@+id/tv3rdtime"
             android:textSize="24sp"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/black" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -210,7 +216,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:textColor="@color/black"
-            android:text="3rd time"></TextView>
+            android:text="3rd time" />
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -267,6 +273,7 @@
         android:layout_below="@id/RL3rd"
         android:layout_marginStart="10dp"
         android:background="@drawable/white_backgroun_with_border">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -274,7 +281,7 @@
             android:layout_marginStart="10dp"
             android:id="@+id/tv4thtime"
             android:textSize="24sp"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -341,6 +348,7 @@
         android:layout_below="@id/RL4th"
         android:layout_marginStart="10dp"
         android:background="@drawable/white_backgroun_with_border">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -348,7 +356,7 @@
             android:layout_marginStart="10dp"
             android:id="@+id/tv5thtime"
             android:textSize="24sp"
-            android:textColor="@color/black"></TextView>
+            android:textColor="@color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

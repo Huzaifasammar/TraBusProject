@@ -3,8 +3,6 @@
     <string name="register">Register</string>
     <string name="upload_image"><u>+ upload image</u></string>
     <string name="sign_in">Sign In</string>
-    <string name="Forgett"><u> Forget Password</u></string>
-    <string name="login"><u>Don\'t have an account/Signup</u></string>
     <string name="forget_password">Forget<br>Password</br> </string>
     <string name="update_profile">Update Profile</string>
     <string name="enter_your_email_to_reset_your_password">Enter your email to reset your \n<br>password</br></string>
@@ -39,8 +37,6 @@
 
     <!-- spinner -->
     <string-array name="spinnerlistpickup">
-        <item>Rawalpindi</item>
-        <item>Islamabad</item>
         <item>New Campus</item>
         <item>Old Campus</item>
 
@@ -52,6 +48,7 @@
         <item>Lahore</item>
         <item>Kashmir</item>
         <item>Kalarkahar</item>
+        <item>Karachi</item>
     </string-array>
     <string name="title_activity_tracking_buses">Map</string>
 

@@ -84,19 +84,20 @@
         android:textSize="20sp"
         android:id="@+id/tv_date5"
         android:textColor="@color/black"></TextView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="3500 PKR"
-        android:layout_below="@+id/tv_date4"
-        android:layout_marginTop="20dp"
-        android:layout_toRightOf="@+id/tv_date5"
-        android:textSize="20sp"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:layout_alignEnd="@+id/tv_date3"
-        android:id="@+id/tv_date6"
-        android:textColor="@color/black"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3500 PKR"
+            android:layout_below="@+id/tv_date4"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/tv_date5"
+            android:textSize="20sp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_alignEnd="@+id/tv_date3"
+            android:id="@+id/bookfare"
+            android:textColor="@color/black" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
