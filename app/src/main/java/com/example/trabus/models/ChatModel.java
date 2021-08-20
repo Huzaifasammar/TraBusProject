@@ -1,17 +1,25 @@
 package com.example.trabus.models;
 
 public class ChatModel {
-    String id,sendermessage;
+    String id,sendermessage,senderid;
     public ChatModel()
     {
 
     }
-    public ChatModel (String message,String id)
+    public ChatModel (String message,String id,String senderid)
     {
         this.id=id;
         this.sendermessage=message;
+        this.senderid=senderid;
     }
 
+    public String getSenderid() {
+        return senderid;
+    }
+
+    public void setSenderid(String senderid) {
+        this.senderid = senderid;
+    }
 
     public String getId() {
         return id;

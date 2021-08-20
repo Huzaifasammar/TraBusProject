@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trabus.Driver_Home_Activities.ChatActivityDriver;
 import com.example.trabus.Driver_Navigation_fragment.DriverReminder;
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
@@ -223,7 +224,7 @@ public class Driver_Home extends AppCompatActivity {
                         heading.setText("Set Reminder");
                         break;
                     case R.id.chatdriver:
-                        startActivity(new Intent(Driver_Home.this,ChatsActivity.class));
+                        startActivity(new Intent(Driver_Home.this, ChatActivityDriver.class));
                         finish();
                         break;
                     default:

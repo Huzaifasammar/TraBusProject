@@ -8,7 +8,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.trabus.Login.SignIn;
-import com.example.trabus.Main.ChatsActivity;
+import com.example.trabus.Main.ChatActivity;
+import com.example.trabus.Main.ChatsDetailActivity;
 import com.example.trabus.Student_Navigation_fragments.ChangePassword;
 import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
@@ -120,7 +121,7 @@ public class Student_Home extends AppCompatActivity {
                         notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.studentchat:
-                        startActivity(new Intent(Student_Home.this,ChatsActivity.class));
+                        startActivity(new Intent(Student_Home.this, ChatActivity.class));
                         finish();
                         break;
 

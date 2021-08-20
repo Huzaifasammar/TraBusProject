@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +34,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ChatsActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class ChatsDetailActivity extends AppCompatActivity {
     ImageView leftarrow;
     EditText sendmessage;
     ImageView btnsend;
@@ -42,17 +45,27 @@ public class ChatsActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
+
     LinearLayoutManager linearLayoutManager;
-    DatabaseReference dbreference,reference;
+    DatabaseReference dbreference,reference,referenceid;
     MessageAdapter messageAdapter;
     List<ChatModel>mChat=new ArrayList<>();
-    String id;
+    CircleImageView imageView;
+    TextView Name;
+    String userid,senderid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_chats);
+        imageView=findViewById(R.id.profilepic);
+        Name=findViewById(R.id.usernamechatdetail);
+        senderid =getIntent().getStringExtra("id");
+        String name=getIntent().getStringExtra("username");
+        Name.setText(name);
+        String pic=getIntent().getStringExtra("profilepic");
+        Picasso.get().load(pic).placeholder(R.drawable.ic_profile).into(imageView);
          Initialize();
          showsendmessage();
          onClick();
@@ -65,8 +78,8 @@ public class ChatsActivity extends AppCompatActivity {
   private void sendmessage()
   {
       String Message=sendmessage.getText().toString();
-      ChatModel chatModel=new ChatModel(Message,Currentuser.getUid());
-      reference.child("User").child("Chat").child(Currentuser.getUid()).push().setValue(chatModel);
+      ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid);
+      reference.child("User").child("Chat").child(Currentuser.getUid()).child(senderid).push().setValue(chatModel);
       sendmessage.setText(null);
       messageAdapter.notifyDataSetChanged();
   }
@@ -75,20 +88,23 @@ public class ChatsActivity extends AppCompatActivity {
 
   private void showsendmessage()
   {
-      query=reference.child("User").child("Chat").child(Currentuser.getUid());
+      query=reference.child("User").child("Chat").child(Currentuser.getUid()).child(senderid);
       query.addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
               mChat.clear();
               if(snapshot.exists()) {
+                  Currentuser=FirebaseAuth.getInstance().getCurrentUser();
                   for (DataSnapshot d : snapshot.getChildren()) {
                       ChatModel chatModel = d.getValue(ChatModel.class);
                       assert chatModel != null;
-                      mChat.add(chatModel);
+
+                      {
+                          mChat.add(chatModel);
+                      }
                   }
                   messageAdapter.notifyDataSetChanged();
               }
-
           }
 
           @Override
@@ -127,12 +143,13 @@ public void Initialize()
     Currentuser = FirebaseAuth.getInstance().getCurrentUser();
     leftarrow=findViewById(R.id.back_arrow_Chat);
     recyclerView=findViewById(R.id.chatrecyclerview);
-    id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-    messageAdapter=new MessageAdapter(mChat,id,ChatsActivity.this);
+    userid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
+    messageAdapter=new MessageAdapter(mChat, ChatsDetailActivity.this);
     sendmessage=findViewById(R.id.sms_editText);
     btnsend=findViewById(R.id.send_sms_btn);
     reference=FirebaseDatabase.getInstance().getReference();
     linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+    linearLayoutManager.setStackFromEnd(true);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(messageAdapter);
 }
@@ -146,9 +163,9 @@ public void Initialize()
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        startActivity(new Intent(ChatsActivity.this, Student_Home.class));
+                        startActivity(new Intent(ChatsDetailActivity.this, Student_Home.class));
                     } else {
-                        startActivity(new Intent(ChatsActivity.this, Driver_Home.class));
+                        startActivity(new Intent(ChatsDetailActivity.this, Driver_Home.class));
                     }
                 }
 
@@ -160,7 +177,7 @@ public void Initialize()
         }
         else
         {
-            startActivity(new Intent(ChatsActivity.this, SignIn.class));
+            startActivity(new Intent(ChatsDetailActivity.this, SignIn.class));
             finish();
         }
     }

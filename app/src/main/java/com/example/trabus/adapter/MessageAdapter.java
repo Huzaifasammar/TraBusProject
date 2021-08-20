@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trabus.R;
 import com.example.trabus.models.ChatModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -20,12 +22,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final int MSG_TYP_SENT=1;
     public static final int MSG_TYP_RECIEVE=2;
     private final List<ChatModel> mChat;
-    private final String senderId;
+    FirebaseUser fuser;
     Context  context;
 
-    public MessageAdapter(List<ChatModel> mChat,String senderId,Context context) {
+    public MessageAdapter(List<ChatModel> mChat,Context context) {
         this.mChat = mChat;
-        this.senderId=senderId;
         this.context=context;
     }
 
@@ -74,12 +75,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        if(mChat.get(position).equals(senderId))
+        fuser=FirebaseAuth.getInstance().getCurrentUser();
+        if(mChat.get(position).getId().equals(fuser.getUid()))
         {
-            return MSG_TYP_SENT;
+            return MSG_TYP_RECIEVE;
         }
         else
-            return MSG_TYP_RECIEVE;
+            return MSG_TYP_SENT;
     }
     public static class SendMessageViewHolder extends RecyclerView.ViewHolder{
         public TextView SendMessageShow;
@@ -87,6 +89,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public SendMessageViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             SendMessageShow=itemView.findViewById(R.id.sendmessage);
+
         }
         void sendData(ChatModel chatModel)
         {
