@@ -7,11 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.example.trabus.Main.ChatActivity;
 import com.example.trabus.R;
-import com.example.trabus.adapter.ChatsAdapter;
-import com.example.trabus.adapter.StudentChatAdapter;
-import com.example.trabus.models.DriverHelper;
+import com.example.trabus.adapter.ChatDetailAdapter;
 import com.example.trabus.models.StudentHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +23,7 @@ import java.util.ArrayList;
 public class ChatActivityDriver extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
-    StudentChatAdapter adapter;
+    ChatDetailAdapter adapter;
     DatabaseReference reference;
     ArrayList<StudentHelper> list=new ArrayList<>();
 
@@ -36,7 +33,7 @@ public class ChatActivityDriver extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_chat_driver);
         recyclerView=findViewById(R.id.chatrecyclerviewdriver);
-        adapter=new StudentChatAdapter(list, ChatActivityDriver.this);
+        adapter=new ChatDetailAdapter(list, ChatActivityDriver.this);
         recyclerView.setAdapter(adapter);
         linearLayoutManager=new LinearLayoutManager(ChatActivityDriver.this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -44,6 +41,7 @@ public class ChatActivityDriver extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                list.clear();
                 if(snapshot.exists()) {
                     for(DataSnapshot ds:snapshot.getChildren()) {
                         StudentHelper helper =ds.getValue(StudentHelper.class);

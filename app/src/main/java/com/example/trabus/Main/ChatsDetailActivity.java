@@ -47,12 +47,12 @@ public class ChatsDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
-    DatabaseReference dbreference,reference,referenceid;
+    DatabaseReference dbreference,reference,reference1;
     MessageAdapter messageAdapter;
     List<ChatModel>mChat=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
-    String userid,senderid;
+    String userid,senderid,SenderRoom,ReceiverRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,9 @@ public class ChatsDetailActivity extends AppCompatActivity {
         String pic=getIntent().getStringExtra("profilepic");
         Picasso.get().load(pic).placeholder(R.drawable.ic_profile).into(imageView);
          Initialize();
-         showsendmessage();
          onClick();
+         showsendmessage();
+
 
 
     }
@@ -79,7 +80,8 @@ public class ChatsDetailActivity extends AppCompatActivity {
   {
       String Message=sendmessage.getText().toString();
       ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid);
-      reference.child("User").child("Chat").child(Currentuser.getUid()).child(senderid).push().setValue(chatModel);
+      reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).push().setValue(chatModel);
+      reference1.child("User").child("Chat").child("Receiver").child(senderid).child(Currentuser.getUid()).push().setValue(chatModel);
       sendmessage.setText(null);
       messageAdapter.notifyDataSetChanged();
   }
@@ -88,8 +90,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
 
   private void showsendmessage()
   {
-      query=reference.child("User").child("Chat").child(Currentuser.getUid()).child(senderid);
-      query.addValueEventListener(new ValueEventListener() {
+      reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
               mChat.clear();
@@ -141,6 +142,7 @@ public void Initialize()
     database = FirebaseDatabase.getInstance();
     dbreference = FirebaseDatabase.getInstance().getReference();
     Currentuser = FirebaseAuth.getInstance().getCurrentUser();
+    reference1=FirebaseDatabase.getInstance().getReference();
     leftarrow=findViewById(R.id.back_arrow_Chat);
     recyclerView=findViewById(R.id.chatrecyclerview);
     userid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();

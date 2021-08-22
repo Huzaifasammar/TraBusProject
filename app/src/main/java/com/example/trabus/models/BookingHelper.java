@@ -3,21 +3,21 @@ package com.example.trabus.models;
 import com.example.trabus.adapter.BookingAdapter;
 
 public class BookingHelper {
-    String busno,date;
+    String Bus_Number,date;
     public BookingHelper()
     {}
-    public BookingHelper(String busno,String date)
+    public BookingHelper(String BusNumber,String date)
     {
-        this.busno=busno;
+        this.Bus_Number=BusNumber;
         this.date=date;
     }
 
     public String getBusno() {
-        return busno;
+        return Bus_Number;
     }
 
     public void setBusno(String busno) {
-        this.busno = busno;
+        this.Bus_Number = busno;
     }
 
     public String getDate() {

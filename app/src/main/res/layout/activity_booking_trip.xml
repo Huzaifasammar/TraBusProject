@@ -184,24 +184,22 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@+id/Rl_trip_booking"
+        android:layout_height="match_parent"
         android:background="@color/silver">
 
         <RelativeLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/RL_design_bottom_sheet"
             app:layout_behavior="@string/bottom_sheet_behavior"
-            android:elevation="4dp"
-            app:behavior_peekHeight="10dp"
             app:behavior_hideable="true">
-          <include
-              layout="@layout/sample_bottom_sheet"
-              android:layout_height="wrap_content"
-              android:layout_width="match_parent"
 
-           ></include>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookrecyclerview" />
 
 
 </RelativeLayout>

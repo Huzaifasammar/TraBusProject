@@ -2,13 +2,17 @@ package com.example.trabus.Student_Home_Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -28,7 +32,11 @@ import android.widget.Toast;
 import com.example.trabus.Driver_Home_Activities.Maintanance;
 import com.example.trabus.R;
 import com.example.trabus.Student_Home;
+import com.example.trabus.adapter.BookingAdapter;
+import com.example.trabus.models.BookingHelper;
 import com.example.trabus.models.StudentHelper;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,6 +46,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -47,6 +56,7 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.text.CollationElementIterator;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -57,19 +67,21 @@ public class Booking_Trip extends AppCompatActivity {
     LinearLayout calender;
     DatePickerDialog datePickerDialog;
     Button check_avaliable;
-    String Email,name;
+    String Email,name,pickup,drop,pickdate;
     Double estimatedfare,calcultfare;
     TextView fare;
     RelativeLayout bottom;
     TextView date,busdate,busnumber,bookfare;
     BottomSheetBehavior behavior;
     Double distance;
-    Dialog dialog;
-    String Number,pickup,drop,pickdate;
+    Query query;
+    BookingAdapter bookingAdapter;
+    LinearLayoutManager layoutManager;
     LatLng latLng1,latLng2;
-    DatabaseReference reference,reference1;
+    DatabaseReference reference,reference1,reference2;
     FirebaseUser user;
-
+    RecyclerView bookrecycler;
+    ArrayList<BookingHelper> list =new ArrayList<>();
 
 
 
@@ -83,6 +95,8 @@ public class Booking_Trip extends AppCompatActivity {
         user=FirebaseAuth.getInstance().getCurrentUser();
         reference= FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Profiles").child(user.getUid());
         reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking").child("BusNumber 34");
+        reference2=FirebaseDatabase.getInstance().getReference();
+        query=reference2.child("User").child("Students").child("availablebus").orderByChild("Bus Number");
         date=findViewById(R.id.tvdeparturedate);
         busdate=findViewById(R.id.tv_date);
         drop1=findViewById(R.id.drop1);
@@ -92,6 +106,11 @@ public class Booking_Trip extends AppCompatActivity {
         backtrip=findViewById(R.id.back_trip_booking);
         calender=findViewById(R.id.ll_calender_booking);
         check_avaliable=findViewById(R.id.btn_check_avalibilty);
+        bookrecycler=findViewById(R.id.bookrecyclerview);
+        bookingAdapter=new BookingAdapter(list,Booking_Trip.this);
+        layoutManager=new LinearLayoutManager(Booking_Trip.this);
+        bookrecycler.setAdapter(bookingAdapter);
+        bookrecycler.setLayoutManager(layoutManager);
         View bottomsheet=findViewById(R.id.RL_design_bottom_sheet);
          behavior=BottomSheetBehavior.from(bottomsheet);
         behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -138,44 +157,9 @@ public class Booking_Trip extends AppCompatActivity {
 
             }
         });
-        dialog=new Dialog(Booking_Trip.this);
-        dialog.setContentView(R.layout.activity_book_bus);
-        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.book_bus_background));
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(false);
-        dialog.getWindow().getAttributes().windowAnimations =R.style.animation;
 
-        Button book_now =dialog.findViewById(R.id.book);
-        Button book_cancel=dialog.findViewById(R.id.book_cancel);
-        TextView book_date=dialog.findViewById(R.id.tv_date4);
-        bookfare=dialog.findViewById(R.id.bookfare);
-        busnumber=dialog.findViewById(R.id.tv_bus_name);
-        Number=getIntent().getStringExtra("busno");
-        busnumber.setText(Number);
 
-        book_now.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,String> helper=new HashMap<>();
-                pickup=spnpickup.getText().toString();
-                drop=spndrop.getText().toString();
-                pickdate=date.getText().toString();
-                helper.put("Email",Email);
-                helper.put("Name",name);
-                helper.put("Pickup",pickup);
-                helper.put("drop",drop);
-                helper.put("date",pickdate);
-                reference1.setValue(helper);
-                Toast.makeText(Booking_Trip.this, "Congratulation you have sucessfully booked bus", Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
-        book_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+
 
 
         check_avaliable.setOnClickListener(new View.OnClickListener() {
@@ -188,10 +172,10 @@ public class Booking_Trip extends AppCompatActivity {
                  else {
                     if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        farecalculation();
+                        checkavailable();
+
                     } else {
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        farecalculation();
                     }
                 }
 
@@ -219,12 +203,6 @@ public class Booking_Trip extends AppCompatActivity {
             }
         });
 
-        bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.show();
-            }
-        });
 
 
         calender.setOnClickListener(new View.OnClickListener() {
@@ -240,8 +218,6 @@ public class Booking_Trip extends AppCompatActivity {
                         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                             int Month=month+1;
                             date.setText(dayOfMonth+"-"+Month+"-"+year);
-                            busdate.setText(dayOfMonth+"-"+Month+"-"+year);
-                            book_date.setText(dayOfMonth+"-"+Month+"-"+year);
 
                         }
                     },year,month,day);
@@ -288,75 +264,64 @@ public class Booking_Trip extends AppCompatActivity {
 public void farecalculation()
 {
     latLng1=new LatLng(33.6844,73.0479);
-    if(spndrop.getText().toString().equals("Nathia Gali"))
-    {
-        latLng2=new LatLng(34.0729,73.3812);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("Muree"))
-    {
-        latLng2=new LatLng(33.9070,73.3943);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("MuskPuri"))
-    {
-        latLng2=new LatLng(34.0602,73.4308);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("Lahore"))
-    {
-        latLng2=new LatLng(31.5204,74.3587);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("Kashmir"))
-    {
-        latLng2=new LatLng(33.2778,75.3412);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("KalarKahar"))
-    {
-        latLng2=new LatLng(32.7769,72.7068);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
-    }
-    else if(spndrop.getText().toString().equals("Karachi"))
-    {
-        latLng2=new LatLng(24.8607,67.0011);
-        distance=calculatedistance(latLng1,latLng2);
-        estimatedfare=100.0;
-        calcultfare=distance*estimatedfare;
-        fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
-        String farebook=fare.getText().toString();
-        bookfare.setText(farebook);
+    if(fare!=null) {
+        if (spndrop.getText().toString().equals("Nathia Gali")) {
+            latLng2 = new LatLng(34.0729, 73.3812);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("Muree")) {
+            latLng2 = new LatLng(33.9070, 73.3943);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("MuskPuri")) {
+            latLng2 = new LatLng(34.0602, 73.4308);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("Lahore")) {
+            latLng2 = new LatLng(31.5204, 74.3587);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("Kashmir")) {
+            latLng2 = new LatLng(33.2778, 75.3412);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("KalarKahar")) {
+            latLng2 = new LatLng(32.7769, 72.7068);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        } else if (spndrop.getText().toString().equals("Karachi")) {
+            latLng2 = new LatLng(24.8607, 67.0011);
+            distance = calculatedistance(latLng1, latLng2);
+            estimatedfare = 100.0;
+            calcultfare = distance * estimatedfare;
+            fare.setText((String.valueOf(String.format("%.0f", calcultfare))));
+            String farebook = fare.getText().toString();
+            bookfare.setText(farebook);
+        }
     }
 }
 
@@ -381,14 +346,14 @@ public void farecalculation()
         }
     }
     public boolean validatecalendar() {
-        String val =date.getText().toString();
-        if (val.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please Select travel date", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
-            date.setError(null);
-            return true;
-        }
+    String val = date.getText().toString();
+    if (val.isEmpty()) {
+        Toast.makeText(getApplicationContext(), "Please Select travel date", Toast.LENGTH_LONG).show();
+        return false;
+    } else {
+        date.setError(null);
+        return true;
+    }
 
     }
     public Double calculatedistance(LatLng stratP, LatLng EndP)
@@ -414,5 +379,47 @@ public void farecalculation()
         return  radius*c;
 
     }
+    public void checkavailable()
+    {
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if(snapshot.exists())
+                {
+                    for(DataSnapshot ds:snapshot.getChildren())
+                    {
+                        list.clear();
+                        BookingHelper helper=ds.getValue(BookingHelper.class);
+                        assert helper!=null;
+                        list.add(helper);
+                    }
+                    bookingAdapter.notifyDataSetChanged();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+    }
+    public void sendData()
+    {
+        HashMap<String,String> helper=new HashMap<>();
+        pickup=spnpickup.getText().toString();
+        drop=spndrop.getText().toString();
+        pickdate=date.getText().toString();
+        helper.put("Email",Email);
+        helper.put("Name",name);
+        helper.put("Pickup",pickup);
+        helper.put("drop",drop);
+        helper.put("date",pickdate);
+        reference1.setValue(helper);
+        Toast.makeText(Booking_Trip.this, "Congratulation you have sucessfully booked bus", Toast.LENGTH_LONG).show();
+        bookingAdapter.notifyDataSetChanged();
+    }
+
+
 
 }
