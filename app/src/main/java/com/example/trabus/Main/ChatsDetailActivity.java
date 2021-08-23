@@ -69,6 +69,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
          Initialize();
          onClick();
          showsendmessage();
+         showReceivemessage();
 
 
 
@@ -129,7 +130,8 @@ public void onClick()
     leftarrow.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            checkcurrentuser();
+           startActivity(new Intent(ChatsDetailActivity.this,ChatActivity.class));
+           finish();
         }
     });
 }
@@ -158,29 +160,31 @@ public void Initialize()
 
 // On back pressed Check Current User Driver or Student
 
-    public void checkcurrentuser() {
-        if (Currentuser != null) {
 
-            dbreference.child("User").child("Students").child("Profiles").child(Currentuser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        startActivity(new Intent(ChatsDetailActivity.this, Student_Home.class));
-                    } else {
-                        startActivity(new Intent(ChatsDetailActivity.this, Driver_Home.class));
+    private void showReceivemessage()
+    {
+        reference.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                mChat.clear();
+                if(snapshot.exists()) {
+                    Currentuser=FirebaseAuth.getInstance().getCurrentUser();
+                    for (DataSnapshot d : snapshot.getChildren()) {
+                        ChatModel chatModel = d.getValue(ChatModel.class);
+                        assert chatModel != null;
+
+                        {
+                            mChat.add(chatModel);
+                        }
                     }
+                    messageAdapter.notifyDataSetChanged();
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
-                }
-            });
-        }
-        else
-        {
-            startActivity(new Intent(ChatsDetailActivity.this, SignIn.class));
-            finish();
-        }
+            }
+        });
     }
 }

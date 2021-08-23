@@ -52,14 +52,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
+        ChatModel model=mChat.get(position);
 
-        if(getItemViewType(position)==MSG_TYP_SENT)
+        if(holder.getClass()==SendMessageViewHolder.class)
         {
-            ((SendMessageViewHolder)holder).sendData(mChat.get(position));
+            ((SendMessageViewHolder) holder).SendMessageShow.setText(model.getSendermessage());
         }
         else
         {
-            ((RecieveMessageViewHolder)holder).setData((mChat.get(position)));;
+            ((RecieveMessageViewHolder)holder).ShowMessage.setText((model.getSendermessage()));;
 
         }
 
@@ -67,16 +68,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        if(mChat!=null) {
+
             return mChat.size();
         }
-        return 0;
-    }
 
     @Override
     public int getItemViewType(int position) {
         fuser=FirebaseAuth.getInstance().getCurrentUser();
-        if(mChat.get(position).getId().equals(fuser.getUid()))
+        ChatModel model=mChat.get(position);
+        if(model.getId().equals(fuser.getUid()))
         {
             return MSG_TYP_RECIEVE;
         }
@@ -91,10 +91,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             SendMessageShow=itemView.findViewById(R.id.sendmessage);
 
         }
-        void sendData(ChatModel chatModel)
-        {
-            SendMessageShow.setText(chatModel.getSendermessage());
-        }
     }
     public static class RecieveMessageViewHolder extends RecyclerView.ViewHolder{
         public TextView ShowMessage;
@@ -102,10 +98,6 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         public RecieveMessageViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             ShowMessage=itemView.findViewById(R.id.recievemessage);
-        }
-        void setData(ChatModel chatModel)
-        {
-            ShowMessage.setText(chatModel.getSendermessage());
         }
     }
 

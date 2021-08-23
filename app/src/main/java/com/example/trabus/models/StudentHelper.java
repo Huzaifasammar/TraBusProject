@@ -1,13 +1,13 @@
 package com.example.trabus.models;
 
 public class StudentHelper {
-    String fname,lname,username,email,password,imageurl;
+    String fname,lname,username,email,password,imageurl,id;
     int gender;
     public StudentHelper()
     {
 
     }
-    public StudentHelper(String fname,String lname,String username,String email,String password,int gender,String imageurl)
+    public StudentHelper(String fname,String lname,String username,String email,String password,int gender,String imageurl,String id)
     {
         this.fname=fname;
         this.lname=lname;
@@ -16,7 +16,16 @@ public class StudentHelper {
         this.username=username;
         this.gender=gender;
         this.imageurl=imageurl;
+        this.id=id;
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFname() {

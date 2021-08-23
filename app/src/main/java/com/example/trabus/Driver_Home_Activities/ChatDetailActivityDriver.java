@@ -49,12 +49,12 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
     RecyclerView recyclerView;
 
     LinearLayoutManager linearLayoutManager;
-    DatabaseReference dbreference,reference,reference1;
+    DatabaseReference dbreference,reference,reference1,referenceReceives;
     MessageAdapter messageAdapter;
     List<ChatModel> mChat=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
-    String userid,senderid,SenderRoom,ReceiverRoom;
+    String userid,senderid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
         Initialize();
         onClick();
         showsendmessage();
+        showsReceivemessage();
 
 
     }
@@ -157,9 +158,38 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(messageAdapter);
+        referenceReceives=FirebaseDatabase.getInstance().getReference();
+    }
+    private void showsReceivemessage() {
+        referenceReceives.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                mChat.clear();
+                if (snapshot.exists()) {
+                    Currentuser = FirebaseAuth.getInstance().getCurrentUser();
+                    for (DataSnapshot d : snapshot.getChildren()) {
+                        ChatModel chatModel = d.getValue(ChatModel.class);
+                        assert chatModel != null;
+
+                        {
+                            mChat.add(chatModel);
+                        }
+                    }
+                    messageAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+// On back pressed Check Current User Driver or Student
     }
 
-// On back pressed Check Current User Driver or Student
-
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
 }

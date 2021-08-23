@@ -46,15 +46,13 @@ public class ChatDetailAdapter extends RecyclerView.Adapter<ChatDetailAdapter.Vi
         final StudentHelper users=list.get(position);
         Picasso.get().load(users.getImageurl()).placeholder(R.drawable.ic_profile).into(holder.image);
         holder.UserName.setText(users.getUsername());
-        String id= String.valueOf(holder.itemView.getId());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, ChatDetailActivityDriver.class);
                 intent.putExtra("profilepic",users.getImageurl());
                 intent.putExtra("username",users.getUsername());
-                intent.putExtra("id",id);
-                Toast.makeText(context, ""+id, Toast.LENGTH_SHORT).show();
+                intent.putExtra("id",users.getId());
                 context.startActivity(intent);
             }
         });

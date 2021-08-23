@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.R;
 import com.example.trabus.adapter.ChatDetailAdapter;
 import com.example.trabus.models.StudentHelper;
@@ -24,6 +28,7 @@ public class ChatActivityDriver extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
     ChatDetailAdapter adapter;
+    ImageView leftarrow;
     DatabaseReference reference;
     ArrayList<StudentHelper> list=new ArrayList<>();
 
@@ -33,6 +38,7 @@ public class ChatActivityDriver extends AppCompatActivity {
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_chat_driver);
         recyclerView=findViewById(R.id.chatrecyclerviewdriver);
+        leftarrow=findViewById(R.id.backdriverhome);
         adapter=new ChatDetailAdapter(list, ChatActivityDriver.this);
         recyclerView.setAdapter(adapter);
         linearLayoutManager=new LinearLayoutManager(ChatActivityDriver.this);
@@ -55,6 +61,13 @@ public class ChatActivityDriver extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
 
+            }
+        });
+        leftarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ChatActivityDriver.this, Driver_Home.class));
+                finish();
             }
         });
     }

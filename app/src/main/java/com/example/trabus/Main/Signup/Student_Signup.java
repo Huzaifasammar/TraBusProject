@@ -254,7 +254,7 @@ public class Student_Signup extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull @NotNull Exception e) {
                             Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
-                            StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender, "");
+                            StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender, "",id);
                             dbreference.child("User").child("Students").child("Profiles").child(id).setValue(helper);
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -263,7 +263,7 @@ public class Student_Signup extends AppCompatActivity {
                             Imagename.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender,uri.toString());
+                                    StudentHelper helper = new StudentHelper(Sfirstname,Slastname,Susername,Semail,Spassword,Sgender,uri.toString(),id);
                                     dbreference.child("User").child("Students").child("Profiles").child(id).setValue(helper);
                                     progressdialog.dismiss();
                                     startActivity(new Intent(Student_Signup.this, SignIn.class));
