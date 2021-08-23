@@ -107,9 +107,12 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         marker1=mMap.addMarker(options.position(latLng).title("Location Checking"));
         marker=mMap.addMarker(options.position(latLng));
         latlng1 = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        mMap.addMarker(options.position(latlng1).title("you are Here!"));
+        marker.setPosition(latlng1);
+        marker.setTitle("You are Here");
         mMap.animateCamera(CameraUpdateFactory.newLatLng(latlng1));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18.0f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 10.0f));
+        mMap.addCircle(new CircleOptions().fillColor(Color.argb(150,100,150,100)).radius(3.0).center(latlng1).strokeWidth(2f));
+
         readchanges();
 
     }
@@ -141,9 +144,15 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         public void onLocationChanged(@NonNull Location location) {
 
             readchanges();
+            getlocationupdates();
         }
 
-        // Initialize all fields
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        Toast.makeText(getApplicationContext(),"Please Check your Internet Connection",Toast.LENGTH_LONG).show();
+
+    }
+    // Initialize all fields
 
         public void Initilization()
         {
@@ -259,11 +268,9 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                 marker1.setVisible(true);
                                 marker1.setPosition(latlng2);
                                 marker1.setTitle(BusNo);
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng2, 18.0f));
                                 marker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                                 distenace=calculatedistance(latlng1,latlng2);
                                 mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
-                                mMap.addCircle(new CircleOptions().fillColor(Color.argb(150,100,150,100)).radius(5.0).center(latlng1).strokeWidth(3f));
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @SuppressLint("DefaultLocale")
                                     @Override
@@ -286,6 +293,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                     else
                     {
                         marker1.setVisible(false);
+                        mMap.addPolyline(new PolylineOptions().visible(false));
                         Toast.makeText(TrackBuses.this,"Driver not start sharing their location yet",Toast.LENGTH_SHORT).show();
                     }
 

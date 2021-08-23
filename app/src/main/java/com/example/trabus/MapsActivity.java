@@ -24,8 +24,11 @@ import android.widget.Toast;
 
 import com.example.trabus.Main.Driver_Home;
 import com.example.trabus.R;
+import com.example.trabus.Student_Home_Activities.TrackBuses;
 import com.example.trabus.models.DriverHelper;
 import com.example.trabus.models.Mylocation;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +39,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -59,16 +64,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     FirebaseAuth firebaseAuth;
-    private DatabaseReference reference,db;
+    private DatabaseReference reference, db;
+    private static final int REQUEST_CODE = 101;
     private LocationManager manager;
-    private final int mintime=1000;
-    private final int distance=1;
+    private final int mintime = 1000;
+    private final int distance = 1;
     private Marker marker;
     Mylocation location;
     String BusNo;
+    Location currentLocation;
     LatLng latlng1;
+    FusedLocationProviderClient fusedLocationProviderClient;
     FirebaseUser CurrentUser;
-    double longitude,latitude;
+    double longitude, latitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,35 +85,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.maps_activity);
 
         //Initilization
-        firebaseAuth=FirebaseAuth.getInstance();
-        CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
-        manager=(LocationManager)getSystemService(LOCATION_SERVICE);
+        firebaseAuth = FirebaseAuth.getInstance();
+        CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         getlocationupdates();
         Button EndRoute;
-        EndRoute=findViewById(R.id.endroute);
-        FirebaseDatabase database=FirebaseDatabase.getInstance();
+        EndRoute = findViewById(R.id.endroute);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         // Fetching Bus No
-        db=database.getReference("User").child("Drivers").child("Profile").child(CurrentUser.getUid());
+        db = database.getReference("User").child("Drivers").child("Profile").child(CurrentUser.getUid());
         db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    DriverHelper helper=snapshot.getValue(DriverHelper.class);
+                if (snapshot.exists()) {
+                    DriverHelper helper = snapshot.getValue(DriverHelper.class);
                     assert helper != null;
-                    BusNo=helper.getBusno();
-                    marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
+                    BusNo = helper.getBusno();
+                    marker = mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
                 }
             }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "DataBase Error", Toast.LENGTH_LONG).show();
             }
         });
         // End Route ClickListner
@@ -112,17 +121,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onClick(View v) {
-                ProgressDialog dialog=new ProgressDialog(MapsActivity.this);
+                ProgressDialog dialog = new ProgressDialog(MapsActivity.this);
                 dialog.setTitle("End Route");
                 dialog.setMessage("We Ending Your Route");
                 dialog.show();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query query=ref.child("User").child("Drivers").child("Location").child(CurrentUser.getUid());
+                Query query = ref.child("User").child("Drivers").child("Location").child(CurrentUser.getUid());
                 query.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                        if(snapshot.exists()) {
-                            for (DataSnapshot appleSnapshot: snapshot.getChildren()) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot appleSnapshot : snapshot.getChildren()) {
                                 appleSnapshot.getRef().removeValue();
                             }
                             onPause();
@@ -132,12 +141,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
 
 
-
                     }
 
                     @Override
                     public void onCancelled(@NonNull @NotNull DatabaseError error) {
-                        Toast.makeText(getApplicationContext(),"DataBase Error",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "DataBase Error", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -145,24 +153,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-//   On Permission Granted
+    //   On Permission Granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @org.jetbrains.annotations.NotNull String[] permissions, @NonNull @org.jetbrains.annotations.NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==101)
-        {
-            if (grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
-            {
-                getlocationupdates();
-                readchanges();
-            }
-            else
-            {
+        if (REQUEST_CODE == 101) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (REQUEST_CODE == 101) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getlocationupdates();
+                    fetchLocation();
+                }
+            }else {
                 Toast.makeText(this, "Permission not granted", Toast.LENGTH_LONG).show();
             }
         }
     }
-
 
 
     /**
@@ -178,10 +184,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        latlng1=new LatLng(33,73);
-        marker=mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
+        latlng1 = new LatLng(33, 73);
+        marker = mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
         readchanges();
-
 
 
     }
@@ -194,14 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        if(location!=null)
-        {
-            savelocation(location);
-        }
-        else
-        {
-            Toast.makeText(this,"No location found",Toast.LENGTH_LONG).show();
-        }
+        savelocation(location);
     }
 
     private void savelocation(Location location) {
@@ -220,6 +218,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
+        Toast.makeText(getApplicationContext(),"Please Check your Internet Connection",Toast.LENGTH_LONG).show();
 
 
     }
@@ -229,19 +228,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void getlocationupdates() {
         if(manager!=null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            {
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, mintime, distance,this);
+                    manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, mintime, distance, this);
                 } else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mintime, distance,this);
+                    manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mintime, distance, this);
                 } else {
                     Toast.makeText(this, "No provider available", Toast.LENGTH_LONG).show();
                 }
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},101);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+
             }
         }
     }
@@ -252,17 +249,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                if(snapshot.exists())
-                {
-                    location=snapshot.getValue(Mylocation.class);
-                        if(location!=null) {
-                            longitude = location.getLongitude();
-                            latitude = location.getLatitude();
-                            latlng1 = new LatLng(latitude, longitude);
-                            marker.setPosition(latlng1);
-                            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 18.0f));
-                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
-                        }
+                if (snapshot.exists()) {
+                    location = snapshot.getValue(Mylocation.class);
+                    if (location != null) {
+                        longitude = location.getLongitude();
+                        latitude = location.getLatitude();
+                        latlng1 = new LatLng(latitude, longitude);
+                        marker.setPosition(latlng1);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 14.0f));
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
+                    }
 
 
                 }
@@ -274,4 +270,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-}
+        public void fetchLocation() {
+
+            if (ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                return;
+            }
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        currentLocation = location;
+                        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                        assert supportMapFragment != null;
+                        supportMapFragment.getMapAsync(MapsActivity.this);
+                    }
+                }
+            });
+
+        }
+
+    }

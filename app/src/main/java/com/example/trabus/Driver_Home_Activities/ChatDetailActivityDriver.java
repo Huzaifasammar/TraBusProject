@@ -96,8 +96,8 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 mChat.clear();
-                if(snapshot.exists()) {
-                    Currentuser=FirebaseAuth.getInstance().getCurrentUser();
+                if (snapshot.exists()) {
+                    Currentuser = FirebaseAuth.getInstance().getCurrentUser();
                     for (DataSnapshot d : snapshot.getChildren()) {
                         ChatModel chatModel = d.getValue(ChatModel.class);
                         assert chatModel != null;

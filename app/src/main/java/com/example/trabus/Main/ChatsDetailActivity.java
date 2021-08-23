@@ -40,19 +40,17 @@ public class ChatsDetailActivity extends AppCompatActivity {
     ImageView leftarrow;
     EditText sendmessage;
     ImageView btnsend;
-    Query query;
     FirebaseUser Currentuser;
     FirebaseDatabase database;
     FirebaseAuth firebaseAuth;
     RecyclerView recyclerView;
-
     LinearLayoutManager linearLayoutManager;
     DatabaseReference dbreference,reference,reference1;
     MessageAdapter messageAdapter;
     List<ChatModel>mChat=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
-    String userid,senderid,SenderRoom,ReceiverRoom;
+    String userid,senderid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
