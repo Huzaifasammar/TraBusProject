@@ -21,11 +21,15 @@ import java.util.List;
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int MSG_TYP_SENT=1;
     public static final int MSG_TYP_RECIEVE=2;
-    private final List<ChatModel> mChat;
+    private  List<ChatModel> mChat;
     FirebaseUser fuser;
     Context  context;
 
     public MessageAdapter(List<ChatModel> mChat,Context context) {
+        this.mChat = mChat;
+        this.context=context;
+    }
+    public void setList(List<ChatModel> mChat,Context context) {
         this.mChat = mChat;
         this.context=context;
     }
@@ -36,18 +40,14 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View view;
         RecyclerView.ViewHolder viewHolder;
+        LayoutInflater layoutInflater=LayoutInflater.from(context);
         if(viewType==MSG_TYP_SENT)
         {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatsender,parent,false);
-            viewHolder = new SendMessageViewHolder(view);
-
-
+          return new SendMessageViewHolder(layoutInflater,parent);
         }
         else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatreciever, parent, false);
-            viewHolder = new RecieveMessageViewHolder(view);
+            return new RecieveMessageViewHolder(layoutInflater,parent);
         }
-        return viewHolder;
     }
 
     @Override
@@ -86,8 +86,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class SendMessageViewHolder extends RecyclerView.ViewHolder{
         public TextView SendMessageShow;
 
-        public SendMessageViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
+        public SendMessageViewHolder(LayoutInflater layoutInflater,ViewGroup viewGroup) {
+            super(layoutInflater.inflate(R.layout.chatsender,viewGroup,false));
             SendMessageShow=itemView.findViewById(R.id.sendmessage);
 
         }
@@ -95,8 +95,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static class RecieveMessageViewHolder extends RecyclerView.ViewHolder{
         public TextView ShowMessage;
 
-        public RecieveMessageViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
+        public RecieveMessageViewHolder(LayoutInflater layoutInflater,ViewGroup viewGroup) {
+            super(layoutInflater.inflate(R.layout.chatreciever,viewGroup,false));
             ShowMessage=itemView.findViewById(R.id.recievemessage);
         }
     }

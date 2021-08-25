@@ -133,6 +133,7 @@
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -142,12 +143,11 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="start"
-                    android:hint="@string/complaint_Descrption"
+                    android:hint="Description"
                     android:textSize="16sp"
                     android:padding="10dp"
                     android:background="@drawable/pic_background_rounded"
-                    android:textCursorDrawable="@drawable/style_cursur"
-                    android:textColorHint="@color/black"></EditText>
+                    android:textCursorDrawable="@drawable/style_cursur" />
 
             </LinearLayout>
             <RelativeLayout

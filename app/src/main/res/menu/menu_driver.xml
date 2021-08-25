@@ -43,6 +43,10 @@
                 android:id="@+id/nav_report"
                 android:icon="@drawable/report"
                 android:title="Report a Situation" />
+                <item
+                    android:id="@+id/nav_histor"
+                    android:icon="@drawable/report"
+                    android:title="History" />
             </group>
 
         </menu>

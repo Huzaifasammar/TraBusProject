@@ -56,7 +56,7 @@ public class Schedule extends AppCompatActivity {
         dbreference=FirebaseDatabase.getInstance().getReference();
         reference=FirebaseDatabase.getInstance().getReference();
         filterreference=FirebaseDatabase.getInstance().getReference();
-        Query query =reference.child("User").child("Schedule").orderByChild("bus_number");
+        Query query =reference.child("User").child("Schedule").orderByChild("busno");
         linearLayoutManager=new LinearLayoutManager(Schedule.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         back=findViewById(R.id.backschedule);
@@ -106,8 +106,8 @@ public class Schedule extends AppCompatActivity {
     {
         ArrayList<ScheduleBusNo> filtereddata=new ArrayList<>();
         ScheduledAdapter adapter= new ScheduledAdapter(list, Schedule.this);
-        recyclerView.setAdapter(scheduledAdapter);
-        filterreference.child("User").child("Schedule").orderByChild("bus_number").addValueEventListener(new ValueEventListener() {
+        recyclerView.setAdapter(adapter);
+        filterreference.child("User").child("Schedule").orderByChild("busno").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 list.clear();

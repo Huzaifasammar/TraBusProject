@@ -93,7 +93,7 @@ public class Booking_Trip extends AppCompatActivity {
         calender=findViewById(R.id.ll_calender_booking);
         check_avaliable=findViewById(R.id.btn_check_avalibilty);
         bookrecycler=findViewById(R.id.bookrecyclerview);
-        bookingAdapter=new BookingAdapter(list,Booking_Trip.this);
+        bookingAdapter=new BookingAdapter(list,spnpickup.getText().toString(),spndrop.getText().toString(),Booking_Trip.this);
         layoutManager=new LinearLayoutManager(Booking_Trip.this);
         bookrecycler.setAdapter(bookingAdapter);
         bookrecycler.setLayoutManager(layoutManager);

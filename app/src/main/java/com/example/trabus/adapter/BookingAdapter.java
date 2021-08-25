@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,14 +34,17 @@ import java.util.HashMap;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewholder> {
     ArrayList<BookingHelper> list;
     Context context;
+    String pick,drop;
     FirebaseAuth auth;
     FirebaseUser user;
     DatabaseReference reference,reference1;
     String Email,name,pickdate;
 
-    public BookingAdapter(ArrayList<BookingHelper> list, Context context) {
+    public BookingAdapter(ArrayList<BookingHelper> list,String pick,String drop, Context context) {
         this.list = list;
         this.context = context;
+        this.pick=pick;
+        this.drop=drop;
     }
 
     @NonNull
@@ -57,6 +61,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
         final BookingHelper helper=list.get(position);
         holder.busno.setText(helper.getBusNumber());
         holder.date.setText(helper.getDate());
+        holder.bind(pick,drop);
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +108,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
     }
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView busno,date;
+        String pick,drop;
 
 
         public Viewholder(@NonNull @NotNull View itemView) {
@@ -109,29 +116,46 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
             busno = itemView.findViewById(R.id.tv_busNo);
             date=itemView.findViewById(R.id.tv_date);
         }
+        public void bind(String A,String b)
+        {
+            pick=A;
+            drop=b;
+        }
     }
     public void senddata()
     {
 
         user=FirebaseAuth.getInstance().getCurrentUser();
         reference= FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Profiles").child(user.getUid());
-        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking");
-        reference1.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if(snapshot.exists()) {
                     StudentHelper fetch = snapshot.getValue(StudentHelper.class);
-                    assert fetch!=null;
+                    assert fetch != null;
                     Email = fetch.getEmail();
                     name = fetch.getFname() + " " + fetch.getLname();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking");
+        reference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+
                     HashMap<String, String> putdata = new HashMap<>();
                     putdata.put("Email", Email);
                     putdata.put("Name", name);
                     putdata.put("date", pickdate);
-                    reference.setValue(putdata);
+                    Toast.makeText(context,"Email"+Email, Toast.LENGTH_SHORT).show();
+                    reference1.setValue(putdata);
                 }
 
-            }
 
             @Override
             public void onCancelled(@NonNull @NotNull DatabaseError error) {

@@ -157,7 +157,13 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
         linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(messageAdapter);
+        if(messageAdapter==null) {
+            recyclerView.setAdapter(messageAdapter);
+        }
+        else
+        {
+            messageAdapter.notifyDataSetChanged();
+        }
         referenceReceives=FirebaseDatabase.getInstance().getReference();
     }
     private void showsReceivemessage() {

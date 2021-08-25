@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.trabus.Driver_Home_Activities.ChatActivityDriver;
 import com.example.trabus.Driver_Navigation_fragment.DriverReminder;
+import com.example.trabus.Driver_Navigation_fragment.HistoryFragment;
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
 import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
@@ -226,6 +227,10 @@ public class Driver_Home extends AppCompatActivity {
                     case R.id.chatdriver:
                         startActivity(new Intent(Driver_Home.this, ChatActivityDriver.class));
                         finish();
+                        break;
+                    case R.id.nav_histor:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HistoryFragment()).commit();
+                        heading.setText("History");
                         break;
                     default:
                         break;

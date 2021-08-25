@@ -48,6 +48,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
     DatabaseReference dbreference,reference,reference1;
     MessageAdapter messageAdapter;
     List<ChatModel>mChat=new ArrayList<>();
+    List<ChatModel>mChatReceiver=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
     String userid,senderid;
@@ -67,7 +68,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
          Initialize();
          onClick();
          showsendmessage();
-         showReceivemessage();
+         //showReceivemessage();
 
 
 
@@ -92,7 +93,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
       reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-              mChat.clear();
+            //  mChat.clear();
               if(snapshot.exists()) {
                   Currentuser=FirebaseAuth.getInstance().getCurrentUser();
                   for (DataSnapshot d : snapshot.getChildren()) {
@@ -101,9 +102,43 @@ public class ChatsDetailActivity extends AppCompatActivity {
 
                       {
                           mChat.add(chatModel);
+                          reference1.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
+                              @Override
+                              public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                  mChat.clear();
+                                  if(snapshot.exists()) {
+                                      Currentuser=FirebaseAuth.getInstance().getCurrentUser();
+                                      for (DataSnapshot d : snapshot.getChildren()) {
+                                          ChatModel chatModel = d.getValue(ChatModel.class);
+                                          assert chatModel != null;
+
+                                          {
+                                              mChat.add(chatModel);
+                                          }
+                                      }
+                                    //  messageAdapter.notifyDataSetChanged();
+                                  }
+
+                              }
+
+                              @Override
+                              public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                              }
+                          });
                       }
                   }
+
+              }
+              if(messageAdapter!=null) {
+                  messageAdapter.setList(mChat,ChatsDetailActivity.this);
                   messageAdapter.notifyDataSetChanged();
+              }
+              else
+              {
+                  messageAdapter=new MessageAdapter(mChat, ChatsDetailActivity.this);
+                  recyclerView.setAdapter(messageAdapter);
+
               }
           }
 
@@ -146,14 +181,13 @@ public void Initialize()
     leftarrow=findViewById(R.id.back_arrow_Chat);
     recyclerView=findViewById(R.id.chatrecyclerview);
     userid = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();
-    messageAdapter=new MessageAdapter(mChat, ChatsDetailActivity.this);
+
     sendmessage=findViewById(R.id.sms_editText);
     btnsend=findViewById(R.id.send_sms_btn);
     reference=FirebaseDatabase.getInstance().getReference();
     linearLayoutManager=new LinearLayoutManager(getApplicationContext());
     linearLayoutManager.setStackFromEnd(true);
     recyclerView.setLayoutManager(linearLayoutManager);
-    recyclerView.setAdapter(messageAdapter);
 }
 
 // On back pressed Check Current User Driver or Student
@@ -161,28 +195,6 @@ public void Initialize()
 
     private void showReceivemessage()
     {
-        reference.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                mChat.clear();
-                if(snapshot.exists()) {
-                    Currentuser=FirebaseAuth.getInstance().getCurrentUser();
-                    for (DataSnapshot d : snapshot.getChildren()) {
-                        ChatModel chatModel = d.getValue(ChatModel.class);
-                        assert chatModel != null;
 
-                        {
-                            mChat.add(chatModel);
-                        }
-                    }
-                    messageAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
     }
 }

@@ -68,7 +68,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
     Query query;
     Button EndRoute;
     SimpleRatingBar ratingBar;
-    TextView textView;
+    TextView textView,busSpeed,arrivalTime;
     Marker marker,marker1;
     Dialog rating;
     Button btnreview,btnskip;
@@ -173,6 +173,8 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             id=getIntent().getStringExtra("id");
             reference= FirebaseDatabase.getInstance().getReference();
             query=reference.child("User").child("Drivers").child("Location").child(id);
+            busSpeed=findViewById(R.id.speedcal);
+            arrivalTime=findViewById(R.id.arrivalTime);
         }
         // click Listeners
 
@@ -216,7 +218,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                     float text= Float.parseFloat(textView.getText().toString());
                     FirebaseUser CurrentUser=FirebaseAuth.getInstance().getCurrentUser();
                     Rating helper=new Rating(text);
-                    reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).setValue(helper);
+                    reference.child("User").child("Drivers").child("Rating").child(id).child(CurrentUser.getUid()).push().setValue(helper);
                     startActivity(new Intent(TrackBuses.this,Student_Home.class));
                     finish();
 
@@ -252,12 +254,15 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
 
         public void readchanges() {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("DefaultLocale")
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
                     if (snapshot.exists()) {
 
                             location =snapshot.getValue(Mylocation.class);
+                            assert location != null;
+                            busSpeed.setText(String.valueOf(location.getSpeed())+" km/hr");
 
 
 
@@ -270,6 +275,9 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                 marker1.setTitle(BusNo);
                                 marker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                                 distenace=calculatedistance(latlng1,latlng2);
+                                double Time=distance/location.getSpeed();
+                                arrivalTime.setText(String.valueOf(String.format("%.1f",Time))+" minute");
+
                                 mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @SuppressLint("DefaultLocale")

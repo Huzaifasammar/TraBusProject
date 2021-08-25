@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowInsetsAnimation;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trabus.Main.Driver_Home;
@@ -71,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final int distance = 1;
     private Marker marker;
     Mylocation location;
+    TextView speed,arrival,arrivalTime;
     String BusNo;
     Location currentLocation;
     LatLng latlng1;
@@ -87,6 +90,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Initilization
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        speed=findViewById(R.id.speedcal);
+        arrival=findViewById(R.id.arrival);
+        arrival.setVisibility(View.INVISIBLE);
+        arrivalTime=findViewById(R.id.arrivalTime);
+        arrivalTime.setVisibility(View.INVISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
         manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -247,10 +256,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void readchanges() {
         reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     location = snapshot.getValue(Mylocation.class);
+                    assert location!=null;
+                    speed.setText(String.valueOf(String.format("%.0f",location.getSpeed()))+" km/hr");
                     if (location != null) {
                         longitude = location.getLongitude();
                         latitude = location.getLatitude();
