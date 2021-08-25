@@ -52,6 +52,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.core.Tag;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.model.DirectionsLeg;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.Duration;
+import com.google.maps.model.TravelMode;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -73,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final int distance = 1;
     private Marker marker;
     Mylocation location;
-    TextView speed,arrival,arrivalTime;
+    TextView speed, arrival, arrivalTime;
     String BusNo;
     Location currentLocation;
     LatLng latlng1;
@@ -91,10 +98,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        speed=findViewById(R.id.speedcal);
-        arrival=findViewById(R.id.arrival);
+        speed = findViewById(R.id.speedcal);
+        arrival = findViewById(R.id.arrival);
         arrival.setVisibility(View.INVISIBLE);
-        arrivalTime=findViewById(R.id.arrivalTime);
+        arrivalTime = findViewById(R.id.arrivalTime);
         arrivalTime.setVisibility(View.INVISIBLE);
         reference = FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
         manager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -173,7 +180,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     getlocationupdates();
                     fetchLocation();
                 }
-            }else {
+            } else {
                 Toast.makeText(this, "Permission not granted", Toast.LENGTH_LONG).show();
             }
         }
@@ -227,7 +234,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        Toast.makeText(getApplicationContext(),"Please Check your Internet Connection",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Please Check your Internet Connection", Toast.LENGTH_LONG).show();
 
 
     }
@@ -235,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // Get Location Updates
 
     private void getlocationupdates() {
-        if(manager!=null) {
+        if (manager != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                     ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -261,8 +268,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     location = snapshot.getValue(Mylocation.class);
-                    assert location!=null;
-                    speed.setText(String.valueOf(String.format("%.0f",location.getSpeed()))+" km/hr");
+                    assert location != null;
+                    speed.setText(String.valueOf(String.format("%.0f", location.getSpeed())) + " km/hr");
                     if (location != null) {
                         longitude = location.getLongitude();
                         latitude = location.getLatitude();
@@ -282,27 +289,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-        public void fetchLocation() {
 
-            if (ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-                return;
-            }
-            Task<Location> task = fusedLocationProviderClient.getLastLocation();
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null) {
-                        currentLocation = location;
-                        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-                        assert supportMapFragment != null;
-                        supportMapFragment.getMapAsync(MapsActivity.this);
-                    }
-                }
-            });
+    public void fetchLocation() {
 
+        if (ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            return;
         }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    currentLocation = location;
+                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                    assert supportMapFragment != null;
+                    supportMapFragment.getMapAsync(MapsActivity.this);
+                }
+            }
+        });
 
     }
+}
+

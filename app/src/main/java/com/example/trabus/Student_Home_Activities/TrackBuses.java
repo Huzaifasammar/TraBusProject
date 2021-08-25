@@ -54,10 +54,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsLeg;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.Duration;
+import com.google.maps.model.TravelMode;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
@@ -254,7 +263,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
 
         public void readchanges() {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @SuppressLint("DefaultLocale")
+                @SuppressLint({"DefaultLocale", "SetTextI18n"})
                 @Override
                 public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
@@ -275,8 +284,15 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                 marker1.setTitle(BusNo);
                                 marker1.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                                 distenace=calculatedistance(latlng1,latlng2);
-                                double Time=distance/location.getSpeed();
-                                arrivalTime.setText(String.valueOf(String.format("%.1f",Time))+" minute");
+                                double Time = (distenace / location.getSpeed()) * 60;
+                                double tempTime=distenace/0.1;
+                                if(location.getSpeed()==0) {
+                                    arrivalTime.setText(String.format("%.0f", tempTime) + " minute");
+                                }
+                                else {
+
+                                    arrivalTime.setText(String.format("%.0f", Time) + " minute");
+                                }
 
                                 mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -362,4 +378,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
         return  radius*c;
 
     }
+
+
+
 }
