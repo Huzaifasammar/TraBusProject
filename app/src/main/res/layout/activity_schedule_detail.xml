@@ -248,7 +248,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/arrival3rd"
-                android:text="03:00 AM"
+                android:text="03:00 PM"
                 android:layout_below="@id/tvdeparture3rd"
                 android:textSize="14sp" />
             <TextView
@@ -258,7 +258,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/tvdeparture3rd"
                 android:layout_alignParentRight="true"
-                android:text="01:40 AM"
+                android:text="01:40 PM"
                 android:textSize="14sp"
                 />
         </RelativeLayout>
@@ -322,7 +322,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/arrival4th"
-                android:text="11:30 AM"
+                android:text="06:00 PM"
                 android:layout_below="@id/tvdeparture4th"
                 android:textSize="14sp" />
             <TextView
@@ -332,7 +332,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/tvdeparture4th"
                 android:layout_alignParentRight="true"
-                android:text="10:00 AM"
+                android:text="04:30 PM"
                 android:textSize="14sp"
                 />
         </RelativeLayout>
@@ -397,7 +397,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/arrival5th"
-                android:text="11:30 AM"
+                android:text="09:30 PM"
                 android:layout_below="@id/tvdeparture5th"
                 android:textSize="14sp" />
             <TextView
@@ -407,7 +407,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/tvdeparture5th"
                 android:layout_alignParentRight="true"
-                android:text="10:00 AM"
+                android:text="08:00 PM"
                 android:textSize="14sp"
                 />
         </RelativeLayout>

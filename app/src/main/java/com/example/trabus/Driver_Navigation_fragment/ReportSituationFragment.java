@@ -113,10 +113,16 @@ public class ReportSituationFragment extends Fragment {
                 helper.put("Location",Location);
                 helper.put("Situation",Situation);
                 helper.put("Description",Description);
-                reference.child("User").child("Drivers").child("ReportSituation").child(user.getUid()).child(BusNumber).setValue(helper);
-                Toast.makeText(getContext(),"Reported Successfully",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ReportSituationFragment.this.getActivity(), Driver_Home.class));
+                if(Location.isEmpty()||Situation.isEmpty()||Description.isEmpty())
+                {
+                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 
+                }
+                else {
+                    reference.child("User").child("Drivers").child("ReportSituation").child(user.getUid()).child(BusNumber).setValue(helper);
+                    Toast.makeText(getContext(), "Reported Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(ReportSituationFragment.this.getActivity(), Driver_Home.class));
+                }
             }
         });
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ShowIn="navigation_view">
 
     <group android:checkableBehavior="single">
@@ -45,7 +46,8 @@
                 android:title="Report a Situation" />
                 <item
                     android:id="@+id/nav_histor"
-                    android:icon="@drawable/report"
+                    android:icon="@drawable/history"
+                    app:iconTint="@color/black"
                     android:title="History" />
             </group>
 

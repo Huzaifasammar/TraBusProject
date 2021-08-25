@@ -68,6 +68,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -213,8 +215,14 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
             EndRoute.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    rating.show();
-                    onPause();
+                    if(latlng2!=null) {
+                        rating.show();
+                        onPause();
+                    }
+                    else {
+                        startActivity(new Intent(TrackBuses.this,Student_Home.class));
+                        finish();
+                    }
                 }
             });
 
@@ -271,7 +279,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
 
                             location =snapshot.getValue(Mylocation.class);
                             assert location != null;
-                            busSpeed.setText(String.valueOf(location.getSpeed())+" km/hr");
+                            busSpeed.setText(String.valueOf(String.format("%.0f",location.getSpeed()*1.609344))+" km/hr");
 
 
 
@@ -286,6 +294,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                 distenace=calculatedistance(latlng1,latlng2);
                                 double Time = (distenace / location.getSpeed()) * 60;
                                 double tempTime=distenace/0.1;
+
                                 if(location.getSpeed()==0) {
                                     arrivalTime.setText(String.format("%.0f", tempTime) + " minute");
                                 }
@@ -294,7 +303,7 @@ public class TrackBuses extends FragmentActivity implements OnMapReadyCallback, 
                                     arrivalTime.setText(String.format("%.0f", Time) + " minute");
                                 }
 
-                                mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
+                               // mMap.addPolyline(new PolylineOptions().add(latlng1).add(latlng2).color(Color.argb(150,100,150,100)).width(4f));
                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                     @SuppressLint("DefaultLocale")
                                     @Override

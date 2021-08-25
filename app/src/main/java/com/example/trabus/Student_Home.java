@@ -132,6 +132,9 @@ public class Student_Home extends AppCompatActivity {
                 return true;
             }
         });
+
+        // notification button listener -----------------------------------------
+
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +150,9 @@ public class Student_Home extends AppCompatActivity {
 
 
     }
+
+    // Read data from database --------------------------------------------------
+
     public void retrivedata() {
          id = fAuth.getUid();
         DatabaseReference reference = database.getReference("User").child("Students").child("Profiles").child(id);

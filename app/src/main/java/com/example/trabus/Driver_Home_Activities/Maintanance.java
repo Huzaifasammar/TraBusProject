@@ -138,6 +138,7 @@ public void onclick()
     submit.setOnClickListener(new View.OnClickListener() {
                                   @Override
                                   public void onClick(View v) {
+
                                       getedittextdata();
                                       HashMap<String,String> helper=new HashMap<>();
                                       helper.put("time",sTime);
@@ -150,10 +151,17 @@ public void onclick()
                                       helper.put("BrakeServicesPrice",sBrake);
                                       helper.put("Other_services_Price",sOther);
                                       helper.put("Mileage_Services",sMileageservices);
-                                      reference.child("User").child("Drivers").child("Maintanance").child(Id.getUid()).child(Bus).push().setValue(helper);
-                                      Toast.makeText(Maintanance.this,"Your response has been recorded",Toast.LENGTH_LONG).show();
-                                      startActivity(new Intent(Maintanance.this,Driver_Home.class));
-                                      finish();
+                                      if(sTime.isEmpty()||sDate.isEmpty()||sMileagepetrol.isEmpty()||sLitres.isEmpty())
+                                      {
+                                          Toast.makeText(Maintanance.this,"Please Fill Require Fields",Toast.LENGTH_LONG).show();
+
+                                      }
+                                      else {
+                                          reference.child("User").child("Drivers").child("Maintanance").child(Id.getUid()).child(Bus).push().setValue(helper);
+                                          Toast.makeText(Maintanance.this, "Your response has been recorded", Toast.LENGTH_LONG).show();
+                                          startActivity(new Intent(Maintanance.this, Driver_Home.class));
+                                          finish();
+                                      }
                                   }
                               });
     cancel.setOnClickListener(new View.OnClickListener() {

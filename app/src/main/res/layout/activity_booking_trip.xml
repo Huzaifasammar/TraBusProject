@@ -112,14 +112,14 @@
             <AutoCompleteTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Pickup Location"
+                android:hint="drop of Location"
                 android:id="@+id/drop"
                 android:background="@null"
                 android:padding="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@+id/img2"
-                android:completionThreshold="1"></AutoCompleteTextView>
+                android:completionThreshold="1" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

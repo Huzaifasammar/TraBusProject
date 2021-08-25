@@ -1,12 +1,15 @@
 package com.example.trabus.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -34,6 +37,8 @@ public class ProgressButton {
     {
         progressBar.setVisibility(View.GONE);
         textView.setText("Failed");
+
+
     }
 
 

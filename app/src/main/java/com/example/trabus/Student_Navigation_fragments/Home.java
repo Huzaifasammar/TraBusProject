@@ -36,6 +36,7 @@ public class Home extends Fragment {
 
 
 
+//onClick Lixteners ----------------------------------------------------
 
     public void onclick(){
         buses_schedule.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +65,8 @@ public class Home extends Fragment {
 
 
     }
+    //initiazlize all fields ------------------------------------------------------------------
+
     public void intilize(){
         buses_schedule=v.findViewById(R.id.Rl_bus_schedule);
         booking=v.findViewById(R.id.Rl_booking);

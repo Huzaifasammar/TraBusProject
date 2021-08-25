@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -87,6 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     FusedLocationProviderClient fusedLocationProviderClient;
     FirebaseUser CurrentUser;
     double longitude, latitude;
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.maps_activity);
 
         //Initilization
+        dialog=new ProgressDialog(MapsActivity.this);
+        dialog.setMessage("please wait while we fetch your location");
+        dialog.show();
         firebaseAuth = FirebaseAuth.getInstance();
         CurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -106,15 +111,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         reference = FirebaseDatabase.getInstance().getReference("User").child("Drivers").child("Location").child(CurrentUser.getUid());
         manager = (LocationManager) getSystemService(LOCATION_SERVICE);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fetchLocation();
         getlocationupdates();
         Button EndRoute;
         EndRoute = findViewById(R.id.endroute);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        // Fetching Bus No
+
+        // Fetching Bus No ----------------------------------------------------
+
         db = database.getReference("User").child("Drivers").child("Profile").child(CurrentUser.getUid());
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -132,7 +143,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(getApplicationContext(), "DataBase Error", Toast.LENGTH_LONG).show();
             }
         });
-        // End Route ClickListner
+
+
+        // End Route ClickListner -------------------------------------------------------------
+
         EndRoute.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -168,8 +182,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
-    //   On Permission Granted
+    //   On Permission Granted ---------------------------------------------------------------
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @org.jetbrains.annotations.NotNull String[] permissions, @NonNull @org.jetbrains.annotations.NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -198,7 +211,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        dialog.show();
         mMap = googleMap;
         latlng1 = new LatLng(33, 73);
         marker = mMap.addMarker(new MarkerOptions().position(latlng1).title(BusNo));
@@ -239,7 +252,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    // Get Location Updates
+    // Get Location Updates ---------------------------------------------------------
 
     private void getlocationupdates() {
         if (manager != null) {
@@ -250,6 +263,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } else if (manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
                     manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, mintime, distance, this);
                 } else {
+
                     Toast.makeText(this, "No provider available", Toast.LENGTH_LONG).show();
                 }
             } else {
@@ -259,23 +273,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    // Read Data from Database
+    // Read Data from Database ----------------------------------------------------
 
     private void readchanges() {
         reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("DefaultLocale")
+            @SuppressLint({"DefaultLocale", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    dialog.dismiss();
                     location = snapshot.getValue(Mylocation.class);
                     assert location != null;
-                    speed.setText(String.valueOf(String.format("%.0f", location.getSpeed())) + " km/hr");
+                    speed.setText(String.format("%.0f", location.getSpeed() * 1.609344) +" km/hr");;
                     if (location != null) {
                         longitude = location.getLongitude();
                         latitude = location.getLatitude();
                         latlng1 = new LatLng(latitude, longitude);
                         marker.setPosition(latlng1);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 14.0f));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng1, 16.0f));
                         marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                     }
 
@@ -290,6 +305,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+// fetch location ---------------------------------------------------------------------------------
+
     public void fetchLocation() {
 
         if (ActivityCompat.checkSelfPermission(
@@ -302,6 +319,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+
                 if (location != null) {
                     currentLocation = location;
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

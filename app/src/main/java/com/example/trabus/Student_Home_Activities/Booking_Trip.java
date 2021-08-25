@@ -76,179 +76,14 @@ public class Booking_Trip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_booking_trip);
-        spnpickup=findViewById(R.id.pickup);
-        spndrop=findViewById(R.id.drop);
-        user=FirebaseAuth.getInstance().getCurrentUser();
-        reference= FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Profiles").child(user.getUid());
-        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking").child("BusNumber 34");
-        reference2=FirebaseDatabase.getInstance().getReference();
-        query=reference2.child("User").child("Students").child("availablebus");
-        date=findViewById(R.id.tvdeparturedate);
-        busdate=findViewById(R.id.tv_date);
-        drop1=findViewById(R.id.drop1);
-        fare=findViewById(R.id.fare);
-        drop2=findViewById(R.id.drop2);
-        bottom=findViewById(R.id.Rl_bottom_sheet);
-        backtrip=findViewById(R.id.back_trip_booking);
-        calender=findViewById(R.id.ll_calender_booking);
-        check_avaliable=findViewById(R.id.btn_check_avalibilty);
-        bookrecycler=findViewById(R.id.bookrecyclerview);
-        bookingAdapter=new BookingAdapter(list,spnpickup.getText().toString(),spndrop.getText().toString(),Booking_Trip.this);
-        layoutManager=new LinearLayoutManager(Booking_Trip.this);
-        bookrecycler.setAdapter(bookingAdapter);
-        bookrecycler.setLayoutManager(layoutManager);
-        View bottomsheet=findViewById(R.id.RL_design_bottom_sheet);
-         behavior=BottomSheetBehavior.from(bottomsheet);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull @NotNull View bottomSheet, int newState) {
-                switch (newState){
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
-                      break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
-                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
-                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
-                        break;
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
-                        break;
-                }
-            }
+        initialization();
+        onClick();
 
-            @Override
-            public void onSlide(@NonNull @NotNull View bottomSheet, float slideOffset) {
-                Log.i("BottomSheetCallback","slideOffset: " + slideOffset);
-
-            }
-        });
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                StudentHelper helper=snapshot.getValue(StudentHelper.class);
-                assert helper != null;
-                Email=helper.getEmail();
-                String fullname=helper.getFname()+" "+helper.getLname();
-                name=fullname;
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-
-        check_avaliable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!validatepickup()||!validatedrop()||!validatecalendar())
-                {
-
-                }
-                 else {
-                    if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
-                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        farecalculation();
-                        checkavailable();
-
-
-                    } else {
-                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    }
-                }
-
-
-            }
-        });
-
-        backtrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Booking_Trip.this, Student_Home.class));
-                finish();
-            }
-        });
-        drop1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spnpickup.showDropDown();
-            }
-        });
-        drop2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spndrop.showDropDown();
-            }
-        });
-
-
-
-        calender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    final Calendar clndr=Calendar.getInstance();
-                    int day=clndr.get(Calendar.DAY_OF_MONTH);
-                    int month=clndr.get(Calendar.MONTH);
-                    int year=clndr.get(Calendar.YEAR);
-                    datePickerDialog=new DatePickerDialog(Booking_Trip.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                        @SuppressLint("SetTextI18n")
-                        @Override
-                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                            int Month=month+1;
-                            date.setText(dayOfMonth+"-"+Month+"-"+year);
-
-                        }
-                    },year,month,day);
-                    datePickerDialog.show();
-            }
-        });
-
-
-        adapter=ArrayAdapter.createFromResource(this,R.array.spinnerlistpickup, android.R.layout.simple_dropdown_item_1line);
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
-        spnpickup.setAdapter(adapter);
-
-        spnpickup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String data=parent.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        ArrayAdapter<CharSequence> adapter1=ArrayAdapter.createFromResource(this,R.array.spinnerlistdropoff, android.R.layout.simple_dropdown_item_1line);
-        adapter1.setDropDownViewResource(R.layout.spinner_dropdown);
-        spndrop.setAdapter(adapter1);
-
-        spndrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String data=parent.getItemAtPosition(position).toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 @SuppressLint("DefaultLocale")
+
+// Fare calculation Function ----------------------------------------
+
 public void farecalculation()
 {
 
@@ -382,6 +217,189 @@ public void farecalculation()
             }
         });
     }
+
+    //onClick listener---------------------------------------------------
+
+    public void onClick()
+    {
+        View bottomsheet=findViewById(R.id.RL_design_bottom_sheet);
+        behavior=BottomSheetBehavior.from(bottomsheet);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull @NotNull View bottomSheet, int newState) {
+                switch (newState){
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        Log.i("BottomSheetCallback","BottomSheetBehavior.STATE_DRAGGING");
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull @NotNull View bottomSheet, float slideOffset) {
+                Log.i("BottomSheetCallback","slideOffset: " + slideOffset);
+
+            }
+        });
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                StudentHelper helper=snapshot.getValue(StudentHelper.class);
+                assert helper != null;
+                Email=helper.getEmail();
+                String fullname=helper.getFname()+" "+helper.getLname();
+                name=fullname;
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
+
+
+
+
+
+        check_avaliable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!validatepickup()||!validatedrop()||!validatecalendar())
+                {
+
+                }
+                else {
+                    if (behavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                        farecalculation();
+                        checkavailable();
+
+
+                    } else {
+                        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
+                }
+
+
+            }
+        });
+
+        backtrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Booking_Trip.this, Student_Home.class));
+                finish();
+            }
+        });
+        drop1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spnpickup.showDropDown();
+            }
+        });
+        drop2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spndrop.showDropDown();
+            }
+        });
+
+
+
+        calender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar clndr=Calendar.getInstance();
+                int day=clndr.get(Calendar.DAY_OF_MONTH);
+                int month=clndr.get(Calendar.MONTH);
+                int year=clndr.get(Calendar.YEAR);
+                datePickerDialog=new DatePickerDialog(Booking_Trip.this,R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        int Month=month+1;
+                        date.setText(dayOfMonth+"-"+Month+"-"+year);
+
+                    }
+                },year,month,day);
+                datePickerDialog.show();
+            }
+        });
+
+
+        adapter=ArrayAdapter.createFromResource(this,R.array.spinnerlistpickup, android.R.layout.simple_dropdown_item_1line);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        spnpickup.setAdapter(adapter);
+
+        spnpickup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String data=parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter<CharSequence> adapter1=ArrayAdapter.createFromResource(this,R.array.spinnerlistdropoff, android.R.layout.simple_dropdown_item_1line);
+        adapter1.setDropDownViewResource(R.layout.spinner_dropdown);
+        spndrop.setAdapter(adapter1);
+
+        spndrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String data=parent.getItemAtPosition(position).toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    // initialize fields -------------------------------------------------
+
+public void initialization()
+{
+    spnpickup=findViewById(R.id.pickup);
+    spndrop=findViewById(R.id.drop);
+    user=FirebaseAuth.getInstance().getCurrentUser();
+    reference= FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Profiles").child(user.getUid());
+    reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking").child("BusNumber 34");
+    reference2=FirebaseDatabase.getInstance().getReference();
+    query=reference2.child("User").child("Students").child("availablebus");
+    date=findViewById(R.id.tvdeparturedate);
+    busdate=findViewById(R.id.tv_date);
+    drop1=findViewById(R.id.drop1);
+    fare=findViewById(R.id.fare);
+    drop2=findViewById(R.id.drop2);
+    bottom=findViewById(R.id.Rl_bottom_sheet);
+    backtrip=findViewById(R.id.back_trip_booking);
+    calender=findViewById(R.id.ll_calender_booking);
+    check_avaliable=findViewById(R.id.btn_check_avalibilty);
+    bookrecycler=findViewById(R.id.bookrecyclerview);
+    bookingAdapter=new BookingAdapter(list,spnpickup.getText().toString(),spndrop.getText().toString(),Booking_Trip.this);
+    layoutManager=new LinearLayoutManager(Booking_Trip.this);
+    bookrecycler.setAdapter(bookingAdapter);
+    bookrecycler.setLayoutManager(layoutManager);
+
+}
 
     public void sendData()
     {
