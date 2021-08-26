@@ -57,7 +57,7 @@ public class Booking_Trip extends AppCompatActivity {
     Double estimatedfare,calcultfare;
     TextView fare;
     RelativeLayout bottom;
-    TextView date,busdate,busnumber,bookfare;
+    TextView date,busdate;
     BottomSheetBehavior behavior;
     Double distance;
     Query query;
@@ -381,7 +381,6 @@ public void initialization()
     spndrop=findViewById(R.id.drop);
     user=FirebaseAuth.getInstance().getCurrentUser();
     reference= FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Profiles").child(user.getUid());
-    reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking").child("BusNumber 34");
     reference2=FirebaseDatabase.getInstance().getReference();
     query=reference2.child("User").child("Students").child("availablebus");
     date=findViewById(R.id.tvdeparturedate);

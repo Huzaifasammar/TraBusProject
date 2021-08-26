@@ -34,6 +34,9 @@ public class SplachScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.splach_screen);
+
+        //Initialization -----------------------------------------------------------------------------
+
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         dbreference = FirebaseDatabase.getInstance().getReference();
@@ -46,6 +49,9 @@ public class SplachScreenActivity extends AppCompatActivity {
             }
         }, 3000);
     }
+
+    // Checking Current User ------------------------------------------------------------------------
+
         public void checkcurrentuser() {
             if (Currentuser != null) {
                 id = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid();

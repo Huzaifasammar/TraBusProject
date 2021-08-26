@@ -32,7 +32,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,10 +60,12 @@ public class Driver_Signup_1 extends AppCompatActivity {
     AutoCompleteTextView busno;
     TextInputEditText pnumber,FirstName,LastName,UserName,Email_et,Password_et;
     private FirebaseAuth fAuth;
+    AuthCredential credential;
     StorageReference reference;
     DatabaseReference dbreference;
     ProgressDialog progressdialog;
     FirebaseDatabase fdatabase;
+    CircleImageView imageView;
     String Fname,Lname,Username,Email,Password,BusNo,PhoneNumber;
     TextInputLayout fname, lname, username, email, passwors, cpassword;
     final int RESULT_LOAD_IMAGE = 0;
@@ -71,9 +76,9 @@ public class Driver_Signup_1 extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
-                image = data.getData();
-                CircleImageView imageView = findViewById(R.id.driverimg);
-                imageView.setImageURI(image);
+                 image = data.getData();
+                 imageView = findViewById(R.id.driverimg);
+                 imageView.setImageURI(image);
             }
         }
     }
@@ -99,7 +104,8 @@ public class Driver_Signup_1 extends AppCompatActivity {
         Rlimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent i = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
@@ -139,6 +145,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
         cpassword = findViewById(R.id.cpassword_layout);
         pnumber = findViewById(R.id.phone);
         dbreference=FirebaseDatabase.getInstance().getReference();
+        credential= EmailAuthProvider.getCredential(Email,Password);
     }
     public void getEditTextData()
     {
@@ -212,7 +219,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
             email.setError("This field cannot be empty");
             return false;
         } else if (!val.matches(checkEmail)) {
-            email.setError("Plese use email abc@iiu.edu.pk!");
+            email.setError("Plese use email pattern abc@iiu.edu.pk!");
             return false;
         } else {
             email.setError(null);
@@ -282,6 +289,7 @@ public class Driver_Signup_1 extends AppCompatActivity {
                         Imagename.putFile(image).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull @NotNull Exception e) {
+
                                 Toast.makeText(getApplicationContext(), "Select profile picture", Toast.LENGTH_SHORT).show();
                                 DriverHelper helper = new DriverHelper(id, Fname, Lname, Username, Email, Password, BusNo, PhoneNumber, "");
                                 dbreference.child("User").child("Drivers").child("Profile").child(id).setValue(helper);

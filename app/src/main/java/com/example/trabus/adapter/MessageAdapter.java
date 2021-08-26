@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -53,14 +56,19 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull RecyclerView.ViewHolder holder, int position) {
         ChatModel model=mChat.get(position);
+        DateFormat df = new SimpleDateFormat("HH:mm");
+        String dateString=df.format(new Date(Long.parseLong(String.valueOf(model.getTimeStamp()))));
 
         if(holder.getClass()==SendMessageViewHolder.class)
         {
             ((SendMessageViewHolder) holder).SendMessageShow.setText(model.getSendermessage());
+
+            ((SendMessageViewHolder) holder).timeSender.setText(dateString);
         }
         else
         {
-            ((RecieveMessageViewHolder)holder).ShowMessage.setText((model.getSendermessage()));;
+            ((RecieveMessageViewHolder)holder).ShowMessage.setText((model.getSendermessage()));
+            ((RecieveMessageViewHolder)holder).timereceiver.setText(dateString);
 
         }
 
@@ -84,20 +92,23 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return MSG_TYP_SENT;
     }
     public static class SendMessageViewHolder extends RecyclerView.ViewHolder{
-        public TextView SendMessageShow;
+        public TextView SendMessageShow,timeSender;
 
         public SendMessageViewHolder(LayoutInflater layoutInflater,ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.chatsender,viewGroup,false));
             SendMessageShow=itemView.findViewById(R.id.sendmessage);
+            timeSender=itemView.findViewById(R.id.timesender);
 
         }
     }
     public static class RecieveMessageViewHolder extends RecyclerView.ViewHolder{
-        public TextView ShowMessage;
+        public TextView ShowMessage,timereceiver;
 
         public RecieveMessageViewHolder(LayoutInflater layoutInflater,ViewGroup viewGroup) {
             super(layoutInflater.inflate(R.layout.chatreciever,viewGroup,false));
             ShowMessage=itemView.findViewById(R.id.recievemessage);
+            timereceiver=itemView.findViewById(R.id.timereceiver);
+
         }
     }
 

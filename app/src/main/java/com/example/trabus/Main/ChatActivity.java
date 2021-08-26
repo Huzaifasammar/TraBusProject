@@ -38,6 +38,9 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setStatusBarColor(getResources().getColor(R.color.Green));
         setContentView(R.layout.activity_chat);
+
+        //Initialization ------------------------------------------------------------------------
+
         recyclerView=findViewById(R.id.chatrecyclerview);
         adapter=new ChatsAdapter(list,ChatActivity.this);
         recyclerView.setAdapter(adapter);
@@ -45,6 +48,9 @@ public class ChatActivity extends AppCompatActivity {
         linearLayoutManager=new LinearLayoutManager(ChatActivity.this);
         recyclerView.setLayoutManager(linearLayoutManager);
         reference= FirebaseDatabase.getInstance().getReference().child("User").child("Drivers").child("Profile");
+
+        // getting List of Drivers -------------------------------------------------------------------
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
@@ -64,6 +70,9 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+        //backarrow click --------------------------------------------------------------------------------
+
         leftarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

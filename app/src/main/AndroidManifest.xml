@@ -22,6 +22,7 @@
         android:theme="@style/Theme.TraBus"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".Main.NotificationActivity"></activity>
         <activity android:name=".Driver_Home_Activities.ChatDetailActivityDriver" />
         <activity android:name=".Driver_Home_Activities.ChatActivityDriver" />
         <activity android:name=".Main.ChatActivity" />

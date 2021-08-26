@@ -52,6 +52,8 @@ public class Complaint extends Fragment {
         View view = inflater.inflate(R.layout.fragment_complaint, container, false);
         complainttype=view.findViewById(R.id.complainttype);
 
+      // initialization ----------------------------------------------------------------------------
+
         String[]selectGender ={"Buses ","Drivers","Transport Office","Other"};
         ArrayAdapter genderAdapter =new ArrayAdapter(getActivity(),R.layout.support_simple_spinner_dropdown_item,selectGender);
         complainttype.setAdapter(genderAdapter);
@@ -66,9 +68,15 @@ public class Complaint extends Fragment {
         database=FirebaseDatabase.getInstance();
         reference=FirebaseDatabase.getInstance().getReference();
         Id=id.getUid();
+
+        //complain button click push data to database --------------------------------------------------------------------
+
         btncomplain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Getting text fields ----------------------------------------------------------------
+
                 sName= Objects.requireNonNull(Name.getText()).toString().trim();
                 sEmail= Objects.requireNonNull(Email.getText()).toString().trim();
                 sRegNo= Objects.requireNonNull(Regno.getText()).toString().trim();

@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
     ImageView leftarrow;
     EditText sendmessage;
     ImageView btnsend;
+    TextView timesender;
     FirebaseUser Currentuser;
     FirebaseDatabase database;
     FirebaseAuth firebaseAuth;
@@ -51,7 +53,7 @@ public class ChatsDetailActivity extends AppCompatActivity {
     List<ChatModel>mChatReceiver=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
-    String userid,senderid;
+    String userid,senderid,senderRoom,receiverRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,12 @@ public class ChatsDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chats);
         imageView=findViewById(R.id.profilepic);
         Name=findViewById(R.id.usernamechatdetail);
+        Currentuser=FirebaseAuth.getInstance().getCurrentUser();
         senderid =getIntent().getStringExtra("id");
         String name=getIntent().getStringExtra("username");
         Name.setText(name);
+        senderRoom=Currentuser.getUid()+senderid;
+        receiverRoom=senderid+Currentuser.getUid();
         String pic=getIntent().getStringExtra("profilepic");
         Picasso.get().load(pic).placeholder(R.drawable.ic_profile).into(imageView);
          Initialize();
@@ -79,9 +84,10 @@ public class ChatsDetailActivity extends AppCompatActivity {
   private void sendmessage()
   {
       String Message=sendmessage.getText().toString();
-      ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid);
-      reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).push().setValue(chatModel);
-      reference1.child("User").child("Chat").child("Receiver").child(senderid).child(Currentuser.getUid()).push().setValue(chatModel);
+      Date date=new Date();
+      ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid,date.getTime());
+      reference.child("User").child("Chat").child(senderRoom).child("Message").push().setValue(chatModel);
+      reference1.child("User").child("Chat").child(receiverRoom).child("Message").push().setValue(chatModel);
       sendmessage.setText(null);
       messageAdapter.notifyDataSetChanged();
   }
@@ -90,56 +96,24 @@ public class ChatsDetailActivity extends AppCompatActivity {
 
   private void showsendmessage()
   {
-      reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
+      reference.child("User").child("Chat").child(senderRoom).child("Message").addValueEventListener(new ValueEventListener() {
           @Override
           public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-            //  mChat.clear();
+             mChat.clear();
               if(snapshot.exists()) {
-                  Currentuser=FirebaseAuth.getInstance().getCurrentUser();
                   for (DataSnapshot d : snapshot.getChildren()) {
                       ChatModel chatModel = d.getValue(ChatModel.class);
                       assert chatModel != null;
 
                       {
                           mChat.add(chatModel);
-                          reference1.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
-                              @Override
-                              public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                                  mChat.clear();
-                                  if(snapshot.exists()) {
-                                      Currentuser=FirebaseAuth.getInstance().getCurrentUser();
-                                      for (DataSnapshot d : snapshot.getChildren()) {
-                                          ChatModel chatModel = d.getValue(ChatModel.class);
-                                          assert chatModel != null;
 
-                                          {
-                                              mChat.add(chatModel);
-                                          }
-                                      }
-                                    //  messageAdapter.notifyDataSetChanged();
-                                  }
-
-                              }
-
-                              @Override
-                              public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-                              }
-                          });
                       }
+                      messageAdapter.notifyDataSetChanged();
                   }
 
               }
-              if(messageAdapter!=null) {
-                  messageAdapter.setList(mChat,ChatsDetailActivity.this);
-                  messageAdapter.notifyDataSetChanged();
-              }
-              else
-              {
-                  messageAdapter=new MessageAdapter(mChat, ChatsDetailActivity.this);
-                  recyclerView.setAdapter(messageAdapter);
 
-              }
           }
 
           @Override
@@ -188,13 +162,8 @@ public void Initialize()
     linearLayoutManager=new LinearLayoutManager(getApplicationContext());
     linearLayoutManager.setStackFromEnd(true);
     recyclerView.setLayoutManager(linearLayoutManager);
+    timesender=findViewById(R.id.timesender);
+    messageAdapter=new MessageAdapter(mChat, ChatsDetailActivity.this);
+    recyclerView.setAdapter(messageAdapter);
 }
-
-// On back pressed Check Current User Driver or Student
-
-
-    private void showReceivemessage()
-    {
-
     }
-}

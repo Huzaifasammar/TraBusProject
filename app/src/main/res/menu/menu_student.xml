@@ -19,10 +19,7 @@
 
         <menu>
             <group android:checkableBehavior="single">
-            <item
-                android:id="@+id/nav_change_password_student"
-                android:icon="@drawable/ic_changepasord"
-                android:title="Change Password" />
+
             <item
                 android:id="@+id/nav_logout_student"
                 android:icon="@drawable/ic_logout"

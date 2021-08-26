@@ -7,12 +7,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,10 +20,11 @@ import com.example.trabus.Driver_Navigation_fragment.DriverReminder;
 import com.example.trabus.Driver_Navigation_fragment.HistoryFragment;
 import com.example.trabus.Driver_Navigation_fragment.HomeFragment;
 import com.example.trabus.Driver_Navigation_fragment.ReportSituationFragment;
-import com.example.trabus.Driver_Navigation_fragment.Update_Password_Driver;
+import com.example.trabus.Driver_Navigation_fragment.Update_Profile;
 import com.example.trabus.Login.SignIn;
 import com.example.trabus.R;
 import com.example.trabus.models.DriverHelper;
+import com.example.trabus.models.NotificationModel;
 import com.example.trabus.models.Rating;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,7 +52,6 @@ public class Driver_Home extends AppCompatActivity {
     NavigationView navigation;
     ImageView notification;
     TextView heading,DriverName,BusNumber,ratings;
-    Dialog notificationdialog;
     ActionBarDrawerToggle drawerToggle;
     FirebaseAuth fAuth;
     View hView;
@@ -61,6 +59,7 @@ public class Driver_Home extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference reference,reference1;
     CircleImageView driverImage;
+    ArrayList<NotificationModel>list=new ArrayList<>();
 
     @Override
     public void onBackPressed() {
@@ -89,10 +88,9 @@ public class Driver_Home extends AppCompatActivity {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                notificationdialog = new Dialog(Driver_Home.this);
-                notificationdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                notificationdialog.setContentView(R.layout.notification_dialog);
-                notificationdialog.show();
+              startActivity(new Intent(Driver_Home.this,NotificationActivity.class));
+              finish();
+
 
             }
         });
@@ -203,11 +201,13 @@ public class Driver_Home extends AppCompatActivity {
                 switch(item.getItemId())
                 {
                     case R.id.nav_home_driver:
+                        heading.setText("Driver Home");
+                        notification.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new HomeFragment()).commit();
                         break;
                     case R.id.nav_change_password_driver:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new Update_Password_Driver()).commit();
-                        heading.setText("Update Password");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_driver_home,new Update_Profile()).commit();
+                        heading.setText("Update Profile");
                         notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.nav_report:

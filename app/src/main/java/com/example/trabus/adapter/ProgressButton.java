@@ -1,5 +1,6 @@
 package com.example.trabus.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
@@ -33,10 +34,12 @@ public class ProgressButton {
         progressBar.setVisibility(View.VISIBLE);
         textView.setText("Please wait...");
     }
+   @SuppressLint("ResourceAsColor")
    public void buttonfinished()
     {
         progressBar.setVisibility(View.GONE);
         textView.setText("Failed");
+        constraintLayout.setBackgroundColor(R.color.red);
 
 
     }

@@ -32,6 +32,7 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,7 +55,7 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
     List<ChatModel> mChat=new ArrayList<>();
     CircleImageView imageView;
     TextView Name;
-    String userid,senderid;
+    String userid,senderid,senderRoom,receiverRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +69,12 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
         Name.setText(name);
         String pic=getIntent().getStringExtra("profilepic");
         Picasso.get().load(pic).placeholder(R.drawable.ic_profile).into(imageView);
+
         Initialize();
+        senderRoom=Currentuser.getUid()+senderid;
+        receiverRoom=senderid+Currentuser.getUid();
         onClick();
         showsendmessage();
-        showsReceivemessage();
-
 
     }
 
@@ -81,9 +83,10 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
     private void sendmessage()
     {
         String Message=sendmessage.getText().toString();
-        ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid);
-        reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).push().setValue(chatModel);
-        reference1.child("User").child("Chat").child("Receiver").child(senderid).child(Currentuser.getUid()).push().setValue(chatModel);
+        Date date=new Date();
+        ChatModel chatModel=new ChatModel(Message,Currentuser.getUid(),senderid,date.getTime());
+        reference.child("User").child("Chat").child(receiverRoom).child("Message").push().setValue(chatModel);
+        reference1.child("User").child("Chat").child(senderRoom).child("Message").push().setValue(chatModel);
         sendmessage.setText(null);
         messageAdapter.notifyDataSetChanged();
     }
@@ -92,21 +95,22 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
 
     private void showsendmessage()
     {
-        reference.child("User").child("Chat").child("Sender").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
+        reference.child("User").child("Chat").child(senderRoom).child("Message").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                 mChat.clear();
-                if (snapshot.exists()) {
-                    Currentuser = FirebaseAuth.getInstance().getCurrentUser();
+                if(snapshot.exists()) {
                     for (DataSnapshot d : snapshot.getChildren()) {
                         ChatModel chatModel = d.getValue(ChatModel.class);
                         assert chatModel != null;
 
                         {
                             mChat.add(chatModel);
+
                         }
+                        messageAdapter.notifyDataSetChanged();
                     }
-                    messageAdapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -157,41 +161,11 @@ public class ChatDetailActivityDriver extends AppCompatActivity {
         linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        if(messageAdapter==null) {
-            recyclerView.setAdapter(messageAdapter);
-        }
-        else
-        {
-            messageAdapter.notifyDataSetChanged();
-        }
         referenceReceives=FirebaseDatabase.getInstance().getReference();
+        recyclerView.setAdapter(messageAdapter);
+
     }
-    private void showsReceivemessage() {
-        referenceReceives.child("User").child("Chat").child("Receiver").child(Currentuser.getUid()).child(senderid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-                mChat.clear();
-                if (snapshot.exists()) {
-                    Currentuser = FirebaseAuth.getInstance().getCurrentUser();
-                    for (DataSnapshot d : snapshot.getChildren()) {
-                        ChatModel chatModel = d.getValue(ChatModel.class);
-                        assert chatModel != null;
-
-                        {
-                            mChat.add(chatModel);
-                        }
-                    }
-                    messageAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
 // On back pressed Check Current User Driver or Student
-    }
 
     @Override
     public boolean onSupportNavigateUp() {

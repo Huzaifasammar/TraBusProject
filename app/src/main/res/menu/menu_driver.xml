@@ -22,7 +22,7 @@
             <item
                 android:id="@+id/nav_change_password_driver"
                 android:icon="@drawable/ic_changepasord"
-                android:title="Change Password" />
+                android:title="Profile" />
             <item
                 android:id="@+id/nav_logout_driver"
                 android:icon="@drawable/ic_logout"

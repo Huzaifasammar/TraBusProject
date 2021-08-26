@@ -119,7 +119,7 @@ public class ReportSituationFragment extends Fragment {
 
                 }
                 else {
-                    reference.child("User").child("Drivers").child("ReportSituation").child(user.getUid()).child(BusNumber).setValue(helper);
+                    reference.child("User").child("Drivers").child("ReportSituation").child(user.getUid()).child(BusNumber).push().setValue(helper);
                     Toast.makeText(getContext(), "Reported Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(ReportSituationFragment.this.getActivity(), Driver_Home.class));
                 }

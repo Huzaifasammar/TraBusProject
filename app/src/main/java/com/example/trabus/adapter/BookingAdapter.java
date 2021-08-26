@@ -59,9 +59,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
     @Override
     public void onBindViewHolder(@NonNull @NotNull BookingAdapter.Viewholder holder, int position) {
         final BookingHelper helper=list.get(position);
+        String bus=helper.getBusNumber();
         holder.busno.setText(helper.getBusNumber());
         holder.date.setText(helper.getDate());
-        holder.bind(pick,drop);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +85,27 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
                     @Override
                     public void onClick(View v) {
                         senddata();
-                        Toast.makeText(context,"Succeessfully Booked bus ",Toast.LENGTH_SHORT).show();
+                        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking").child(bus);
+                        reference1.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
+                                HashMap<String, String> putdata = new HashMap<>();
+                                putdata.put("Email", Email);
+                                putdata.put("Name", name);
+                                putdata.put("Pickup",pick);
+                                putdata.put("drop",drop);
+                                putdata.put("date", helper.getDate());
+                                reference1.setValue(putdata);
+                            }
+
+
+                            @Override
+                            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                            }
+                        });
+                        Toast.makeText(context,"Succeessfully Booked bus ",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 });
@@ -108,18 +127,15 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
     }
     public static class Viewholder extends RecyclerView.ViewHolder {
         TextView busno,date;
-        String pick,drop;
+        TextView pick,drop;
 
 
         public Viewholder(@NonNull @NotNull View itemView) {
             super(itemView);
             busno = itemView.findViewById(R.id.tv_busNo);
             date=itemView.findViewById(R.id.tv_date);
-        }
-        public void bind(String A,String b)
-        {
-            pick=A;
-            drop=b;
+            pick=itemView.findViewById(R.id.pickup);
+            drop=itemView.findViewById(R.id.drop1);
         }
     }
     public void senddata()
@@ -143,24 +159,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.Viewhold
 
             }
         });
-        reference1=FirebaseDatabase.getInstance().getReference().child("User").child("Students").child("Booking");
-        reference1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
 
-                    HashMap<String, String> putdata = new HashMap<>();
-                    putdata.put("Email", Email);
-                    putdata.put("Name", name);
-                    putdata.put("date", pickdate);
-                    Toast.makeText(context,"Email"+Email, Toast.LENGTH_SHORT).show();
-                    reference1.setValue(putdata);
-                }
-
-
-            @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
-
-            }
-        });
     }
 }

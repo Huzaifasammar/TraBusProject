@@ -9,27 +9,23 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.trabus.Login.SignIn;
 import com.example.trabus.Main.ChatActivity;
-import com.example.trabus.Main.ChatsDetailActivity;
-import com.example.trabus.Student_Navigation_fragments.ChangePassword;
+import com.example.trabus.Main.NotificationActivity;
 import com.example.trabus.Student_Navigation_fragments.Complaint;
 import com.example.trabus.Student_Navigation_fragments.Contact;
 import com.example.trabus.Student_Navigation_fragments.Home;
 import com.example.trabus.Student_Navigation_fragments.Reminder;
 import com.example.trabus.models.StudentHelper;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,8 +44,6 @@ public class Student_Home extends AppCompatActivity {
     TextView heading,StudentName,Email;
     ImageView notification;
     CircleImageView StudentImage;
-    Dialog dialog_notice;
-    FirebaseUser user;
     String id;
     FirebaseAuth fAuth;
 
@@ -92,17 +86,13 @@ public class Student_Home extends AppCompatActivity {
 
 
                     case R.id.nav_home_student:
+                        heading.setText("Student Home");
+                        notification.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Home()).commit();
                         break;
                     case R.id.nav_setreminder_student:
                         getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new Reminder()).commit();
                         heading.setText("Set Reminder");
-                        notification.setVisibility(View.INVISIBLE);
-                        break;
-                   
-                    case R.id.nav_change_password_student:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.RL_student_home,new ChangePassword()).commit();
-                        heading.setText("Change Password");
                         notification.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.nav_logout_student:
@@ -138,13 +128,8 @@ public class Student_Home extends AppCompatActivity {
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog_notice=new Dialog(Student_Home.this);
-                dialog_notice.setContentView(R.layout.student_notification_dialog);
-                dialog_notice.getWindow().setBackgroundDrawable(getDrawable(R.drawable.book_bus_background));
-                dialog_notice.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog_notice.setCancelable(true);
-                dialog_notice.getWindow().getAttributes().windowAnimations =R.style.animation;
-                dialog_notice.show();
+               startActivity(new Intent(Student_Home.this, NotificationActivity.class));
+               finish();
             }
         });
 

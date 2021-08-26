@@ -2,15 +2,25 @@ package com.example.trabus.models;
 
 public class ChatModel {
     String id,sendermessage,senderid;
+    long timeStamp;
     public ChatModel()
     {
 
     }
-    public ChatModel (String message,String id,String senderid)
+    public ChatModel (String message,String id,String senderid,long timeStamp)
     {
         this.id=id;
         this.sendermessage=message;
         this.senderid=senderid;
+        this.timeStamp=timeStamp;
+    }
+
+    public long getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(long timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     public String getSenderid() {
